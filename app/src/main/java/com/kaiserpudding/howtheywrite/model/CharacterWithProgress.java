@@ -6,7 +6,7 @@ import android.arch.persistence.room.Relation;
 public class WordWithProgress {
 
   @Embedded
-  private Word word;
+  private KanjiWord word;
 
   @Relation(parentColumn = "id", entityColumn = "wordId", entity = Progress.class)
   private Progress progress;
