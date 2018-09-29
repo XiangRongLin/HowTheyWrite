@@ -11,10 +11,11 @@ import android.support.annotation.NonNull;
 /**
  * https://stackoverflow.com/questions/44361824/how-can-i-represent-a-many-to-many-relation-with-android-room
  * https://stackoverflow.com/questions/50799324/many-to-many-relations-with-room-livedata
+ * This POJO holds the n:m relation between lessons and characters
  */
 @Entity(
     tableName="lesson_character_join",
-    primaryKeys={"lessonId", "wordId"},
+    primaryKeys={"lessonId", "characterId"},
     foreignKeys={
         @ForeignKey(
             entity=Lesson.class,
@@ -24,11 +25,12 @@ import android.support.annotation.NonNull;
         @ForeignKey(
             entity=Character.class,
             parentColumns="id",
-            childColumns="wordId",
+            childColumns="characterId",
             onDelete=CASCADE)},
+    //TODO check unique
     indices={
-        @Index(value="lessonId"),
-        @Index(value="wordId")
+        @Index(value={"lessonId", "characterId"}, unique = true),
+        @Index(value="characterId")
     }
 )
 public class LessonCharacterJoin {
@@ -36,9 +38,9 @@ public class LessonCharacterJoin {
   private final int lessonId;
   private final int characterId;
 
-  public LessonCharacterJoin(int lessonId, int wordId) {
+  public LessonCharacterJoin(int lessonId, int characterId) {
     this.lessonId = lessonId;
-    this.characterId= wordId;
+    this.characterId= characterId;
   }
 
   @Override

@@ -4,25 +4,30 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import com.kaiserpudding.howtheywrite.model.HiraganaWord;
-import com.kaiserpudding.howtheywrite.model.KanjiWord;
-import com.kaiserpudding.howtheywrite.model.KatakanaWord;
+import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
+import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
+import com.kaiserpudding.howtheywrite.model.Progress;
 import com.kaiserpudding.howtheywrite.model.User;
-import com.kaiserpudding.howtheywrite.model.Word;
 
-@Database(entities = {Word.class,
+
+@Database(entities = {/*Word.class,
     HiraganaWord.class,
-    KatakanaWord.class,
-    KanjiWord.class,
+    KatakanaWord.class,*/
+    Character.class,
     Lesson.class,
-    User.class},
+    LessonCharacterJoin.class,
+    User.class,
+    Progress.class},
     version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
-  public abstract HiraganaWordDao hiraganaWordDao();
-  public abstract KatakanaWordDao katakanaWordDao();
-  public abstract KanjiWordDao kanjiWordDao();
+/*  public abstract HiraganaWordDao hiraganaWordDao();
+  public abstract KatakanaWordDao katakanaWordDao();*/
+  public abstract CharacterDao characterDao();
+  public abstract LessonDao lessonDao();
+  public abstract LessonCharacterJoinDao lessonCharacterJoinJoinDao();
+  public abstract ProgressDao progressDao();
   public abstract UserDao userDao();
 
   //singleton

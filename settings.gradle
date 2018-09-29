@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':WanaKana'
+include 'wanakana-core', ':wanakana-core'

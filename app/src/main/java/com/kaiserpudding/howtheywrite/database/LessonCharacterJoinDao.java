@@ -7,34 +7,49 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.RoomWarnings;
-import android.arch.persistence.room.Update;
-import com.kaiserpudding.howtheywrite.model.CharacterWord;
-import com.kaiserpudding.howtheywrite.model.LessonWordJoin;
+import com.kaiserpudding.howtheywrite.model.Character;
+import com.kaiserpudding.howtheywrite.model.Lesson;
+import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
 import java.util.List;
 
 @Dao
-public interface LessonWordJoinDao {
+public interface LessonCharacterJoinDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  void insertLessonWordJoin(LessonWordJoin lessonWordJoin);
+  void insertLessonCharacterJoin(LessonCharacterJoin lessonCharacterJoin);
 
   @Delete
-  void deleteLessonWordJoin(LessonWordJoin lessonWordJoin);
+  void deleteLessonCharacterJoin(LessonCharacterJoin lessonCharacterJoin);
 
-  @Update
-  void updateLessonWordJoin(LessonWordJoin lessonWordJoin);
+  @Query("SELECT * FROM lesson_character_join")
+  LiveData<LessonCharacterJoin> getAllLessonCharacterJoin();
 
-  @Query("SELECT * FROM lesson_word_join")
-  LiveData<LessonWordJoin> getAllLessonWordJoin();
-
-  @Query("SELECT * FROM lesson_word_join\n"
-      + "WHERE lessonId = :lessonId AND wordId = :wordId")
-  LiveData<LessonWordJoin> getLessonWordJoin(int lessonId, int wordId);
+  @Query("SELECT * FROM lesson_character_join\n"
+      + "WHERE lessonId = :lessonId AND characterId = :characterId")
+  LiveData<LessonCharacterJoin> getLessonCharacterJoin(int lessonId, int characterId);
 
   @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-  @Query("SELECT * FROM characters INNER JOIN lesson_word_join ON\n"
-      + "wordId = lesson_word_join.wordId WHERE\n"
-      + "lesson_word_join.lessonId = :id")
-  LiveData<List<CharacterWord>> getWordsWithLessonId(int id);
+  @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
+      + "characterId = lesson_character_join.characterId WHERE\n"
+      + "lesson_character_join.lessonId = :id")
+  LiveData<List<Character>> getLivaDataCharactersByLessonId(int id);
+
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
+      + "characterId = lesson_character_join.characterId WHERE\n"
+      + "lesson_character_join.lessonId = :id")
+  List<Character> getCharactersByLessonId(int id);
+
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"
+      + "lessonId = lesson_character_join.lessonId WHERE\n"
+      + "lesson_character_join.characterId = :id")
+  LiveData<List<Lesson>> getLiveDataLessonsByCharacterId(int id);
+
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"
+      + "lessonId = lesson_character_join.lessonId WHERE\n"
+      + "lesson_character_join.characterId = :id")
+  List<Lesson> getLessonsByCharacterId(int id);
 
 }

@@ -2,22 +2,29 @@ package com.kaiserpudding.howtheywrite.model;
 
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Relation;
+import android.support.annotation.NonNull;
 import java.util.List;
 
-public class CharacterWithProgress {
+public class UserWithProgress {
 
   @Embedded
-  private Character character;
+  private User user;
 
-  @Relation(parentColumn = "id", entityColumn = "character_id", entity = Progress.class)
+  @Relation(parentColumn = "id", entityColumn = "user_id", entity = Progress.class)
   private List<Progress> progress;
 
-  public Character getCharacter() {
-    return character;
+  @Override
+  @NonNull
+  public String toString() {
+    return String.valueOf(user.getId());
   }
 
-  public void setCharacter(Character character) {
-    this.character = character;
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   public List<Progress> getProgress() {

@@ -11,7 +11,7 @@ import com.kaiserpudding.howtheywrite.model.Progress;
 public interface ProgressDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  void insertProgress(Progress progress);
+  long insertProgress(Progress progress);
 
   @Delete
   void deleteProgress(Progress progress);

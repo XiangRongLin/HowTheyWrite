@@ -1,3 +1,4 @@
+/*
 package com.kaiserpudding.howtheywrite.viewmodel;
 
 import android.app.Application;
@@ -18,3 +19,4 @@ public class HiraganaWordViewModel extends AndroidViewModel {
     mRepository.insert(hiraganaWord);
   }
 }
+*/

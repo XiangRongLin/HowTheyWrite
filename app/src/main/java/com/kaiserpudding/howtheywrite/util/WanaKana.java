@@ -1,4 +1,4 @@
-package com.kaiserpudding.howtheywrite;
+package com.kaiserpudding.howtheywrite.util;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * A Java version of the Javascript WanaKana romaji-to-kana converter library (https://github.com/WaniKani/WanaKana)
  * Version 1.1.1
  */
-public class WanaKanaJava
+public class WanaKana
 {
 
   //static final int LOWERCASE_START = 0x61;
@@ -32,7 +32,7 @@ public class WanaKanaJava
     public boolean run(String str);
   }
 
-  public WanaKanaJava(Boolean useObsoleteKana)
+  public WanaKana(Boolean useObsoleteKana)
   {
 
     mOptions.put(OPTION_USE_OBSOLETE_KANA, useObsoleteKana);
@@ -932,3 +932,4 @@ public class WanaKanaJava
     mJtoR.put("んよ", "n'yo");
   }
 }
+

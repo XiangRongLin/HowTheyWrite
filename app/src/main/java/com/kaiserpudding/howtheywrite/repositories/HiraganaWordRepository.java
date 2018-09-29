@@ -1,3 +1,4 @@
+/*
 package com.kaiserpudding.howtheywrite.repositories;
 
 import android.app.Application;
@@ -28,8 +29,9 @@ public class HiraganaWordRepository {
 
     @Override
     protected Void doInBackground(final HiraganaWord... params) {
-      mAsyncTaskDao.addHiragana(params[0]);
+      mAsyncTaskDao.insertHiragana(params[0]);
       return null;
     }
   }
 }
+*/

@@ -7,13 +7,12 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import com.kaiserpudding.howtheywrite.model.Lesson;
-import com.kaiserpudding.howtheywrite.model.Word;
 
 @Dao
 public interface LessonDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  void insertLesson(Lesson lesson);
+  long insertLesson(Lesson lesson);
 
   @Delete
   void deleteLesson(Lesson lesson);
@@ -24,8 +23,8 @@ public interface LessonDao {
   @Query("SELECT * FROM lessons WHERE name = :name")
   Lesson getLesson(String name);
 
-  @Query("SELECT words.* FROM words\n"
+ /* @Query("SELECT words.* FROM words\n"
       + "JOIN lesson_word_join ON words.id=lesson_word_join.wordId\n"
       + "WHERE lesson_word_join.lessonId=:lessonId")
-  Word[] getWordsOfLesson(int lessonId);
+  Word[] getWordsOfLesson(int lessonId);*/
 }

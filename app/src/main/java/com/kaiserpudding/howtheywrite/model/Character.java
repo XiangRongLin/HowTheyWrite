@@ -2,20 +2,24 @@ package com.kaiserpudding.howtheywrite.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
-import com.kaiserpudding.howtheywrite.util.ReadingsConverter;
+import android.support.annotation.NonNull;
+import com.kaiserpudding.howtheywrite.util.KanaConverter;
 import com.kaiserpudding.howtheywrite.util.RoomTypeConverter;
+import java.util.LinkedList;
 import java.util.List;
 
-@Entity(tableName = "kanjis")
-public class Kanji {
+@Entity(tableName = "characters")
+public class Character {
 
   @PrimaryKey(autoGenerate = true)
   private int id;
   @ColumnInfo(name = "kanji")
   private String kanji;
   @ColumnInfo(name = "hiragana")
+  @NonNull
   private String hiragana;
   @ColumnInfo(name = "romanji")
   private String romanji;
@@ -23,26 +27,43 @@ public class Kanji {
   private String translationKey;
   @ColumnInfo(name = "translation")
   @TypeConverters(RoomTypeConverter.class)
+  @NonNull
   private List<String> translation;
   @ColumnInfo(name = "isCustom")
   private boolean isCustom;
+  @Ignore
+  @NonNull
+  private List<Lesson> lessons;
+  @Ignore
+  @NonNull
+  private List<Progress> progresses;
 
   /**
-   * Contructor for a {@link Kanji}.
-   * Either translationKey or translation can be null.
+   * Contructor for a {@link Character}.
+   * translationKey can be null.
+   * translation can be an empty list.
    * @param kanji The kanji of the word
    * @param hiragana The hiragana of the word
    * @param translationKey The translationKey of the word. Can be Null
    * @param translation The translations of the word
    * @param isCustom Specifies whether user created or modified this word
    */
-  public Kanji(String kanji, String hiragana, String translationKey, List<String> translation, boolean isCustom) {
+  public Character(String kanji, @NonNull String hiragana, String translationKey, @NonNull List<String> translation, boolean isCustom) {
     this.kanji = kanji;
     this.hiragana = hiragana;
     this.translationKey = translationKey;
-    setRomanji(ReadingsConverter.hiraganaToReading(hiragana));
+    setRomanji(KanaConverter.hiraganaToReading(hiragana));
     this.translation = translation;
     this.isCustom = false;
+    this.lessons = new LinkedList<Lesson>();
+    this.progresses = new LinkedList<Progress>();
+  }
+
+  @Override
+  @NonNull
+  public String toString() {
+    //TODO include translation and translationKey
+    return getId() + getKanji() + getHiragana();
   }
 
   public int getId() {
@@ -61,11 +82,12 @@ public class Kanji {
     this.kanji = kanji;
   }
 
+  @NonNull
   public String getHiragana() {
     return hiragana;
   }
 
-  public void setHiragana(String hiragana) {
+  public void setHiragana(@NonNull String hiragana) {
     this.hiragana = hiragana;
   }
 
@@ -85,12 +107,26 @@ public class Kanji {
     this.translationKey = translationKey;
   }
 
+  @NonNull
   public List<String> getTranslation() {
     return translation;
   }
 
   public void setTranslation(List<String> translation) {
+    this.isCustom = true;
     this.translation = translation;
+  }
+
+  public void addTranslation(String translation) {
+    this.isCustom = true;
+    this.translation.add(translation);
+  }
+
+  public void removeTranslation(String translation) {
+    this.translation.remove(translation);
+    if (translationKey == null && this.translation.size() == 0) {
+      isCustom = true;
+    }
   }
 
   public boolean isCustom() {
@@ -99,5 +135,39 @@ public class Kanji {
 
   public void setCustom(boolean custom) {
     isCustom = custom;
+  }
+
+  @NonNull
+  public List<Lesson> getLessons() {
+    return lessons;
+  }
+
+  public void setLessons(@NonNull List<Lesson> lessons) {
+    this.lessons = lessons;
+  }
+
+  public void addLesson(Lesson lesson) {
+    this.lessons.add(lesson);
+  }
+
+  public void removeLesson(Lesson lesson) {
+    this.lessons.remove(lesson);
+  }
+
+  @NonNull
+  public List<Progress> getProgresses() {
+    return progresses;
+  }
+
+  public void setProgresses(@NonNull List<Progress> progresses) {
+    this.progresses = progresses;
+  }
+
+  public void addProgress(Progress progress) {
+    this.progresses.add(progress);
+  }
+
+  public void removeProgress(Progress progress) {
+    this.progresses.remove(progress);
   }
 }

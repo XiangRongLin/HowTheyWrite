@@ -6,25 +6,26 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.util.InstantTaskExecutorRule;
-import com.kaiserpudding.howtheywrite.model.CharacterWord;
+import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
-import com.kaiserpudding.howtheywrite.model.LessonWordJoin;
+import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
 import com.kaiserpudding.howtheywrite.util.LiveDataTestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class LessonWordJoinDaoTest {
+public class LessonCharacterJoinDaoTest {
 
   @Rule
   public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
   private AppDatabase db;
-  private CharacterWordDao hiraganaWordDao;
+  private CharacterDao characterDao;
   private LessonDao lessonDao;
-  private LessonWordJoinDao lessonWordJoinDao;
+  private LessonCharacterJoinDao lessonCharacterJoinDao;
 
   /**
    * Setup
@@ -35,9 +36,9 @@ public class LessonWordJoinDaoTest {
     db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
         .allowMainThreadQueries()
         .build();
-    hiraganaWordDao = db.characterWordDao();
+    characterDao = db.characterDao();
     lessonDao = db.lessonDao();
-    lessonWordJoinDao = db.lessonWordJoinDao();
+    lessonCharacterJoinDao = db.lessonCharacterJoinJoinDao();
   }
 
   @After
@@ -46,28 +47,120 @@ public class LessonWordJoinDaoTest {
   }
 
   @Test
-  public void insertAndGetLessonWordJoin() {
-    CharacterWord hiraganaWord = new CharacterWord(null, "あ", "a", null, false);
-    int hiraganaId = (int) hiraganaWordDao.insertCharacter(hiraganaWord);
+  public void insertAndGetLessonCharacterJoin() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
     Lesson lesson = new Lesson("basics");
     int lessonId = (int) lessonDao.insertLesson(lesson);
-    LessonWordJoin lessonWordJoin = new LessonWordJoin(lessonId, hiraganaId);
-    lessonWordJoinDao.insertLessonWordJoin(lessonWordJoin);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
 
-    LiveData<LessonWordJoin> actualLessonWordJoin = lessonWordJoinDao.getAllLessonWordJoin();
+    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+        lessonCharacterJoinDao.getAllLessonCharacterJoin());
 
-    assertEquals(lessonWordJoin.toString(), LiveDataTestUtil.getValue(actualLessonWordJoin).toString());
+    assertEquals(lessonCharacterJoin.toString(), actualLessonCharacterJoin.toString());
   }
 
   @Test
-  public void deleteLessonWordJoin() {
+  public void insertAndDeleteLessonCharacterJoin() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
+    Lesson lesson = new Lesson("basics");
+    int lessonId = (int) lessonDao.insertLesson(lesson);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+    lessonCharacterJoinDao.deleteLessonCharacterJoin(lessonCharacterJoin);
+
+    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+        lessonCharacterJoinDao.getAllLessonCharacterJoin());
+
+    assertNull(actualLessonCharacterJoin);
   }
 
   @Test
-  public void updateLessonWordJoin() {
+  public void getAllEmptyDatabase() {
+    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+        lessonCharacterJoinDao.getAllLessonCharacterJoin());
+
+    assertNull(actualLessonCharacterJoin);
   }
 
   @Test
-  public void getWordsWithLessonId() {
+  public void getLessonCharacterJoinByLessonIdAndCharacterId() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
+    Lesson lesson = new Lesson("basics");
+    int lessonId = (int) lessonDao.insertLesson(lesson);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+
+    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+        lessonCharacterJoinDao.getLessonCharacterJoin(lessonId, characterId));
+
+    assertEquals(lessonCharacterJoin.toString(), actualLessonCharacterJoin.toString());
+  }
+
+  @Test
+  public void getLivaDataCharacterByLessonId() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
+    character.setId(characterId);
+    Lesson lesson = new Lesson("basics");
+    int lessonId = (int) lessonDao.insertLesson(lesson);
+    lesson.setId(lessonId);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+
+    Character actualCharacter = LiveDataTestUtil.getValue(
+        lessonCharacterJoinDao.getLivaDataCharactersByLessonId(lessonId)).get(0);
+
+    assertEquals(character.toString(), actualCharacter.toString());
+  }
+
+  @Test
+  public void getCharacterByLessonId() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
+    character.setId(characterId);
+    Lesson lesson = new Lesson("basics");
+    int lessonId = (int) lessonDao.insertLesson(lesson);
+    lesson.setId(lessonId);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+
+    Character actualCharacter = lessonCharacterJoinDao.getCharactersByLessonId(lessonId).get(0);
+
+    assertEquals(character.toString(), actualCharacter.toString());
+  }
+
+  @Test
+  public void getLiveDataLessonByCharacterId() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
+    Lesson lesson = new Lesson("basics");
+    int lessonId = (int) lessonDao.insertLesson(lesson);
+    lesson.setId(lessonId);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+
+    Lesson actualLesson = LiveDataTestUtil.getValue(
+        lessonCharacterJoinDao.getLiveDataLessonsByCharacterId(characterId)).get(0);
+
+    assertEquals(lesson.toString(), actualLesson.toString());
+  }
+
+  @Test
+  public void getLessonByCharacterId() {
+    Character character = new Character(null, "あ", "a", null, false);
+    int characterId = (int) characterDao.insertCharacter(character);
+    Lesson lesson = new Lesson("basics");
+    int lessonId = (int) lessonDao.insertLesson(lesson);
+    lesson.setId(lessonId);
+    LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+    lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+
+    Lesson actualLesson = lessonCharacterJoinDao.getLessonsByCharacterId(characterId).get(0);
+
+    assertEquals(lesson.toString(), actualLesson.toString());
   }
 }
