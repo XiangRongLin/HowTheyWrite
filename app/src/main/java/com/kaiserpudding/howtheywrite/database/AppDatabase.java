@@ -8,7 +8,6 @@ import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
 import com.kaiserpudding.howtheywrite.model.Progress;
-import com.kaiserpudding.howtheywrite.model.User;
 
 
 @Database(entities = {/*Word.class,
@@ -17,7 +16,6 @@ import com.kaiserpudding.howtheywrite.model.User;
     Character.class,
     Lesson.class,
     LessonCharacterJoin.class,
-    User.class,
     Progress.class},
     version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -28,7 +26,6 @@ public abstract class AppDatabase extends RoomDatabase {
   public abstract LessonDao lessonDao();
   public abstract LessonCharacterJoinDao lessonCharacterJoinJoinDao();
   public abstract ProgressDao progressDao();
-  public abstract UserDao userDao();
 
   //singleton
   private static AppDatabase INSTANCE;

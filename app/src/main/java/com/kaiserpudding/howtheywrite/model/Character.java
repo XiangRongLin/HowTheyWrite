@@ -35,8 +35,7 @@ public class Character {
   @NonNull
   private List<Lesson> lessons;
   @Ignore
-  @NonNull
-  private List<Progress> progresses;
+  private Progress progress;
 
   /**
    * Contructor for a {@link Character}.
@@ -56,7 +55,6 @@ public class Character {
     this.translation = translation;
     this.isCustom = false;
     this.lessons = new LinkedList<Lesson>();
-    this.progresses = new LinkedList<Progress>();
   }
 
   @Override
@@ -154,20 +152,11 @@ public class Character {
     this.lessons.remove(lesson);
   }
 
-  @NonNull
-  public List<Progress> getProgresses() {
-    return progresses;
+  public Progress getProgress() {
+    return progress;
   }
 
-  public void setProgresses(@NonNull List<Progress> progresses) {
-    this.progresses = progresses;
-  }
-
-  public void addProgress(Progress progress) {
-    this.progresses.add(progress);
-  }
-
-  public void removeProgress(Progress progress) {
-    this.progresses.remove(progress);
+  public void setProgress(Progress progress) {
+    this.progress = progress;
   }
 }
