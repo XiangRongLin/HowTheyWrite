@@ -3,12 +3,15 @@ package com.kaiserpudding.howtheywrite.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import java.util.LinkedList;
 import java.util.List;
 
-@Entity(tableName = "lessons")
+@Entity(
+    tableName = "lessons",
+    indices = @Index(value = "name", unique = true))
 public class  Lesson {
 
   @PrimaryKey(autoGenerate = true)

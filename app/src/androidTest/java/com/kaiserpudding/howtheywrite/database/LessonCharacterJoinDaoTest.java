@@ -12,6 +12,7 @@ import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
 import com.kaiserpudding.howtheywrite.util.LiveDataTestUtil;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -55,10 +56,10 @@ public class LessonCharacterJoinDaoTest {
     LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
     lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
 
-    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+    List<LessonCharacterJoin> actualLessonCharacterJoin = LiveDataTestUtil.getValue(
         lessonCharacterJoinDao.getAllLessonCharacterJoin());
 
-    assertEquals(lessonCharacterJoin.toString(), actualLessonCharacterJoin.toString());
+    assertEquals(lessonCharacterJoin.toString(), actualLessonCharacterJoin.get(0).toString());
   }
 
   @Test
@@ -71,18 +72,18 @@ public class LessonCharacterJoinDaoTest {
     lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
     lessonCharacterJoinDao.deleteLessonCharacterJoin(lessonCharacterJoin);
 
-    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+    List<LessonCharacterJoin> actualLessonCharacterJoin = LiveDataTestUtil.getValue(
         lessonCharacterJoinDao.getAllLessonCharacterJoin());
 
-    assertNull(actualLessonCharacterJoin);
+    assertEquals(0, actualLessonCharacterJoin.size());
   }
 
   @Test
   public void getAllEmptyDatabase() {
-    LessonCharacterJoin actualLessonCharacterJoin = LiveDataTestUtil.getValue(
+    List<LessonCharacterJoin> actualLessonCharacterJoin = LiveDataTestUtil.getValue(
         lessonCharacterJoinDao.getAllLessonCharacterJoin());
 
-    assertNull(actualLessonCharacterJoin);
+    assertEquals(0, actualLessonCharacterJoin.size());
   }
 
   @Test

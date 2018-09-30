@@ -1,5 +1,6 @@
 package com.kaiserpudding.howtheywrite.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -7,6 +8,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import com.kaiserpudding.howtheywrite.model.Lesson;
+import java.util.List;
 
 @Dao
 public interface LessonDao {
@@ -21,10 +23,11 @@ public interface LessonDao {
   void updateLesson(Lesson lesson);
 
   @Query("SELECT * FROM lessons WHERE name = :name")
-  Lesson getLesson(String name);
+  Lesson getLessonByName(String name);
 
- /* @Query("SELECT words.* FROM words\n"
-      + "JOIN lesson_word_join ON words.id=lesson_word_join.wordId\n"
-      + "WHERE lesson_word_join.lessonId=:lessonId")
-  Word[] getWordsOfLesson(int lessonId);*/
+  @Query("SELECT * FROM lessons")
+  LiveData<List<Lesson>> getAllLiveLessons();
+
+  @Query("SELECT * FROM lessons")
+  List<Lesson> getAllLessons();
 }

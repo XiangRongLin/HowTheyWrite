@@ -1,3 +1,4 @@
+/*
 package com.kaiserpudding.howtheywrite.database;
 
 import android.arch.lifecycle.LiveData;
@@ -29,3 +30,4 @@ public interface ProgressDao {
   @Query("SELECT * FROM progress WHERE character_id IN (:characterIds)")
   LiveData<List<Progress>> getProgressesByCharacterIds(int[] characterIds);
 }
+*/

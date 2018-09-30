@@ -14,9 +14,9 @@ import android.support.annotation.NonNull;
  * This POJO holds the n:m relation between lessons and characters
  */
 @Entity(
-    tableName="lesson_character_join",
-    primaryKeys={"lessonId", "characterId"},
-    foreignKeys={
+    tableName = "lesson_character_join",
+    primaryKeys = {"lessonId", "characterId"},
+    foreignKeys = {
         @ForeignKey(
             entity=Lesson.class,
             parentColumns="id",
@@ -27,10 +27,9 @@ import android.support.annotation.NonNull;
             parentColumns="id",
             childColumns="characterId",
             onDelete=CASCADE)},
-    //TODO check unique
-    indices={
-        @Index(value={"lessonId", "characterId"}, unique = true),
-        @Index(value="characterId")
+    indices = {
+        @Index(value = {"lessonId", "characterId"}, unique = true),
+        @Index(value = "characterId")
     }
 )
 public class LessonCharacterJoin {

@@ -8,9 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/WanaKana" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/wanakana-core" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

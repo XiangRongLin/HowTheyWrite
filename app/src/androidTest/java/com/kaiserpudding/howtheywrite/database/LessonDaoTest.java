@@ -2,11 +2,13 @@ package com.kaiserpudding.howtheywrite.database;
 
 import static org.junit.Assert.*;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.kaiserpudding.howtheywrite.util.LiveDataTestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +45,7 @@ public class LessonDaoTest {
     int id = (int) lessonDao.insertLesson(lesson);
     lesson.setId(id);
 
-    Lesson actualLesson = lessonDao.getLesson("beginner");
+    Lesson actualLesson = lessonDao.getLessonByName("beginner");
 
     assertEquals(lesson.toString(), actualLesson.toString());
   }

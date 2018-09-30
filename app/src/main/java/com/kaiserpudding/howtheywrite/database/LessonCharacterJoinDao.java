@@ -18,11 +18,14 @@ public interface LessonCharacterJoinDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   void insertLessonCharacterJoin(LessonCharacterJoin lessonCharacterJoin);
 
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  void insertLessonCharacterJoin(LessonCharacterJoin[] lessonCharacterJoin);
+
   @Delete
   void deleteLessonCharacterJoin(LessonCharacterJoin lessonCharacterJoin);
 
   @Query("SELECT * FROM lesson_character_join")
-  LiveData<LessonCharacterJoin> getAllLessonCharacterJoin();
+  LiveData<List<LessonCharacterJoin>> getAllLessonCharacterJoin();
 
   @Query("SELECT * FROM lesson_character_join\n"
       + "WHERE lessonId = :lessonId AND characterId = :characterId")
@@ -52,4 +55,9 @@ public interface LessonCharacterJoinDao {
       + "lesson_character_join.characterId = :id")
   List<Lesson> getLessonsByCharacterId(int id);
 
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"
+      + "characterId = lesson_character_join.characterId WHERE\n"
+      + "lesson_character_join.lessonId = :id")
+  LiveData<Lesson> getLiveDataLessonByLessonId(int id);
 }

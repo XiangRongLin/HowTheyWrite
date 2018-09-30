@@ -1,6 +1,7 @@
 package com.kaiserpudding.howtheywrite.model;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -34,7 +35,7 @@ public class Character {
   @Ignore
   @NonNull
   private List<Lesson> lessons;
-  @Ignore
+  @Embedded
   private Progress progress;
 
   /**
@@ -55,6 +56,7 @@ public class Character {
     this.translation = translation;
     this.isCustom = false;
     this.lessons = new LinkedList<Lesson>();
+    this.progress = new Progress();
   }
 
   @Override
