@@ -8,6 +8,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import com.kaiserpudding.howtheywrite.model.Character;
+import com.kaiserpudding.howtheywrite.model.Lesson;
 import java.util.List;
 
 @Dao
@@ -23,9 +24,12 @@ public interface CharacterDao {
   void updateCharacter(Character characterWord);
 
   @Query("SELECT * FROM characters WHERE id = :id LIMIT 1")
-  LiveData<Character> getCharacterById(int id);
+  Character getCharacterById(int id);
 
   @Query("SELECT * FROM characters WHERE id IN (:ids)")
-  LiveData<List<Character>> getCharactersByIds(int[] ids);
+  List<Character> getCharactersByIds(int[] ids);
+
+  @Query("SELECT * FROM characters")
+  List<Character> getAllCharacters();
 
 }

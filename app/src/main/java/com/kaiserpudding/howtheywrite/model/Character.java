@@ -59,6 +59,27 @@ public class Character {
     this.progress = new Progress();
   }
 
+  /**
+   * Contructor for a {@link Character}.
+   * translationKey can be null.
+   * translation can be an empty list.
+   * @param kanji The kanji of the word
+   * @param hiragana The hiragana of the word
+   * @param translationKey The translationKey of the word. Can be Null
+   * @param isCustom Specifies whether user created or modified this word
+   */
+  @Ignore
+  public Character(String kanji, @NonNull String hiragana, String translationKey, boolean isCustom) {
+    this.kanji = kanji;
+    this.hiragana = hiragana;
+    this.translationKey = translationKey;
+    setRomanji(KanaConverter.hiraganaToReading(hiragana));
+    this.translation = new LinkedList<>();
+    this.isCustom = false;
+    this.lessons = new LinkedList<Lesson>();
+    this.progress = new Progress();
+  }
+
   @Override
   @NonNull
   public String toString() {

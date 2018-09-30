@@ -1,3 +1,4 @@
+/*
 package com.kaiserpudding.howtheywrite.model;
 
 import static org.junit.Assert.assertEquals;
@@ -22,9 +23,11 @@ public class LessonCharacterJoinTest {
   private LessonDao lessonDao;
   private LessonCharacterJoinDao lessonCharacterJoinDao;
 
-  /**
+  */
+/**
    * Setup
-   */
+   *//*
+
   @Before
   public void setUp() {
     Context context = InstrumentationRegistry.getTargetContext();
@@ -58,3 +61,4 @@ public class LessonCharacterJoinTest {
     assertEquals(1, ((List) actualLessonCharacterJoin).size());
   }
 }
+*/

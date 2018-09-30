@@ -42,7 +42,7 @@ public class CharacterDaoTest {
     int characterId = (int) characterDao.insertCharacter(character);
     character.setId(characterId);
 
-    Character actualCharacter = LiveDataTestUtil.getValue(characterDao.getCharacterById(characterId));
+    Character actualCharacter = characterDao.getCharacterById(characterId);
 
     assertEquals(character.toString(), actualCharacter.toString());
   }
@@ -54,7 +54,7 @@ public class CharacterDaoTest {
     character.setId(characterId);
     characterDao.deleteCharacter(character);
 
-    Character actualCharacter = LiveDataTestUtil.getValue(characterDao.getCharacterById(characterId));
+    Character actualCharacter = characterDao.getCharacterById(characterId);
 
     assertNull(actualCharacter);
   }
@@ -67,7 +67,7 @@ public class CharacterDaoTest {
     character.setHiragana("う");
     characterDao.updateCharacter(character);
 
-    Character actualCharacter = LiveDataTestUtil.getValue(characterDao.getCharacterById(characterId));
+    Character actualCharacter = characterDao.getCharacterById(characterId);
 
     assertEquals(character.toString(), actualCharacter.toString());
   }
@@ -83,7 +83,7 @@ public class CharacterDaoTest {
     List<Character> characters = new LinkedList<Character>(Arrays.asList(characterA, characterB));
 
     int[] ids = {characterAId, characterBId};
-    List<Character> actualCharacters = LiveDataTestUtil.getValue(characterDao.getCharactersByIds(ids));
+    List<Character> actualCharacters = characterDao.getCharactersByIds(ids);
 
     assertEquals(characters.toString(), actualCharacters.toString());
   }

@@ -25,39 +25,21 @@ public interface LessonCharacterJoinDao {
   void deleteLessonCharacterJoin(LessonCharacterJoin lessonCharacterJoin);
 
   @Query("SELECT * FROM lesson_character_join")
-  LiveData<List<LessonCharacterJoin>> getAllLessonCharacterJoin();
+  List<LessonCharacterJoin> getAllLessonCharacterJoin();
 
   @Query("SELECT * FROM lesson_character_join\n"
       + "WHERE lessonId = :lessonId AND characterId = :characterId")
-  LiveData<LessonCharacterJoin> getLessonCharacterJoin(int lessonId, int characterId);
-
-  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-  @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
-      + "characterId = lesson_character_join.characterId WHERE\n"
-      + "lesson_character_join.lessonId = :id")
-  LiveData<List<Character>> getLivaDataCharactersByLessonId(int id);
-
-  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-  @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
-      + "characterId = lesson_character_join.characterId WHERE\n"
-      + "lesson_character_join.lessonId = :id")
-  List<Character> getCharactersByLessonId(int id);
+  LessonCharacterJoin getLessonCharacterJoin(int lessonId, int characterId);
 
   @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
   @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"
       + "lessonId = lesson_character_join.lessonId WHERE\n"
-      + "lesson_character_join.characterId = :id")
-  LiveData<List<Lesson>> getLiveDataLessonsByCharacterId(int id);
-
-  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-  @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"
-      + "lessonId = lesson_character_join.lessonId WHERE\n"
-      + "lesson_character_join.characterId = :id")
-  List<Lesson> getLessonsByCharacterId(int id);
+      + "characterId = lesson_character_join.characterId ")
+  List<Lesson> getAllLessons();
 
   @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
   @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"
       + "characterId = lesson_character_join.characterId WHERE\n"
       + "lesson_character_join.lessonId = :id")
-  LiveData<Lesson> getLiveDataLessonByLessonId(int id);
+  Lesson getLessonByLessonId(int id);
 }

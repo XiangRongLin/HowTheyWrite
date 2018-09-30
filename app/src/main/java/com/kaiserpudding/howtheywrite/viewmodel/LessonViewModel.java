@@ -2,52 +2,38 @@ package com.kaiserpudding.howtheywrite.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import com.kaiserpudding.howtheywrite.model.Lesson;
 import com.kaiserpudding.howtheywrite.repositories.LessonRepository;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class LessonViewModel extends AndroidViewModel {
 
-  private LessonRepository lessonRepository;
-
-  private MutableLiveData<List<Lesson>> lessons;
+  private final LessonRepository lessonRepository;
+  private final MutableLiveData<List<Lesson>> lessons;
+  private final Executor executor;
 
   public LessonViewModel(@NonNull Application application) {
     super(application);
     lessonRepository = new LessonRepository(application);
     lessons = new MutableLiveData<List<Lesson>>();
+    executor = Executors.newCachedThreadPool();
+    updateLessons();
   }
 
-  public LiveData<List<Lesson>> getAllLessons() {
-    return lessons;
+  public void insertLesson(Lesson lesson) {
+    executor.execute(() -> {
+      lessonRepository.insertLesson(lesson);
+    });
   }
 
-  public void updateAllLessons() {
-    getAsyncTask getAsyncTask = new getAsyncTask(this);
-    getAsyncTask.execute();
-  }
-
-  private static class getAsyncTask extends AsyncTask<LessonViewModel, Void, List<Lesson>> {
-
-    private LessonViewModel lessonViewModel;
-
-    getAsyncTask(LessonViewModel lessonViewModel) {
-      this.lessonViewModel = lessonViewModel;
-    }
-
-    @Override
-    protected List<Lesson> doInBackground(LessonViewModel... lessonViewModels) {
-      return null;
-    }
-
-    @Override
-    protected void onPostExecute(List<Lesson>  updatedLessons) {
-      lessonViewModel.getLessons().setValue(updatedLessons);
-    }
+  public void updateLessons() {
+    executor.execute(() -> {
+      lessons.setValue(lessonRepository.getAllLessonsWithRelation());
+    });
   }
 
   public MutableLiveData<List<Lesson>> getLessons() {
