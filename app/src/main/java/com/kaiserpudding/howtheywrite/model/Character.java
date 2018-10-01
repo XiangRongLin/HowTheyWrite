@@ -55,7 +55,7 @@ public class Character {
     setRomanji(KanaConverter.hiraganaToReading(hiragana));
     this.translation = translation;
     this.isCustom = false;
-    this.lessons = new LinkedList<Lesson>();
+    this.lessons = new LinkedList<>();
     this.progress = new Progress();
   }
 
@@ -76,7 +76,7 @@ public class Character {
     setRomanji(KanaConverter.hiraganaToReading(hiragana));
     this.translation = new LinkedList<>();
     this.isCustom = false;
-    this.lessons = new LinkedList<Lesson>();
+    this.lessons = new LinkedList<>();
     this.progress = new Progress();
   }
 

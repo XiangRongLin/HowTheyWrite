@@ -41,11 +41,7 @@ public class LessonRepository {
     }
   }
 
-  public List<Lesson> getAllLessons() {
+  public LiveData<List<Lesson>> getAllLiveDataLessons() {
     return lessonDao.getAllLessons();
-  }
-
-  public List<Lesson> getAllLessonsWithRelation() {
-    return lessonCharacterJoinDao.getAllLessons();
   }
 }

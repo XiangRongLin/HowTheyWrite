@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical" android:layout_width="match_parent"
   android:layout_height="match_parent">
@@ -9,11 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fontFamily="sans-serif-light"
-    android:hint="@string/hint_word"
+    android:hint="@string/hint_lesson"
     android:inputType="textAutoComplete"
-    android:padding="@dimen/small_padding"
-    android:layout_marginBottom="@dimen/big_padding"
-    android:layout_marginTop="@dimen/big_padding"
+    android:padding="6dp"
+    android:layout_marginBottom="16dp"
+    android:layout_marginTop="16dp"
     android:textSize="18sp" />
 
   <Button

@@ -2,8 +2,10 @@
   <string name="app_name">HowTheyWrite</string>
   <string name="hello">Hello!</string>
   <string name="title_activity_main2">Main2Activity</string>
-  <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
-  <string name="hint_word">Word...</string>
+  <string name="lesson_text">Lesson</string>
+  <string name="no_lesson">No Lessons</string>
+  <string name="lessons">Lessons</string>
+  <string name="hint_lesson">Lesson Name</string>
   <string name="button_save">Save</string>
-  <string name="empty_not_saved">Word not saved because it is empty.</string>
+  <string name="empty_not_saved">Lesson could not be saved because it is empty</string>
 </resources>

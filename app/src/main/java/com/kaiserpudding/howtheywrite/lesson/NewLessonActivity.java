@@ -1,4 +1,4 @@
-package com.kaiserpudding.howtheywrite;
+package com.kaiserpudding.howtheywrite.lesson;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,29 +8,30 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import com.kaiserpudding.howtheywrite.R;
 
-public class NewCharacterActivity extends AppCompatActivity {
+public class NewLessonActivity extends AppCompatActivity {
 
-  public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+  public static final String EXTRA_REPLY = "howTheyWrite.ADD_LESSON";
 
-  private EditText editCharacterView;
+  private EditText editLessonView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_new_character);
-    editCharacterView = findViewById(R.id.edit_word);
+    setContentView(R.layout.activity_new_lesson);
+    editLessonView = findViewById(R.id.edit_word);
 
     final Button button = findViewById(R.id.button_save);
     button.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
         Intent replyIntent = new Intent();
-        if(TextUtils.isEmpty((editCharacterView.getText()))) {
+        if (TextUtils.isEmpty(editLessonView.getText())) {
           setResult(RESULT_CANCELED, replyIntent);
         } else {
-          String word = editCharacterView.getText().toString();
-          replyIntent.putExtra(EXTRA_REPLY, word);
+          String lessonName = editLessonView.getText().toString();
+          replyIntent.putExtra(EXTRA_REPLY, lessonName);
           setResult(RESULT_OK, replyIntent);
         }
         finish();

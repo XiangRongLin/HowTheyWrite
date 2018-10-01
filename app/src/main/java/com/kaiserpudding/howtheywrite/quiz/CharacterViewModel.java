@@ -1,4 +1,4 @@
-package com.kaiserpudding.howtheywrite.viewmodel;
+package com.kaiserpudding.howtheywrite.quiz;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

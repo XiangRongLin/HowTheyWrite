@@ -26,5 +26,5 @@ public interface LessonDao {
   Lesson getLessonByName(String name);
 
   @Query("SELECT * FROM lessons")
-  List<Lesson> getAllLessons();
+  LiveData<List<Lesson>> getAllLessons();
 }
