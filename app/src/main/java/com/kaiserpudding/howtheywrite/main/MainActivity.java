@@ -1,5 +1,6 @@
 package com.kaiserpudding.howtheywrite.main;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.kaiserpudding.howtheywrite.lessonList.LessonListViewModel;
 import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
+import com.kaiserpudding.howtheywrite.quiz.QuizActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,4 +38,6 @@ public class MainActivity extends AppCompatActivity {
     Intent intent = new Intent(this, CharacterListActivity.class);
     startActivity(intent);
   }
+
+
 }

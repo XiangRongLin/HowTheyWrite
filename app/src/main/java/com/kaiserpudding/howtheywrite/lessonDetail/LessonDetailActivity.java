@@ -1,16 +1,14 @@
 package com.kaiserpudding.howtheywrite.lessonDetail;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import com.kaiserpudding.howtheywrite.R;
-import com.kaiserpudding.howtheywrite.model.Character;
-import com.kaiserpudding.howtheywrite.model.Lesson;
-import java.util.List;
+import com.kaiserpudding.howtheywrite.quiz.QuizActivity;
 
 public class LessonDetailActivity extends AppCompatActivity {
 
@@ -36,5 +34,13 @@ public class LessonDetailActivity extends AppCompatActivity {
         this, new LessonDetailViewModelFactory(getApplication(), lessonId))
         .get(LessonDetailViewModel.class);
     lessonDetailViewModel.getCharacters().observe(this, adapter::setCharacters);
+
+    Button toQuiz = findViewById(R.id.to_quiz_button);
+    toQuiz.setOnClickListener(view -> {
+      Intent intent = new Intent(view.getContext(), QuizActivity.class);
+      intent.putExtra(REPLY_LESSON_ID, lessonId);
+      startActivity(intent);
+    });
+
   }
 }

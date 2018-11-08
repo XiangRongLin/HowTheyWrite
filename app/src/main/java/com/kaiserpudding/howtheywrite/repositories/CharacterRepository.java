@@ -41,4 +41,8 @@ public class CharacterRepository {
     return lessonCharacterJoinDao.getLiveDataCharacterByLessonId(lessonId);
   }
 
+  public List<Character> getCharacterByLessonId(int lessonId) {
+    return lessonCharacterJoinDao.getCharacterByLessonId(lessonId);
+  }
+
 }
