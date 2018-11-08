@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.support.annotation.NonNull;
 import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -24,8 +25,8 @@ public class QuizViewModel extends AndroidViewModel {
     this.executor = Executors.newCachedThreadPool();
     this.currentCharacterIndex = -1;
     executor.execute(() -> {
-      this.characters = characterRepository.getCharacterByLessonId(lessonId);
-      this.charactersSize = characters.size();
+      characters = characterRepository.getCharacterByLessonId(lessonId);
+      charactersSize = characters.size();
     });
   }
 
@@ -36,6 +37,10 @@ public class QuizViewModel extends AndroidViewModel {
       return null;
     }
     return characters.get(currentCharacterIndex);
+  }
+
+  public void randomizeList() {
+    Collections.shuffle(characters);
   }
 
   public List<Character> getCharacters() {

@@ -16,7 +16,7 @@
     android:fontFamily="@font/kanji_stroke_order"
     android:gravity="center"
     android:text="私の私の"
-    android:textSize="100sp"
+    android:textSize="75sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>

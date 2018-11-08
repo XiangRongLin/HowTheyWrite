@@ -34,20 +34,22 @@ public class QuizActivity extends AppCompatActivity {
     while (a == null) {
       a = quizViewModel.getCharacters();
     }
+    quizViewModel.randomizeList();
     setQuizWord(quizViewModel.getNextWord());
 
     EditText quizInput = findViewById(R.id.quiz_input_edit_text);
-    quizInput.setOnEditorActionListener(new OnEditorActionListener() {
-      @Override
-      public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-        setQuizWord(quizViewModel.getNextWord());
+    quizInput.setOnEditorActionListener((textView, i, keyEvent) -> {
+      Character nextCharacter = quizViewModel.getNextWord();
+      if (nextCharacter != null) {
+        setQuizWord(nextCharacter);
+        quizInput.setText("");
+        return true;
+      } else {
+        //TODO show result screen
+        finish();
         return true;
       }
     });
-//    () -> {
-//      setQuizWord(quizViewModel.getNextWord());
-//      return true;
-//    });
   }
 
   private void setQuizWord(Character character) {

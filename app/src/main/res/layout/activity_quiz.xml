@@ -16,7 +16,7 @@
     android:layout_marginEnd="30dp"
     android:gravity="center_horizontal"
     android:text="我"
-    android:textSize="100sp"
+    android:textSize="50sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
