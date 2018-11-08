@@ -1,8 +1,6 @@
 package com.kaiserpudding.howtheywrite.characterDetail;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -13,8 +11,8 @@ public class CharacterDetailActivity extends AppCompatActivity {
 
   public static String REPLY_CHARACTER_ID = "howTheyWrite.CHARACTER_ID";
 
-  private TextView kanjiTextView;
-  private TextView hiraganaTextView;
+  private TextView hanziTextView;
+  private TextView pinyinTextView;
   private TextView translationTextView;
 
   private CharacterDetailViewModel characterDetailViewModel;
@@ -37,10 +35,10 @@ public class CharacterDetailActivity extends AppCompatActivity {
       character = characterDetailViewModel.getCharacter();
     }
 
-    kanjiTextView = findViewById(R.id.kanji);
-    kanjiTextView.setText(character.getKanji());
-    hiraganaTextView = findViewById(R.id.hiragana);
-    hiraganaTextView.setText(character.getHiragana());
+    hanziTextView = findViewById(R.id.hanzi);
+    hanziTextView.setText(character.getHanzi());
+    pinyinTextView = findViewById(R.id.pinyin);
+    pinyinTextView.setText(character.getPinyin());
     translationTextView = findViewById(R.id.translation);
     if (character.getTranslationKey() != null) {
       translationTextView.setText(

@@ -1,13 +1,10 @@
 package com.kaiserpudding.howtheywrite.quiz;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import com.kaiserpudding.howtheywrite.R;
 import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity;
 import com.kaiserpudding.howtheywrite.model.Character;
@@ -54,6 +51,6 @@ public class QuizActivity extends AppCompatActivity {
 
   private void setQuizWord(Character character) {
     quizWord = findViewById(R.id.quiz_word);
-    quizWord.setText(character.getHiragana());
+    quizWord.setText(character.getPinyin());
   }
 }

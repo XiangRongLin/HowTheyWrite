@@ -8,7 +8,7 @@
   tools:context=".characterDetail.CharacterDetailActivity">
 
   <TextView
-    android:id="@+id/kanji"
+    android:id="@+id/hanzi"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="30dp"
@@ -21,7 +21,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
   <TextView
-    android:id="@+id/hiragana"
+    android:id="@+id/pinyin"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="50dp"
@@ -29,7 +29,7 @@
     android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/kanji"/>
+    app:layout_constraintTop_toBottomOf="@+id/hanzi"/>
   <TextView
     android:id="@+id/translation"
     android:layout_width="wrap_content"
@@ -38,5 +38,5 @@
     android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/hiragana"/>
+    app:layout_constraintTop_toBottomOf="@+id/pinyin"/>
 </android.support.constraint.ConstraintLayout>

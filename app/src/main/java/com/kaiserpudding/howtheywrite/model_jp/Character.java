@@ -1,3 +1,4 @@
+/*
 package com.kaiserpudding.howtheywrite.model;
 
 import android.arch.persistence.room.ColumnInfo;
@@ -5,8 +6,10 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 import com.kaiserpudding.howtheywrite.util.KanaConverter;
+import com.kaiserpudding.howtheywrite.util.RoomTypeConverter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,11 +18,13 @@ public class Character {
 
   @PrimaryKey(autoGenerate = true)
   private int id;
-  @ColumnInfo(name = "hanzi")
-  private String hanzi;
-  @ColumnInfo(name = "pinyin")
+  @ColumnInfo(name = "kanji")
+  private String kanji;
+  @ColumnInfo(name = "hiragana")
   @NonNull
-  private String pinyin;
+  private String hiragana;
+  @ColumnInfo(name = "romanji")
+  private String romanji;
   @ColumnInfo(name = "translationKey")
   private String translationKey;
   @ColumnInfo(name = "translation")
@@ -32,19 +37,22 @@ public class Character {
   @Embedded
   private Progress progress;
 
-  /**
+  */
+/**
    * Constructor for a {@link Character}.
    * translationKey can be null.
    * translation can be an empty list.
-   * @param hanzi The hanzi of the word
-   * @param pinyin The pinyin of the word
+   * @param kanji The kanji of the word
+   * @param hiragana The hiragana of the word
    * @param translationKey The translationKey of the word. Can be Null
    * @param translation The translations of the word
    * @param isCustom Specifies whether user created or modified this word
-   */
-  public Character(String hanzi, @NonNull String pinyin, String translationKey, String translation, boolean isCustom) {
-    this.hanzi = hanzi;
-    this.pinyin = pinyin;
+   *//*
+
+  public Character_jp(String kanji, @NonNull String hiragana, String translationKey, String translation, boolean isCustom) {
+    this.kanji = kanji;
+    this.hiragana = hiragana;
+    this.romanji = KanaConverter.hiraganaToReading(hiragana);
     this.translationKey = translationKey;
     this.translation = translation;
     this.isCustom = isCustom;
@@ -56,7 +64,7 @@ public class Character {
   @NonNull
   public String toString() {
     //TODO include translation and translationKey
-    return getId() + getHanzi() + getPinyin();
+    return getId() + getKanji() + getHiragana();
   }
 
   public int getId() {
@@ -67,23 +75,31 @@ public class Character {
     this.id = id;
   }
 
-  public String getHanzi() {
-    if (hanzi != null)
-      return hanzi;
-    else return getPinyin();
+  public String getKanji() {
+    if (kanji != null)
+      return kanji;
+    else return getHiragana();
   }
 
-  public void setHanzi(String hanzi) {
-    this.hanzi = hanzi;
+  public void setKanji(String kanji) {
+    this.kanji = kanji;
   }
 
   @NonNull
-  public String getPinyin() {
-    return pinyin;
+  public String getHiragana() {
+    return hiragana;
   }
 
-  public void setPinyin(@NonNull String pinyin) {
-    this.pinyin = pinyin;
+  public void setHiragana(@NonNull String hiragana) {
+    this.hiragana = hiragana;
+  }
+
+  public String getRomanji() {
+    return romanji;
+  }
+
+  public void setRomanji(String romanji) {
+    this.romanji = romanji;
   }
 
   public String getTranslationKey() {
@@ -135,3 +151,4 @@ public class Character {
     this.progress = progress;
   }
 }
+*/

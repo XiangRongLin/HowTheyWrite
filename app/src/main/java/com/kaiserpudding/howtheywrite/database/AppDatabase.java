@@ -76,6 +76,66 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     @Override
+    protected Void doInBackground(Void... voids) {
+      String[][][] characters = {
+          {
+            {"我", "wo", "w_Me"},
+            {"你", "ni", "w_You"},
+            {"他", "ta1", "w_He"},
+            {"她", "ta2", "w_She"},
+            {"它", "ta3", "w_It"},
+            }//, {
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            {"", "", "w_"},
+//            }
+          };
+
+      String[] lessonNames = {
+          "1"
+//          "", "", "", "", "",
+      };
+      for (int i = 0; i < lessonNames.length; i++) {
+        Lesson lesson = new Lesson(lessonNames[i]);
+        int lessonId = (int) lessonDao.insertLesson(lesson);
+        for (int j = 0; j < characters[i].length; j++) {
+          Character character = new Character(
+              characters[i][j][0],
+              characters[i][j][1],
+              characters[i][j][2],
+              null,
+              false
+          );
+          int characterId = (int) characterDao.insertCharacter(character);
+          LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+          lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
+        }
+      }
+      return null;
+    }
+
+
+    /*@Override
     protected Void doInBackground(final Void... params) {
         String[][][] characters = {
             {
@@ -213,7 +273,7 @@ public abstract class AppDatabase extends RoomDatabase {
           }
         }
       return null;
-    }
+    }*/
   }
 
 }

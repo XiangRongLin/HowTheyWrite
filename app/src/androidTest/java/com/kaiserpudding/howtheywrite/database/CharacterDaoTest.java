@@ -6,7 +6,6 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import com.kaiserpudding.howtheywrite.model.Character;
-import com.kaiserpudding.howtheywrite.util.LiveDataTestUtil;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class CharacterDaoTest {
     Character character = new Character(null, "あ", "a", null, false);
     int characterId = (int) characterDao.insertCharacter(character);
     character.setId(characterId);
-    character.setHiragana("う");
+    character.setPinyin("う");
     characterDao.updateCharacter(character);
 
     Character actualCharacter = characterDao.getCharacterById(characterId);

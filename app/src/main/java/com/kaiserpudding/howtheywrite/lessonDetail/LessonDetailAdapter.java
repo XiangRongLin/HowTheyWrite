@@ -53,9 +53,9 @@ public class LessonDetailAdapter extends  RecyclerView.Adapter<LessonDetailAdapt
     String representation;
     if (characters != null) {
       Character current = characters.get(position);
-      representation = current.getKanji();
+      representation = current.getHanzi();
       if (representation == null) {
-        representation = current.getHiragana();
+        representation = current.getPinyin();
       }
     } else {
       //TODO NOT displayed

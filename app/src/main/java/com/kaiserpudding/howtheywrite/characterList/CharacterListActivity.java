@@ -44,7 +44,7 @@ public class CharacterListActivity extends AppCompatActivity {
 
     if (requestCode == NEW_CHAR_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
       Character character = new Character(
-          data.getStringExtra(NewCharacterActivity.REPLY_CHAR_KANJI),
+          data.getStringExtra(NewCharacterActivity.REPLY_CHAR_HANZI),
           data.getStringExtra(NewCharacterActivity.REPLY_CHAR_HIRAGANA),
           null,
           data.getStringExtra(NewCharacterActivity.REPLY_CHAR_TRANSLATION),

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.kaiserpudding.howtheywrite.R;
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity;
 import com.kaiserpudding.howtheywrite.model.Character;
@@ -56,9 +55,9 @@ class CharacterListAdapter extends RecyclerView.Adapter<CharacterListAdapter.Cha
     String represetation;
     if (characters != null) {
       Character current = characters.get(position);
-      represetation = current.getKanji();
+      represetation = current.getHanzi();
       if (represetation == null) {
-        represetation = current.getHiragana();
+        represetation = current.getPinyin();
       }
     } else {
       //TODO NOT displayed
