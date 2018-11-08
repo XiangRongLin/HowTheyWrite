@@ -9,8 +9,6 @@ import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class LessonRepository {
 
@@ -43,5 +41,17 @@ public class LessonRepository {
 
   public LiveData<List<Lesson>> getAllLiveDataLessons() {
     return lessonDao.getAllLessons();
+  }
+
+  public Lesson getLessonWithRelationById(int id) {
+    return lessonCharacterJoinDao.getLessonByLessonId(id);
+  }
+
+  public LiveData<Lesson> getLiveDataLessonWithRelationById(int id) {
+    return lessonCharacterJoinDao.getLiveDataLessonByLessonId(id);
+  }
+
+  public List<String> getAllLessonNames() {
+    return lessonDao.getAllLessonNames();
   }
 }

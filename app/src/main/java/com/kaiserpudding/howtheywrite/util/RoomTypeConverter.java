@@ -11,14 +11,4 @@ import java.util.List;
  */
 public class RoomTypeConverter {
 
-  @TypeConverter
-  public static String stringListToJson(List<String> list) {
-    return new Gson().toJson(list);
-  }
-
-  @TypeConverter
-  public static List<String> jsonToStringList(String json) {
-    Type type = new TypeToken<List<String>>() {}.getType();
-    return new Gson().fromJson(json, type);
-  }
 }

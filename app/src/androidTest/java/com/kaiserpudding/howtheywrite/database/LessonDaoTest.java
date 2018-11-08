@@ -9,6 +9,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.kaiserpudding.howtheywrite.util.LiveDataTestUtil;
+import java.util.LinkedList;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,5 +50,30 @@ public class LessonDaoTest {
     Lesson actualLesson = lessonDao.getLessonByName("beginner");
 
     assertEquals(lesson.toString(), actualLesson.toString());
+  }
+
+  @Test
+  public void getLessonNames() {
+    Lesson lesson1 = new Lesson("a");
+    Lesson lesson2 = new Lesson("b");
+    Lesson lesson3 = new Lesson("c");
+    Lesson lesson4 = new Lesson("d");
+    Lesson lesson5 = new Lesson("e");
+    lessonDao.insertLesson(lesson1);
+    lessonDao.insertLesson(lesson2);
+    lessonDao.insertLesson(lesson3);
+    lessonDao.insertLesson(lesson4);
+    lessonDao.insertLesson(lesson5);
+
+    List<String> expectedLessonNames = new LinkedList<>();
+    expectedLessonNames.add("a");
+    expectedLessonNames.add("b");
+    expectedLessonNames.add("c");
+    expectedLessonNames.add("d");
+    expectedLessonNames.add("e");
+    List<String> actualLessonNames = lessonDao.getAllLessonNames();
+
+    assertEquals(expectedLessonNames, actualLessonNames);
+
   }
 }

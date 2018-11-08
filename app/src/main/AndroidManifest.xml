@@ -16,9 +16,17 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".lesson.LessonActivity">
+    <activity android:name=".lessonList.LessonListActivity">
     </activity>
-    <activity android:name=".lesson.NewLessonActivity">
+    <activity android:name=".lessonList.NewLessonActivity">
+    </activity>
+    <activity android:name=".characterList.CharacterListActivity">
+    </activity>
+    <activity android:name=".characterList.NewCharacterActivity">
+    </activity>
+    <activity android:name=".lessonDetail.LessonDetailActivity">
+    </activity>
+    <activity android:name=".characterDetail.CharacterDetailActivity">
     </activity>
   </application>
 

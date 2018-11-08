@@ -87,4 +87,32 @@ public void hiraganaToReading4() {
 
     Assert.assertEquals(expectedReading, actualReading);
   }
+
+  @Test
+  public void isKanji1() {
+    String kanji = "人";
+
+    Assert.assertTrue(KanaConverter.isKanji(kanji));
+  }
+
+  @Test
+  public void isKanji2() {
+    String kanji = "画稿";
+
+    Assert.assertTrue(KanaConverter.isKanji(kanji));
+  }
+
+  @Test
+  public void isKanji3() {
+    String kanji = "会社員";
+
+    Assert.assertTrue(KanaConverter.isKanji(kanji));
+  }
+
+  @Test
+  public void isKanji4() {
+    String kanji = "私";
+
+    Assert.assertTrue(KanaConverter.isKanji(kanji));
+  }
 }

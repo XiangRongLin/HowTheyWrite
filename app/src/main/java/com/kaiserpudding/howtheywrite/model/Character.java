@@ -27,9 +27,7 @@ public class Character {
   @ColumnInfo(name = "translationKey")
   private String translationKey;
   @ColumnInfo(name = "translation")
-  @TypeConverters(RoomTypeConverter.class)
-  @NonNull
-  private List<String> translation;
+  private String translation;
   @ColumnInfo(name = "isCustom")
   private boolean isCustom;
   @Ignore
@@ -48,34 +46,13 @@ public class Character {
    * @param translation The translations of the word
    * @param isCustom Specifies whether user created or modified this word
    */
-  public Character(String kanji, @NonNull String hiragana, String translationKey, @NonNull List<String> translation, boolean isCustom) {
+  public Character(String kanji, @NonNull String hiragana, String translationKey, @NonNull String translation, boolean isCustom) {
     this.kanji = kanji;
     this.hiragana = hiragana;
+    this.romanji = KanaConverter.hiraganaToReading(hiragana);
     this.translationKey = translationKey;
-    setRomanji(KanaConverter.hiraganaToReading(hiragana));
     this.translation = translation;
-    this.isCustom = false;
-    this.lessons = new LinkedList<>();
-    this.progress = new Progress();
-  }
-
-  /**
-   * Contructor for a {@link Character}.
-   * translationKey can be null.
-   * translation can be an empty list.
-   * @param kanji The kanji of the word
-   * @param hiragana The hiragana of the word
-   * @param translationKey The translationKey of the word. Can be Null
-   * @param isCustom Specifies whether user created or modified this word
-   */
-  @Ignore
-  public Character(String kanji, @NonNull String hiragana, String translationKey, boolean isCustom) {
-    this.kanji = kanji;
-    this.hiragana = hiragana;
-    this.translationKey = translationKey;
-    setRomanji(KanaConverter.hiraganaToReading(hiragana));
-    this.translation = new LinkedList<>();
-    this.isCustom = false;
+    this.isCustom = isCustom;
     this.lessons = new LinkedList<>();
     this.progress = new Progress();
   }
@@ -96,7 +73,9 @@ public class Character {
   }
 
   public String getKanji() {
-    return kanji;
+    if (kanji != null)
+      return kanji;
+    else return getHiragana();
   }
 
   public void setKanji(String kanji) {
@@ -128,26 +107,12 @@ public class Character {
     this.translationKey = translationKey;
   }
 
-  @NonNull
-  public List<String> getTranslation() {
+  public String getTranslation() {
     return translation;
   }
 
-  public void setTranslation(List<String> translation) {
-    this.isCustom = true;
+  public void setTranslation(String translation) {
     this.translation = translation;
-  }
-
-  public void addTranslation(String translation) {
-    this.isCustom = true;
-    this.translation.add(translation);
-  }
-
-  public void removeTranslation(String translation) {
-    this.translation.remove(translation);
-    if (translationKey == null && this.translation.size() == 0) {
-      isCustom = true;
-    }
   }
 
   public boolean isCustom() {

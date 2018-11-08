@@ -30,6 +30,6 @@ public interface CharacterDao {
   List<Character> getCharactersByIds(int[] ids);
 
   @Query("SELECT * FROM characters")
-  List<Character> getAllCharacters();
+  LiveData<List<Character>> getAllCharacters();
 
 }
