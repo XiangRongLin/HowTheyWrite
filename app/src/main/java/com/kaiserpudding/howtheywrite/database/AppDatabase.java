@@ -92,11 +92,10 @@ public abstract class AppDatabase extends RoomDatabase {
                 {"大学", "だいがく", "w_university"},
                 {"病院", "びょういん", "w_hospital"},
                 {"歳", "さい", "w_years_age"},
-            }
-//            }, {
-//            {"", "", "w_book"},
-//            {"", "", "w_dictionary"},
-//            {"", "", "w_magizin"},
+            }, {
+            {"本", "ほん", "w_book"},
+            {" 辞書", "じしょ", "w_dictionary"},}
+//            {"", "", "w_magizine"},
 //            {"", "", "w_newspaper"},
 //            {"", "", "w_notebook"},
 //            {"", "", "w_business_card"},
@@ -191,7 +190,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
         String[] lectureName =
             {
-                "1"
+                "1", "2"
 //                "", "", "", "", "",
 //                "", "", "", "", "",
 //                "", "", "", "", "",
@@ -210,6 +209,7 @@ public abstract class AppDatabase extends RoomDatabase {
              );
             int characterId = (int) characterDao.insertCharacter(character);
             LessonCharacterJoin lessonCharacterJoin = new LessonCharacterJoin(lessonId, characterId);
+            lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin);
           }
         }
       return null;

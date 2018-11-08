@@ -37,7 +37,7 @@ public class Character {
   private Progress progress;
 
   /**
-   * Contructor for a {@link Character}.
+   * Constructor for a {@link Character}.
    * translationKey can be null.
    * translation can be an empty list.
    * @param kanji The kanji of the word
@@ -46,7 +46,7 @@ public class Character {
    * @param translation The translations of the word
    * @param isCustom Specifies whether user created or modified this word
    */
-  public Character(String kanji, @NonNull String hiragana, String translationKey, @NonNull String translation, boolean isCustom) {
+  public Character(String kanji, @NonNull String hiragana, String translationKey, String translation, boolean isCustom) {
     this.kanji = kanji;
     this.hiragana = hiragana;
     this.romanji = KanaConverter.hiraganaToReading(hiragana);

@@ -13,7 +13,7 @@
   <string name="hint_char_hiragana">Hiragana</string>
   <string name="hint_char_translation">Translations</string>
   <string name="error_kanji_syntax">Error, input has to consist of kanji and/or kana.</string>
-  <string name="error_kana_sytanx">Error, input has to consist of kana.</string>
+  <string name="error_kana_syntanx">Error, input has to consist of kana.</string>
   <string name="error_empty_field">Error, field is empty.</string>
   <string name="error_duplicate_lesson_name">Error, a lesson with the name already exists.</string>
 
@@ -30,4 +30,6 @@
   <string name="w_university">University</string>
   <string name="w_hospital">Hospital</string>
   <string name="w_years_age">Years Suffix (Age)</string>
+  <string name="w_book">Book</string>
+  <string name="w_dictionary">Dictionary</string>
 </resources>

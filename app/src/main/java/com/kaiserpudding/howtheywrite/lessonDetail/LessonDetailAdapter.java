@@ -75,4 +75,14 @@ public class LessonDetailAdapter extends  RecyclerView.Adapter<LessonDetailAdapt
       return characters.size();
     else return 0;
   }
+
+  @Override
+  public long getItemId(int position) {
+    return position;
+  }
+
+  @Override
+  public int getItemViewType(int position) {
+    return position;
+  }
 }

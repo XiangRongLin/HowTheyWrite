@@ -51,7 +51,14 @@ public interface LessonCharacterJoinDao {
 
   @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
   @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
-      + "characterId = lesson_character_join.characterId WHERE\n"
+      + "characters.id = lesson_character_join.characterId WHERE\n"
       + "lesson_character_join.lessonId = :id")
   LiveData<List<Character>> getLiveDataCharacterByLessonId(int id);
+
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
+      + "characters.id = lesson_character_join.characterId WHERE\n"
+      + "lesson_character_join.lessonId = :id")
+  List<Character> getCharacterByLessonId(int id);
+
 }

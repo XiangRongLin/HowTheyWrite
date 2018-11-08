@@ -25,7 +25,7 @@ public class LessonListAdapter extends RecyclerView.Adapter<LessonListAdapter.Le
       super(itemView);
       itemView.setOnClickListener(v -> {
         Intent intent = new Intent(context, LessonDetailActivity.class);
-        intent.putExtra(LessonDetailActivity.REPLY_LESSON_ID, lessons.get(getAdapterPosition()).getId() + 1);
+        intent.putExtra(LessonDetailActivity.REPLY_LESSON_ID, lessons.get(getAdapterPosition()).getId());
         context.startActivity(intent);
       });
       lessonItemView = itemView.findViewById(R.id.lessonTextView);

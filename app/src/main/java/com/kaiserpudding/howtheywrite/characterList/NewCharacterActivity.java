@@ -53,7 +53,7 @@ public class NewCharacterActivity extends AppCompatActivity {
       return false;
     } else if (TextUtils.isEmpty(newCharHiraganaView.getText())
         || !KanaConverter.isKana(newCharHiraganaView.getText().toString())) {
-      newCharHiraganaView.setError(getResources().getString(R.string.error_kana_sytanx));
+      newCharHiraganaView.setError(getResources().getString(R.string.error_kana_syntanx));
       return false;
     } else {
       return true;

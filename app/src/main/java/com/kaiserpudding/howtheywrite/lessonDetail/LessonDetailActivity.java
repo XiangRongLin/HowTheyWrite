@@ -5,9 +5,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.kaiserpudding.howtheywrite.R;
+import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
+import java.util.List;
 
 public class LessonDetailActivity extends AppCompatActivity {
 
