@@ -21,6 +21,7 @@ import com.kaiserpudding.howtheywrite.model.Progress;
     version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
+
   public abstract CharacterDao characterDao();
   public abstract LessonDao lessonDao();
   public abstract LessonCharacterJoinDao lessonCharacterJoinJoinDao();
@@ -37,6 +38,7 @@ public abstract class AppDatabase extends RoomDatabase {
           // Create database here
           INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
               AppDatabase.class, "howTheyLearn_database_cn")
+              //.addCallback(callback)
               .build();
         }
       }
@@ -44,6 +46,36 @@ public abstract class AppDatabase extends RoomDatabase {
     return INSTANCE;
   }
 
+  /**
+  private static RoomDatabase.Callback callback = new RoomDatabase.Callback(){
+
+    @Override
+    public void onOpen (@NonNull SupportSQLiteDatabase db){
+      super.onOpen(db);
+      // If you want to keep the data through app restarts,
+      // comment out the following line.
+      new PopulateDbAsync(INSTANCE).execute();
+    }
+  };
+
+  private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
+
+    private  final CharacterDao dao;
+
+    PopulateDbAsync(AppDatabase db) {
+      dao = db.characterDao();
+    }
+
+    @Override
+    protected Void doInBackground(final Void... params) {
+      // Start the app with a clean database every time.
+      // Not needed if you only populate on creation.
+      Character c = new Character("我", "wo", null, "ich", false);
+      dao.insertCharacter(c);
+      return null;
+
+    }
+  }*/
 
 }
 
