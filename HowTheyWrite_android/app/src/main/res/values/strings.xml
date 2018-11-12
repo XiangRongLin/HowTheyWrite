@@ -15,6 +15,7 @@
   <string name="error_hanzi_syntax">Error, input has to consist of hanzi.</string>
   <string name="error_empty_field">Error, field is empty.</string>
   <string name="error_duplicate_lesson_name">Error, a lesson with the name already exists.</string>
+  <string name="error_wrong_hanzi">Wrong hanzi</string>
 
   <string name="w_hsk_1_1">possessive, adjectival suffix</string>
   <string name="w_hsk_1_2">one; a, an; alone</string>

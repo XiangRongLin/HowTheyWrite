@@ -30,7 +30,7 @@ public class LessonListActivity extends AppCompatActivity {
     lessonListViewModel.getLessons().observe(this, adapter::setLessons);
 
     FloatingActionButton fab = findViewById(R.id.add_lessen_fab);
-    fab.setOnClickListener(view -> {
+    fab.setOnClickListener(v -> {
       Intent intent = new Intent(LessonListActivity.this, NewLessonActivity.class);
       startActivityForResult(intent, NEW_LESSON_ACTIVITY_REQUEST_CODE);
     });

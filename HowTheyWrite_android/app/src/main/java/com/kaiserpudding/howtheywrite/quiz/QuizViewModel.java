@@ -30,7 +30,11 @@ public class QuizViewModel extends AndroidViewModel {
     });
   }
 
-  public Character getNextWord() {
+  Character getCurrentWord() {
+    return characters.get(currentCharacterIndex);
+  }
+
+  Character getNextWord() {
     //TODO multiple calls return different values
     currentCharacterIndex++;
     if (currentCharacterIndex >= charactersSize) {
@@ -39,7 +43,7 @@ public class QuizViewModel extends AndroidViewModel {
     return characters.get(currentCharacterIndex);
   }
 
-  public void randomizeList() {
+  void randomizeList() {
     Collections.shuffle(characters);
   }
 
