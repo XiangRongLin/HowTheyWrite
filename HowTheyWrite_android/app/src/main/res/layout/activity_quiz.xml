@@ -10,12 +10,12 @@
   <TextView
     android:id="@+id/quiz_translation"
     android:layout_width="wrap_content"
-    android:layout_height="0dp"
+    android:layout_height="120dp"
     android:layout_marginTop="30dp"
     android:layout_marginStart="30dp"
     android:layout_marginEnd="30dp"
     android:gravity="center_horizontal"
-    android:textSize="40sp"
+    android:textSize="30sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
