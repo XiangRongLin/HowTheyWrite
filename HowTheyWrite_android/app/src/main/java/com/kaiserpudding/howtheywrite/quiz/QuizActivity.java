@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.kaiserpudding.howtheywrite.R;
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity;
 import com.kaiserpudding.howtheywrite.characterList.CharacterListActivity;
@@ -50,6 +51,7 @@ public class QuizActivity extends AppCompatActivity {
     EditText quizInput = findViewById(R.id.quiz_input_edit_text);
     //if user clicks enter check if input is correct and show next word if it is, otherwise display error
     quizInput.setOnEditorActionListener((textView, i, keyEvent) -> {
+      boolean b = quizInput.getText() != null;
       if (quizInput.getText() != null
           && quizInput.getText().toString().equals(quizViewModel.getCurrentWord().getHanzi())) {
         Character nextCharacter = quizViewModel.getNextWord();
@@ -63,7 +65,7 @@ public class QuizActivity extends AppCompatActivity {
           return true;
         }
       } else {
-        quizInput.setError(getResources().getString(R.string.error_wrong_hanzi));
+        quizInput.setText("");
         return true;
       }
     });
