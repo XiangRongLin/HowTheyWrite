@@ -3,12 +3,10 @@ package com.kaiserpudding.howtheywrite.repositories;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import com.kaiserpudding.howtheywrite.database.AppDatabase;
-import com.kaiserpudding.howtheywrite.database.CharacterDao;
-import com.kaiserpudding.howtheywrite.database.LessonCharacterJoinDao;
+import com.kaiserpudding.howtheywrite.database.dao.CharacterDao;
+import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao;
 import com.kaiserpudding.howtheywrite.model.Character;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class CharacterRepository {
 
@@ -22,11 +20,11 @@ public class CharacterRepository {
   }
 
   public void insertCharacter(Character character) {
-    characterDao.insertCharacter(character);
+    characterDao.insert(character);
   }
 
   public void deleteCharacter(Character character) {
-    characterDao.deleteCharacter(character);
+    characterDao.delete(character);
   }
 
   public Character getCharacterById(int id)  {

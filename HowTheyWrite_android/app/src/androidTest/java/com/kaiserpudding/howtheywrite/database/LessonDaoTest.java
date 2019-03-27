@@ -2,13 +2,12 @@ package com.kaiserpudding.howtheywrite.database;
 
 import static org.junit.Assert.*;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.kaiserpudding.howtheywrite.util.LiveDataTestUtil;
+import com.kaiserpudding.howtheywrite.database.dao.LessonDao;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.After;

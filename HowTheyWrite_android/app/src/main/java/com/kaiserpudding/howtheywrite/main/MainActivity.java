@@ -1,29 +1,16 @@
 package com.kaiserpudding.howtheywrite.main;
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailViewModel;
 import com.kaiserpudding.howtheywrite.characterList.CharacterListActivity;
 import com.kaiserpudding.howtheywrite.R;
-import com.kaiserpudding.howtheywrite.database.AppDatabase;
-import com.kaiserpudding.howtheywrite.database.CharacterDao;
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper;
-import com.kaiserpudding.howtheywrite.database.LessonCharacterJoinDao;
-import com.kaiserpudding.howtheywrite.database.LessonDao;
 import com.kaiserpudding.howtheywrite.lessonList.LessonListActivity;
 import com.kaiserpudding.howtheywrite.lessonList.LessonListViewModel;
-import com.kaiserpudding.howtheywrite.model.Character;
-import com.kaiserpudding.howtheywrite.model.Lesson;
-import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
-import com.kaiserpudding.howtheywrite.quiz.QuizActivity;
-import com.kaiserpudding.howtheywrite.repositories.CharacterRepository;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 

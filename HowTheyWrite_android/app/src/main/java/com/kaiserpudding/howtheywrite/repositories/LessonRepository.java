@@ -3,8 +3,8 @@ package com.kaiserpudding.howtheywrite.repositories;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import com.kaiserpudding.howtheywrite.database.AppDatabase;
-import com.kaiserpudding.howtheywrite.database.LessonCharacterJoinDao;
-import com.kaiserpudding.howtheywrite.database.LessonDao;
+import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao;
+import com.kaiserpudding.howtheywrite.database.dao.LessonDao;
 import com.kaiserpudding.howtheywrite.model.Character;
 import com.kaiserpudding.howtheywrite.model.Lesson;
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
@@ -21,8 +21,9 @@ public class LessonRepository {
     lessonCharacterJoinDao = db.lessonCharacterJoinJoinDao();
   }
 
-  public void insertLesson(Lesson lesson) {
-    lessonDao.insertLesson(lesson);
+  public void insert(Lesson lesson) {
+    lessonDao.insert(lesson);
+    lessonDao.insert(lesson);
     insertLessonCharacterJoin(lesson);
   }
 

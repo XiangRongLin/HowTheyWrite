@@ -28,7 +28,7 @@ public class LessonListViewModel extends AndroidViewModel {
 
   public void insertLesson(Lesson lesson) {
     executor.execute(() -> {
-      lessonRepository.insertLesson(lesson);
+      lessonRepository.insert(lesson);
     });
   }
 

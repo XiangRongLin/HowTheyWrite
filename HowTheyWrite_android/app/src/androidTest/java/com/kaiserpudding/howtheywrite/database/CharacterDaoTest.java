@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import com.kaiserpudding.howtheywrite.database.dao.CharacterDao;
 import com.kaiserpudding.howtheywrite.model.Character;
 import java.util.Arrays;
 import java.util.LinkedList;
