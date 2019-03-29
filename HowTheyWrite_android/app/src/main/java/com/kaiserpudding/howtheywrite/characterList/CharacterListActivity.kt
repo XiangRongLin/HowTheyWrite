@@ -27,7 +27,7 @@ class CharacterListActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, 5)
 
         characterListViewModel = ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
-        characterListViewModel!!.characters.observe(this, Observer<List<Character>> { adapter.setCharacters(it) })
+        characterListViewModel!!.characters.observe(this, Observer<List<Character>> { adapter.setCharacters(it!!) })
 
         val fab = findViewById<FloatingActionButton>(R.id.add_character_fab)
         fab.setOnClickListener {

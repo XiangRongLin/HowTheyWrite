@@ -1,0 +1,71 @@
+package com.kaiserpudding.howtheywrite.lessonList
+
+import android.content.Context
+import android.content.Intent
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
+import com.kaiserpudding.howtheywrite.model.Lesson
+
+class LessonListAdapter (private val context: Context) : RecyclerView.Adapter<LessonListAdapter.LessonViewHolder>() {
+
+    private val inflater: LayoutInflater
+
+    private var lessons: List<Lesson>? = null
+
+    inner class LessonViewHolder constructor(context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val lessonItemView: TextView
+
+        init {
+            itemView.setOnClickListener { v ->
+                val intent = Intent(context, LessonDetailActivity::class.java)
+                intent.putExtra(LessonDetailActivity.REPLY_LESSON_ID, lessons!![adapterPosition].id)
+                context.startActivity(intent)
+            }
+            lessonItemView = itemView.findViewById(R.id.lessonTextView)
+        }
+    }
+
+    init {
+        this.inflater = LayoutInflater.from(context)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
+        val itemView = inflater.inflate(R.layout.lesson_recyclerview_item, parent, false)
+        return LessonViewHolder(context, itemView)
+    }
+
+    override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
+        if (lessons != null) {
+            val current = lessons!![position]
+            //TODO proper string representation of lesson
+            holder.lessonItemView.text = current.toString()
+        } else {
+            //TODO NOT displayed
+            holder.lessonItemView.setText(R.string.no_lesson)
+        }
+    }
+
+    internal fun setLessons(lessons: List<Lesson>) {
+        this.lessons = lessons
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int {
+        return if (lessons != null)
+            lessons!!.size
+        else
+            0
+    }
+
+    companion object {
+
+        val SELECTED_LESSON_ID = "howTheyWrite.selectedLessonId"
+    }
+
+}

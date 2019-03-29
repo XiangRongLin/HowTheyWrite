@@ -26,7 +26,7 @@ class LessonListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
-        lessonListViewModel!!.lessons.observe(this, Observer<List<Lesson>> { adapter.setLessons(it) })
+        lessonListViewModel!!.lessons!!.observe(this, Observer<List<Lesson>> { adapter.setLessons(it!!) })
 
         val fab = findViewById<FloatingActionButton>(R.id.add_lessen_fab)
         fab.setOnClickListener {

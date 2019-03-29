@@ -46,6 +46,6 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
     @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
             + "characters.id = lesson_character_join.characterId WHERE\n"
             + "lesson_character_join.lessonId = :id")
-    fun getCharacterByLessonId(id: Int): List<Character>
+    fun getCharacterByLessonId(id: Int): MutableList<Character>
 
 }
