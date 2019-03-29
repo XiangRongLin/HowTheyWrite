@@ -4,7 +4,6 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
-import java.util.Collections
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -24,10 +23,8 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     internal//TODO multiple calls return different values
     val nextWord: Character?
         get() {
-            currentCharacterIndex++
-            return if (currentCharacterIndex >= charactersSize) {
-                null
-            } else characters!![currentCharacterIndex]
+            return if (currentCharacterIndex + 1 >= charactersSize) null
+            else characters!![++currentCharacterIndex]
         }
 
     init {
