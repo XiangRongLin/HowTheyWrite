@@ -8,7 +8,7 @@ import android.support.annotation.NonNull
 
 @Entity(tableName = "characters")
 class Character(
-        @NonNull var hanzi: String,
+        var hanzi: String,
         var pinyin: String,
         var translationKey: String?,
         var translation: String?,

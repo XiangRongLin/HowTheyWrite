@@ -12,7 +12,7 @@ class ChineseDbHelper(val context: Context) : SQLiteOpenHelper(context, DATABASE
 
     companion object {
         const val DATABASE_NAME = "howTheyLearn_database_cn"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
     }
 
     private val preferences: SharedPreferences = context.getSharedPreferences(
