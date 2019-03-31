@@ -10,17 +10,16 @@ import java.util.concurrent.Executors
 
 class LessonListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val lessonRepository: LessonRepository
+    private val lessonRepository: LessonRepository = LessonRepository(application)
     private val executor: Executor
 
-    var lessons: LiveData<List<Lesson>>? = null
+    lateinit var lessons: LiveData<List<Lesson>>
         private set
     var lessonNames: List<String>? = null
         private set
 
 
     init {
-        lessonRepository = LessonRepository(application)
         executor = Executors.newCachedThreadPool()
         initLessons()
     }

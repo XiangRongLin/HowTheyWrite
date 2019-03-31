@@ -13,7 +13,7 @@ import com.kaiserpudding.howtheywrite.model.Character
 
 internal class CharacterListAdapter(private val context: Context) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
 
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var characters: List<Character>? = null
 
@@ -32,28 +32,21 @@ internal class CharacterListAdapter(private val context: Context) : RecyclerView
         }
     }
 
-    init {
-        this.inflater = LayoutInflater.from(context)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val itemView = inflater.inflate(R.layout.character_recyclerview_item, parent, false)
         return CharacterViewHolder(context, itemView)
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        var represetation: String?
-        if (characters != null) {
+        val representation: String?
+        representation = if (characters != null) {
             val current = characters!![position]
-            represetation = current.hanzi
-            if (represetation == null) {
-                represetation = current.pinyin
-            }
+            current.hanzi
         } else {
             //TODO NOT displayed
-            represetation = "No Characters"
+            "No Characters"
         }
-        holder.characterItemView.text = represetation
+        holder.characterItemView.text = representation
     }
 
     fun setCharacters(characters: List<Character>) {

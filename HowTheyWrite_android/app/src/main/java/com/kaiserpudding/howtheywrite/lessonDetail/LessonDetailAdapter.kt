@@ -11,9 +11,11 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.model.Character
 
+
+//TODO https://stackoverflow.com/questions/49969278/set-a-click-listener-to-a-recyclerview
 class LessonDetailAdapter(private val context: Context) : RecyclerView.Adapter<LessonDetailAdapter.CharacterViewHolder>() {
 
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var characters: List<Character>? = null
 
@@ -30,10 +32,6 @@ class LessonDetailAdapter(private val context: Context) : RecyclerView.Adapter<L
             }
             characterItemView = itemView.findViewById(R.id.characterTextView)
         }
-    }
-
-    init {
-        this.inflater = LayoutInflater.from(context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {

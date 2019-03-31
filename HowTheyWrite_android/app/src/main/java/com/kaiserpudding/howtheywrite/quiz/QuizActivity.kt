@@ -1,83 +1,72 @@
 package com.kaiserpudding.howtheywrite.quiz
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.support.v4.app.FragmentManager
+import android.support.v7.app.AppCompatActivity
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
-import com.kaiserpudding.howtheywrite.characterList.CharacterListActivity
-import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
+import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment
+import com.kaiserpudding.howtheywrite.lessonList.LessonListFragment
 import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.model.Lesson
 
-class QuizActivity : AppCompatActivity() {
+class QuizActivity : AppCompatActivity(),
+        QuizFragment.OnQuizFragmentInteractionListener,
+        CharacterListFragment.OnCharacterListFragmentInteractionListener,
+        LessonListFragment.OnLessonFragmentInteractionListener {
 
-    private var quizViewModel: QuizViewModel? = null
-    private var quizTranslation: TextView? = null
-    private var quizPinyin: TextView? = null
+    private val manager: FragmentManager = supportFragmentManager
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
-        //TODO handling for 0
-        val lessonId = intent.getIntExtra(LessonDetailActivity.REPLY_LESSON_ID, 0)
-
-        quizViewModel = ViewModelProviders.of(
-                this, QuizViewModelFactory(application, lessonId)).get(QuizViewModel::class.java)
-
-        quizTranslation = findViewById(R.id.quiz_translation)
-        quizPinyin = findViewById(R.id.quiz_pinyin)
-        quizTranslation!!.setOnClickListener { v ->
-            val intent = Intent(this@QuizActivity, CharacterDetailActivity::class.java)
-            intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, quizViewModel!!.currentWord.id)
-            startActivity(intent)
-        }
-
-        //TODO fix while
-        var a: List<Character>? = null
-        while (a == null) {
-            a = quizViewModel!!.characters
-        }
-        quizViewModel!!.randomizeList()
-        setQuizWord(quizViewModel!!.nextWord!!)
-
-        val quizInput = findViewById<EditText>(R.id.quiz_input_edit_text)
-        //if user clicks enter check if input is correct and show next word if it is, otherwise display error
-        quizInput.setOnEditorActionListener { textView, i, keyEvent ->
-            val b = quizInput.text != null
-            if (quizInput.text != null && quizInput.text.toString() == quizViewModel!!.currentWord.hanzi) {
-                val nextCharacter = quizViewModel!!.nextWord
-                if (nextCharacter != null) {
-                    setQuizWord(nextCharacter)
-                    quizInput.setText("")
-
-                } else {
-                    //TODO show result screen
-                    finish()
-                }
-            } else {
-                quizInput.setText("")
-            }
-            true
-        }
+        if (savedInstanceState == null) startLessonListFragment()
     }
 
-    private fun setQuizWord(character: Character) {
-        if (character.translationKey == null) {
-            quizTranslation!!.text = character.translation
-        } else {
-            quizTranslation!!.setText(
-                    resources.getIdentifier(
-                            character.translationKey,
-                            "string",
-                            applicationContext.packageName
-                    )
-            )
-        }
-        quizPinyin!!.text = character.pinyin
+
+
+    override fun onLessonFragmentInteraction(lesson: Lesson) {
+        startCharacterListFragment(lesson.id)
+    }
+
+    override fun onQuizFragmentInteraction(character: Character) {
+        val intent = Intent(this, CharacterDetailActivity::class.java)
+        intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, character.id)
+        startActivity(intent)
+    }
+
+    override fun onToQuizButtonInteraction(lessonId: Int?) {
+        startQuizFragment(lessonId)
+    }
+
+    private fun startLessonListFragment() {
+        val transaction = manager.beginTransaction()
+        transaction.add(R.id.container_quiz_fragment, LessonListFragment.newInstance())
+        transaction.commit()
+    }
+
+    private fun startCharacterListFragment(lessonId: Int?) {
+        val transaction = manager.beginTransaction()
+        val characterListFragment =
+                if (lessonId == null) CharacterListFragment.newInstance()
+                else CharacterListFragment.newInstance(lessonId)
+        transaction.replace(R.id.container_quiz_fragment, characterListFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startQuizFragment(lessonId: Int?) {
+        val transaction = manager.beginTransaction()
+        val quizFragment =
+                if (lessonId == null) QuizFragment.newInstance()
+                else QuizFragment.newInstance(lessonId)
+        transaction.replace(R.id.container_quiz_fragment, quizFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

@@ -2,9 +2,7 @@ package com.kaiserpudding.howtheywrite.model
 
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
-import android.support.annotation.NonNull
 
 @Entity(tableName = "characters")
 class Character(
@@ -15,8 +13,10 @@ class Character(
         var isCustom: Boolean
 ) {
 
-    @PrimaryKey(autoGenerate = true) var id: Int = 0
-    @Embedded var progress: Progress = Progress()
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+    @Embedded
+    var progress: Progress = Progress()
 
 //    @Ignore
 //    constructor(id: Int, hanzi: String, pinyin: String, translationKey: String?, translation: String?, isCustom: Boolean, progress: Progress = Progress())

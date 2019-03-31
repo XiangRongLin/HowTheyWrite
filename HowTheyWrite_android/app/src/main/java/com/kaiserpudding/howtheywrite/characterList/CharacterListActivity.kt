@@ -11,7 +11,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
-import java.util.LinkedList
 
 class CharacterListActivity : AppCompatActivity() {
 
@@ -19,7 +18,7 @@ class CharacterListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstance: Bundle?) {
         super.onCreate(savedInstance)
-        setContentView(R.layout.actvity_character_list)
+        setContentView(R.layout.activity_character_list)
 
         val recyclerView = findViewById<RecyclerView>(R.id.character_recyclerview)
         val adapter = CharacterListAdapter(this)

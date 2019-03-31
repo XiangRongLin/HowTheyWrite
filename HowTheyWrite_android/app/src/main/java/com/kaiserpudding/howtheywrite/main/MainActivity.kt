@@ -11,6 +11,7 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
 import com.kaiserpudding.howtheywrite.lessonList.LessonListActivity
 import com.kaiserpudding.howtheywrite.lessonList.LessonListViewModel
+import com.kaiserpudding.howtheywrite.quiz.QuizActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun toLessons(view: View) {
-        val intent = Intent(this, LessonListActivity::class.java)
+        val intent = Intent(this, QuizActivity::class.java)
         startActivity(intent)
     }
 

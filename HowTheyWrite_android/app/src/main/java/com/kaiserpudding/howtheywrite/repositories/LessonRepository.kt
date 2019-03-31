@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData
 import com.kaiserpudding.howtheywrite.database.AppDatabase
 import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao
 import com.kaiserpudding.howtheywrite.database.dao.LessonDao
-import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin
 

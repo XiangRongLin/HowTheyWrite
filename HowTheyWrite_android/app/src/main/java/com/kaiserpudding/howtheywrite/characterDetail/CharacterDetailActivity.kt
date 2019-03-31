@@ -52,6 +52,6 @@ class CharacterDetailActivity : AppCompatActivity() {
 
     companion object {
 
-        var REPLY_CHARACTER_ID = "howTheyWrite.CHARACTER_ID"
+        const val REPLY_CHARACTER_ID = "howTheyWrite.CHARACTER_ID"
     }
 }
