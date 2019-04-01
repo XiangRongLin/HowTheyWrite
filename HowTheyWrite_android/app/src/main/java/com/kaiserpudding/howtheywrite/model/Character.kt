@@ -1,8 +1,8 @@
 package com.kaiserpudding.howtheywrite.model
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = "characters")
 class Character(

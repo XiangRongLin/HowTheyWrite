@@ -16,8 +16,8 @@ package com.kaiserpudding.howtheywrite.util;
  * limitations under the License.
  */
 
-import android.arch.core.executor.ArchTaskExecutor;
-import android.arch.core.executor.TaskExecutor;
+import androidx.arch.core.executor.ArchTaskExecutor;
+import androidx.arch.core.executor.TaskExecutor;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 

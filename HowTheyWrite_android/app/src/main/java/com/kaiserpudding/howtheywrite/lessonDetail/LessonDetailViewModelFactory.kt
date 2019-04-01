@@ -1,8 +1,8 @@
 package com.kaiserpudding.howtheywrite.lessonDetail
 
 import android.app.Application
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 
 class LessonDetailViewModelFactory(private val application: Application, private val lessonId: Int) : ViewModelProvider.Factory {
 

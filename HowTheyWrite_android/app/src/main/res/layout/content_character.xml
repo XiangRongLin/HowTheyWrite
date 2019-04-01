@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
@@ -8,9 +8,9 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".characterList.CharacterListActivity"
-  tools:showIn="@layout/activity_character_list">
+  tools:showIn="@layout/fragment_character_list">
 
-  <android.support.v7.widget.RecyclerView
+  <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/character_recyclerview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,4 +23,4 @@
     app:layout_constraintVertical_bias="0.0"
     tools:listitem="@layout/character_recyclerview_item"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

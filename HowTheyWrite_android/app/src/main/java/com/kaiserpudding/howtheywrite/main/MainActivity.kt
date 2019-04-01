@@ -3,7 +3,7 @@ package com.kaiserpudding.howtheywrite.main
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.kaiserpudding.howtheywrite.characterList.CharacterListActivity

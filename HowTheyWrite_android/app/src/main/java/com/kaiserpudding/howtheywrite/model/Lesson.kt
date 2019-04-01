@@ -1,6 +1,6 @@
 package com.kaiserpudding.howtheywrite.model
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import java.util.*
 
 @Entity(tableName = "lessons", indices = [Index(value = ["name"], unique = true)])

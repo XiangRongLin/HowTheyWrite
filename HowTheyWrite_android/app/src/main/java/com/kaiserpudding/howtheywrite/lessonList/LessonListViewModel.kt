@@ -1,8 +1,8 @@
 package com.kaiserpudding.howtheywrite.lessonList
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.repositories.LessonRepository
 import java.util.concurrent.Executor

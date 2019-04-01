@@ -2,8 +2,8 @@ package com.kaiserpudding.howtheywrite.quiz
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment

@@ -2,9 +2,9 @@ package com.kaiserpudding.howtheywrite.database;
 
 import static org.junit.Assert.*;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 import com.kaiserpudding.howtheywrite.database.dao.CharacterDao;
 import com.kaiserpudding.howtheywrite.model.Character;
 import java.util.Arrays;
