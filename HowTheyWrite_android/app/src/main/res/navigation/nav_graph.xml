@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/nav_graph">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_graph"
+  app:startDestination="@id/mainActivity">
+
+  <activity
+    android:id="@+id/mainActivity"
+    android:label="MainActivity"
+    android:name="com.kaiserpudding.howtheywrite.main.MainActivity"/>
+
+  <fragment
+    android:id="@+id/quizFragment"
+    android:label="QuizFragment"
+    android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment"/>
+
+  <fragment
+    android:id="@+id/characterListFragment"
+    android:label="fragment_character_list"
+    android:name="com.kaiserpudding.howtheywrite.characterList.CharacterListFragment"
+    tools:layout="@layout/fragment_character_list">
+    <action
+      android:id="@+id/action_characterListFragment_to_quizFragment"
+      app:destination="@id/quizFragment"/>
+  </fragment>
+
+  <fragment
+    android:id="@+id/lessonListFragment"
+    android:label="fragment_lesson_list"
+    android:name="com.kaiserpudding.howtheywrite.lessonList.LessonListFragment"
+    tools:layout="@layout/fragment_lesson_list">
+    <action
+      android:id="@+id/action_lessonListFragment_to_characterListFragment"
+      app:destination="@id/characterListFragment"/>
+  </fragment>
+
 </navigation>
