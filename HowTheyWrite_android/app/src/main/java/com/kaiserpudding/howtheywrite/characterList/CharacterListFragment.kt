@@ -2,6 +2,7 @@ package com.kaiserpudding.howtheywrite.characterList
 
 import androidx.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailViewModel
 import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailViewModelFactory
 
@@ -24,7 +26,8 @@ import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailViewModelFactory
  * create an instance of this fragment.
  *
  */
-class CharacterListFragment : Fragment() {
+class CharacterListFragment
+    : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener{
     private var lessonId: Int? = null
     private var listenerCharacterList: OnCharacterListFragmentInteractionListener? = null
     private lateinit var lessonDetailViewModel: LessonDetailViewModel
@@ -42,7 +45,7 @@ class CharacterListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_character_list, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.character_recyclerview)
-        val adapter = CharacterListAdapter(view.context)
+        val adapter = CharacterListAdapter(view.context, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
@@ -63,9 +66,13 @@ class CharacterListFragment : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onToQuizButtonPressed() {
         listenerCharacterList?.onToQuizButtonInteraction(lessonId)
+    }
+
+    override fun onCharacterListAdapterInteraction(characterId: Int) {
+        val intent = Intent(context, CharacterDetailActivity::class.java)
+        intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, characterId)
     }
 
     override fun onAttach(context: Context) {

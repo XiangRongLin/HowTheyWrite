@@ -11,7 +11,10 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
 import com.kaiserpudding.howtheywrite.model.Lesson
 
-class LessonListAdapter (private val context: Context) : RecyclerView.Adapter<LessonListAdapter.LessonViewHolder>() {
+class LessonListAdapter(
+        private val context: Context,
+        private val listener: OnLessonListAdapterItemInteractionListener)
+    : RecyclerView.Adapter<LessonListAdapter.LessonViewHolder>() {
 
     private val inflater: LayoutInflater
 
@@ -22,12 +25,12 @@ class LessonListAdapter (private val context: Context) : RecyclerView.Adapter<Le
         val lessonItemView: TextView
 
         init {
-            itemView.setOnClickListener { v ->
-                val intent = Intent(context, LessonDetailActivity::class.java)
-                intent.putExtra(LessonDetailActivity.REPLY_LESSON_ID, lessons!![adapterPosition].id)
-                context.startActivity(intent)
-            }
+            itemView.setOnClickListener { onAdapterItemPressed() }
             lessonItemView = itemView.findViewById(R.id.lessonTextView)
+        }
+
+        fun onAdapterItemPressed() {
+            listener.onLessonListAdapterItemInteraction(adapterPosition)
         }
     }
 
@@ -61,6 +64,10 @@ class LessonListAdapter (private val context: Context) : RecyclerView.Adapter<Le
             lessons!!.size
         else
             0
+    }
+
+    interface OnLessonListAdapterItemInteractionListener {
+        fun onLessonListAdapterItemInteraction(lessonId: Int)
     }
 
     companion object {

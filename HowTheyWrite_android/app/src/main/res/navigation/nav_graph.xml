@@ -3,36 +3,35 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/nav_graph"
-  app:startDestination="@id/mainActivity">
+    app:startDestination="@id/lessonListFragment">
 
-  <activity
-    android:id="@+id/mainActivity"
-    android:label="MainActivity"
-    android:name="com.kaiserpudding.howtheywrite.main.MainActivity"/>
+  <fragment
+      android:id="@+id/lessonListFragment"
+      android:label="@string/lessons"
+      android:name="com.kaiserpudding.howtheywrite.lessonList.LessonListFragment"
+      tools:layout="@layout/fragment_lesson_list">
+    <action
+        android:id="@+id/action_lessonListFragment_to_characterListFragment"
+        app:destination="@id/characterListFragment"/>
+  </fragment>
+
+  <fragment
+      android:id="@+id/characterListFragment"
+      android:label="fragment_character_list"
+      android:name="com.kaiserpudding.howtheywrite.characterList.CharacterListFragment"
+      tools:layout="@layout/fragment_character_list">
+    <action
+        android:id="@+id/action_characterListFragment_to_quizFragment"
+        app:destination="@id/quizFragment"/>
+  </fragment>
 
   <fragment
     android:id="@+id/quizFragment"
     android:label="QuizFragment"
     android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment"/>
 
-  <fragment
-    android:id="@+id/characterListFragment"
-    android:label="fragment_character_list"
-    android:name="com.kaiserpudding.howtheywrite.characterList.CharacterListFragment"
-    tools:layout="@layout/fragment_character_list">
-    <action
-      android:id="@+id/action_characterListFragment_to_quizFragment"
-      app:destination="@id/quizFragment"/>
-  </fragment>
 
-  <fragment
-    android:id="@+id/lessonListFragment"
-    android:label="fragment_lesson_list"
-    android:name="com.kaiserpudding.howtheywrite.lessonList.LessonListFragment"
-    tools:layout="@layout/fragment_lesson_list">
-    <action
-      android:id="@+id/action_lessonListFragment_to_characterListFragment"
-      app:destination="@id/characterListFragment"/>
-  </fragment>
+
+
 
 </navigation>

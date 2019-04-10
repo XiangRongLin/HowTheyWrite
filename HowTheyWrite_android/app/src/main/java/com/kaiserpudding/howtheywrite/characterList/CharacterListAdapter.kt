@@ -11,7 +11,10 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.model.Character
 
-internal class CharacterListAdapter(private val context: Context) : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
+internal class CharacterListAdapter(
+        private val context: Context,
+        private val listener: OnCharacterListAdapterItemInteractionListener)
+    : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -22,13 +25,12 @@ internal class CharacterListAdapter(private val context: Context) : RecyclerView
         val characterItemView: TextView
 
         init {
-            itemView.setOnClickListener { v ->
-                val replyIntent = Intent(v.context, CharacterDetailActivity::class.java)
-                replyIntent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, characters!![adapterPosition].id)
-                context.startActivity(replyIntent)
-
-            }
+            itemView.setOnClickListener { onAdapterItemPressed() }
             characterItemView = itemView.findViewById(R.id.characterTextView)
+        }
+
+        fun onAdapterItemPressed() {
+            listener.onCharacterListAdapterInteraction(adapterPosition)
         }
     }
 
@@ -61,4 +63,7 @@ internal class CharacterListAdapter(private val context: Context) : RecyclerView
             0
     }
 
+    interface OnCharacterListAdapterItemInteractionListener {
+        fun onCharacterListAdapterInteraction(characterId: Int)
+    }
 }

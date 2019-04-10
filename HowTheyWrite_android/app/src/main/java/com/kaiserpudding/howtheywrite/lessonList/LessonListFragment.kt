@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
 import com.kaiserpudding.howtheywrite.model.Lesson
 
 /**
@@ -24,7 +25,9 @@ import com.kaiserpudding.howtheywrite.model.Lesson
  * create an instance of this fragment.
  *
  */
-class LessonListFragment : Fragment() {
+class LessonListFragment
+    : Fragment(),
+    LessonListAdapter.OnLessonListAdapterItemInteractionListener{
 
     private var listenerLesson: OnLessonFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
@@ -39,7 +42,7 @@ class LessonListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_lesson_list, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.lesson_recyclerview)
-        val adapter = LessonListAdapter(view.context)
+        val adapter = LessonListAdapter(view.context, this)
         recyclerView.adapter = adapter
 
         lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
@@ -70,6 +73,13 @@ class LessonListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listenerLesson = null
+    }
+
+    override fun onLessonListAdapterItemInteraction(lessonId: Int) {
+        val intent = Intent(context, LessonDetailActivity::class.java)
+        intent.putExtra(LessonDetailActivity.REPLY_LESSON_ID, lessonId)
+        startActivity(intent)
+
     }
 
     /**
