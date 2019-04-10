@@ -11,7 +11,7 @@
       android:name="com.kaiserpudding.howtheywrite.lessonList.LessonListFragment"
       tools:layout="@layout/fragment_lesson_list">
     <action
-        android:id="@+id/action_lessonListFragment_to_characterListFragment"
+        android:id="@+id/action_next"
         app:destination="@id/characterListFragment"/>
   </fragment>
 
@@ -21,7 +21,7 @@
       android:name="com.kaiserpudding.howtheywrite.characterList.CharacterListFragment"
       tools:layout="@layout/fragment_character_list">
     <action
-        android:id="@+id/action_characterListFragment_to_quizFragment"
+        android:id="@+id/action_next"
         app:destination="@id/quizFragment"/>
   </fragment>
 

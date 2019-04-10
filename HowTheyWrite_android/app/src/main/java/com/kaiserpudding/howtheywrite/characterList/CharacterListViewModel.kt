@@ -8,17 +8,19 @@ import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-internal class CharacterListViewModel(application: Application) : AndroidViewModel(application) {
+class CharacterListViewModel(
+        application: Application,
+        lessonId: Int = -1) : AndroidViewModel(application) {
 
-    private val characterRepository: CharacterRepository
-    private val executor: Executor
+    private val characterRepository: CharacterRepository = CharacterRepository(application)
+    private val executor: Executor = Executors.newCachedThreadPool()
 
     val characters: LiveData<List<Character>>
 
     init {
-        this.characterRepository = CharacterRepository(application)
-        this.executor = Executors.newCachedThreadPool()
-        this.characters = characterRepository.allLiveDataCharacters
+        this.characters =
+                if (lessonId == -1) characterRepository.allLiveDataCharacters
+                else characterRepository.getLiveDataCharacterByLessonId(lessonId)
     }
 
     fun insertCharacter(character: Character) {

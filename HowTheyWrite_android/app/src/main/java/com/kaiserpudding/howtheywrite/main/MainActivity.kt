@@ -2,23 +2,29 @@ package com.kaiserpudding.howtheywrite.main
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.kaiserpudding.howtheywrite.characterList.CharacterListActivity
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
+import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
-import com.kaiserpudding.howtheywrite.lessonList.LessonListActivity
-import com.kaiserpudding.howtheywrite.lessonList.LessonListViewModel
-import com.kaiserpudding.howtheywrite.quiz.QuizActivity
+import com.kaiserpudding.howtheywrite.lessonList.LessonListFragment
+import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.model.Lesson
+import com.kaiserpudding.howtheywrite.quiz.QuizFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+        QuizFragment.OnQuizFragmentInteractionListener,
+        CharacterListFragment.OnCharacterListFragmentInteractionListener,
+        LessonListFragment.OnLessonFragmentInteractionListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -37,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
 
-        setupActionBar(navController, appBarConfiguration)
+//        setupActionBar(navController, appBarConfiguration)
 
         setUpBottomNavMenu(navController)
     }
@@ -60,4 +66,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onQuizFragmentInteraction(character: Character) {
+        val intent = Intent(this, CharacterDetailActivity::class.java)
+        intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, character.id)
+        startActivity(intent)}
+
+    override fun onToQuizButtonInteraction(lessonId: Int?) {
+        Navigation.createNavigateOnClickListener(R.id.action_next)
+    }
+
+    override fun onLessonFragmentInteraction(lesson: Lesson) {
+
+    }
 }

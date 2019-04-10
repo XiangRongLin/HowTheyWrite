@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
@@ -76,9 +77,7 @@ class LessonListFragment
     }
 
     override fun onLessonListAdapterItemInteraction(lessonId: Int) {
-        val intent = Intent(context, LessonDetailActivity::class.java)
-        intent.putExtra(LessonDetailActivity.REPLY_LESSON_ID, lessonId)
-        startActivity(intent)
+        Navigation.createNavigateOnClickListener(R.id.action_next)
 
     }
 

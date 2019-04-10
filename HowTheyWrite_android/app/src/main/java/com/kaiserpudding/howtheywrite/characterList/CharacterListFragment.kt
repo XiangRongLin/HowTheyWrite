@@ -30,7 +30,7 @@ class CharacterListFragment
     : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener{
     private var lessonId: Int? = null
     private var listenerCharacterList: OnCharacterListFragmentInteractionListener? = null
-    private lateinit var lessonDetailViewModel: LessonDetailViewModel
+    private lateinit var characterListViewModel: CharacterListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +50,14 @@ class CharacterListFragment
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
         val tmpId = lessonId
-        lessonDetailViewModel =
+        characterListViewModel =
                 if (tmpId != null) {
                     ViewModelProviders.of(
                             this, LessonDetailViewModelFactory(activity!!.application, tmpId))
-                            .get(LessonDetailViewModel::class.java)
+                            .get(CharacterListViewModel::class.java)
 
                 } else {
-                    ViewModelProviders.of(this).get(LessonDetailViewModel::class.java)
+                    ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
                 }
 
         val toQuiz = view.findViewById<Button>(R.id.to_quiz_button)
