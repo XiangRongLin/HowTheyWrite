@@ -20,19 +20,19 @@ class LessonListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson_list)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.lesson_recyclerview)
-        val adapter = LessonListAdapter(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
-        lessonListViewModel!!.lessons!!.observe(this, Observer<List<Lesson>> { adapter.setLessons(it!!) })
-
-        val fab = findViewById<FloatingActionButton>(R.id.add_lessen_fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@LessonListActivity, NewLessonActivity::class.java)
-            startActivityForResult(intent, NEW_LESSON_ACTIVITY_REQUEST_CODE)
-        }
+//        val recyclerView = findViewById<RecyclerView>(R.id.lesson_recyclerview)
+//        val adapter = LessonListAdapter(this)
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//
+//        lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
+//        lessonListViewModel!!.lessons!!.observe(this, Observer<List<Lesson>> { adapter.setLessons(it!!) })
+//
+//        val fab = findViewById<FloatingActionButton>(R.id.add_lessen_fab)
+//        fab.setOnClickListener {
+//            val intent = Intent(this@LessonListActivity, NewLessonActivity::class.java)
+//            startActivityForResult(intent, NEW_LESSON_ACTIVITY_REQUEST_CODE)
+//        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

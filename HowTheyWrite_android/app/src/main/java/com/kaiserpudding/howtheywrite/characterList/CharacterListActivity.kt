@@ -20,19 +20,19 @@ class CharacterListActivity : AppCompatActivity() {
         super.onCreate(savedInstance)
         setContentView(R.layout.activity_character_list)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.character_recyclerview)
-        val adapter = CharacterListAdapter(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(this, 5)
-
-        characterListViewModel = ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
-        characterListViewModel!!.characters.observe(this, Observer<List<Character>> { adapter.setCharacters(it!!) })
-
-        val fab = findViewById<FloatingActionButton>(R.id.add_character_fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@CharacterListActivity, NewCharacterActivity::class.java)
-            startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE)
-        }
+//        val recyclerView = findViewById<RecyclerView>(R.id.character_recyclerview)
+//        val adapter = CharacterListAdapter(this)
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = GridLayoutManager(this, 5)
+//
+//        characterListViewModel = ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
+//        characterListViewModel!!.characters.observe(this, Observer<List<Character>> { adapter.setCharacters(it!!) })
+//
+//        val fab = findViewById<FloatingActionButton>(R.id.add_character_fab)
+//        fab.setOnClickListener {
+//            val intent = Intent(this@CharacterListActivity, NewCharacterActivity::class.java)
+//            startActivityForResult(intent, NEW_CHAR_ACTIVITY_REQUEST_CODE)
+//        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
