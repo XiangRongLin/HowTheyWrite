@@ -1,14 +1,12 @@
 package com.kaiserpudding.howtheywrite.lessonList
 
 import android.content.Context
-import android.content.Intent
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
 import com.kaiserpudding.howtheywrite.model.Lesson
 
 class LessonListAdapter(

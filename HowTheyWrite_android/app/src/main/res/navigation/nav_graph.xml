@@ -11,8 +11,8 @@
       android:name="com.kaiserpudding.howtheywrite.lessonList.LessonListFragment"
       tools:layout="@layout/fragment_lesson_list">
     <action
-        android:id="@+id/action_next"
-        app:destination="@id/characterListFragment"/>
+      android:id="@+id/action_lessonList_to_characterList"
+      app:destination="@id/characterListFragment"/>
   </fragment>
 
   <fragment
@@ -21,12 +21,15 @@
       android:name="com.kaiserpudding.howtheywrite.characterList.CharacterListFragment"
       tools:layout="@layout/fragment_character_list">
     <action
-        android:id="@+id/action_next"
-        app:destination="@id/quizFragment"/>
+      android:id="@+id/action_characterList_to_quiz"
+      app:destination="@id/quizFragment"/>
     <argument
       android:name="lessonId"
       app:argType="integer"
       android:defaultValue="1"/>
+    <action
+      android:id="@+id/action_characterList_to_characterDetail"
+      app:destination="@id/characterDetailFragment"/>
   </fragment>
 
   <fragment
@@ -36,10 +39,20 @@
     <argument
       android:name="lessonId"
       app:argType="integer"/>
+    <action
+      android:id="@+id/action_quiz_to_characterDetail"
+      app:destination="@id/characterDetailFragment"/>
   </fragment>
-
-
-
+  <fragment
+    android:id="@+id/characterDetailFragment"
+    android:name="com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailFragment"
+    android:label="fragment_character_detail"
+    tools:layout="@layout/fragment_character_detail">
+    <argument
+      android:name="characterId"
+      app:argType="integer"
+      android:defaultValue="0"/>
+  </fragment>
 
 
 </navigation>

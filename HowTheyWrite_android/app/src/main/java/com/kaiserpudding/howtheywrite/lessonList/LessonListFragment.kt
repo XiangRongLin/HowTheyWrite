@@ -17,7 +17,7 @@ import com.kaiserpudding.howtheywrite.R
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [LessonListFragment.OnLessonFragmentInteractionListener] interface
+ * [LessonListFragment.OnLessonListFragmentInteractionListener] interface
  * to handle interaction events.
  * Use the [LessonListFragment.newInstance] factory method to
  * create an instance of this fragment.
@@ -27,7 +27,7 @@ class LessonListFragment
     : Fragment(),
     LessonListAdapter.OnLessonListAdapterItemInteractionListener{
 
-    private var listener: OnLessonFragmentInteractionListener? = null
+    private var listenerList: OnLessonListFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,21 +56,21 @@ class LessonListFragment
     }
 
     fun onButtonPressed(lessonId: Int) {
-        listener?.onLessonFragmentInteraction(lessonId)
+        listenerList?.onLessonListFragmentInteraction(lessonId)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnLessonFragmentInteractionListener) {
-            listener = context
+        if (context is OnLessonListFragmentInteractionListener) {
+            listenerList = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnLessonFragmentInteractionListener")
+            throw RuntimeException(context.toString() + " must implement OnLessonListFragmentInteractionListener")
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        listener = null
+        listenerList = null
     }
 
     override fun onLessonListAdapterItemInteraction(lessonId: Int) {
@@ -88,8 +88,8 @@ class LessonListFragment
      * (http://developer.android.com/training/basics/fragments/communicating.html)
      * for more information.
      */
-    interface OnLessonFragmentInteractionListener {
-        fun onLessonFragmentInteraction(lessonId: Int)
+    interface OnLessonListFragmentInteractionListener {
+        fun onLessonListFragmentInteraction(lessonId: Int)
     }
 
     companion object {

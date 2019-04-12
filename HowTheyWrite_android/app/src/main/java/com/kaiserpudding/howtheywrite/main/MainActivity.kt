@@ -1,7 +1,6 @@
 package com.kaiserpudding.howtheywrite.main
 
 import android.content.Context
-import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragmentDirections
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
@@ -19,11 +17,12 @@ import com.kaiserpudding.howtheywrite.lessonList.LessonListFragment
 import com.kaiserpudding.howtheywrite.lessonList.LessonListFragmentDirections
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.quiz.QuizFragment
+import com.kaiserpudding.howtheywrite.quiz.QuizFragmentDirections
 
 class MainActivity : AppCompatActivity(),
         QuizFragment.OnQuizFragmentInteractionListener,
         CharacterListFragment.OnCharacterListFragmentInteractionListener,
-        LessonListFragment.OnLessonFragmentInteractionListener {
+        LessonListFragment.OnLessonListFragmentInteractionListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -66,19 +65,27 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onQuizFragmentInteraction(character: Character) {
-        val intent = Intent(this, CharacterDetailActivity::class.java)
-        intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, character.id)
-        startActivity(intent)
+    override fun onQuizCharacterInteraction(character: Character) {
+        val action = QuizFragmentDirections.actionQuizToCharacterDetail(character.id)
+        navController.navigate(action)
     }
 
     override fun onToQuizButtonInteraction(lessonId: Int) {
-        val action = CharacterListFragmentDirections.actionNext(lessonId)
+        val action = CharacterListFragmentDirections.actionCharacterListToQuiz(lessonId)
         navController.navigate(action)
     }
 
-    override fun onLessonFragmentInteraction(lessonId: Int) {
-        val action = LessonListFragmentDirections.actionNext(lessonId)
+    override fun onLessonListFragmentInteraction(lessonId: Int) {
+        val action = LessonListFragmentDirections.actionLessonListToCharacterList(lessonId)
         navController.navigate(action)
+    }
+
+    override fun onCharacterListItemInteraction(characterId: Int) {
+        val action = CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
+        navController.navigate(action)
+    }
+
+    override fun onQuizFinishInteraction() {
+        navController.popBackStack()
     }
 }

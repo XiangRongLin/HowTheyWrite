@@ -26,8 +26,6 @@
     </activity>
     <activity android:name=".lessonDetail.LessonDetailActivity">
     </activity>
-    <activity android:name=".characterDetail.CharacterDetailActivity">
-    </activity>
     <activity android:name=".quiz.QuizActivity"
               android:windowSoftInputMode="stateAlwaysVisible">
     </activity>

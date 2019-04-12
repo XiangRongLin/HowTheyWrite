@@ -1,11 +1,11 @@
 package com.kaiserpudding.howtheywrite.characterList
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,7 +13,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -27,7 +26,7 @@ import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 class CharacterListFragment
     : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener {
     private var lessonId: Int? = null
-    private var listenerCharacterList: OnCharacterListFragmentInteractionListener? = null
+    private var listener: OnCharacterListFragmentInteractionListener? = null
     private lateinit var characterListViewModel: CharacterListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,25 +63,24 @@ class CharacterListFragment
                 }
         )
 
-//        val toQuiz = view.findViewById<Button>(R.id.to_quiz_button)
-//        toQuiz.setOnClickListener { onToQuizButtonPressed() }
+        val toQuiz = view.findViewById<Button>(R.id.to_quiz_button)
+        toQuiz.setOnClickListener { onToQuizButtonPressed() }
 
         return view
     }
 
     fun onToQuizButtonPressed() {
-        lessonId?.let { listenerCharacterList?.onToQuizButtonInteraction(it) }
+        lessonId?.let { listener?.onToQuizButtonInteraction(it) }
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
-        val intent = Intent(context, CharacterDetailActivity::class.java)
-        intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, characterId)
+        listener?.onCharacterListItemInteraction(characterId)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnCharacterListFragmentInteractionListener) {
-            listenerCharacterList = context
+            listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnCharacterListFragmentInteractionListener")
         }
@@ -90,7 +88,7 @@ class CharacterListFragment
 
     override fun onDetach() {
         super.onDetach()
-        listenerCharacterList = null
+        listener = null
     }
 
     /**
@@ -106,6 +104,7 @@ class CharacterListFragment
      */
     interface OnCharacterListFragmentInteractionListener {
         fun onToQuizButtonInteraction(lessonId: Int)
+        fun onCharacterListItemInteraction(characterId: Int)
     }
 
     companion object {

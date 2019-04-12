@@ -66,14 +66,14 @@ class QuizFragment : Fragment() {
         quizViewModel.nextWord?.let { setQuizWord(it) }
 
         quizInput = view.findViewById(R.id.quiz_input_edit_text)
-        quizInput.setOnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent ->
+        quizInput.setOnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
             if (quizInput.text != null && quizInput.text.toString() == quizViewModel.currentWord.hanzi) {
                 val nextCharacter = quizViewModel.nextWord
                 if (nextCharacter != null) {
                     setQuizWord(nextCharacter)
                     resetQuizInput()
                 } else {
-                    activity!!.finish()
+                    listener!!.onQuizFinishInteraction()
                 }
             } else {
                 resetQuizInput()
@@ -102,7 +102,7 @@ class QuizFragment : Fragment() {
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(character: Character) {
-        listener?.onQuizFragmentInteraction(character)
+        listener?.onQuizCharacterInteraction(character)
     }
 
     override fun onAttach(context: Context) {
@@ -131,8 +131,8 @@ class QuizFragment : Fragment() {
      * for more information.
      */
     interface OnQuizFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onQuizFragmentInteraction(character: Character)
+        fun onQuizCharacterInteraction(character: Character)
+        fun onQuizFinishInteraction()
     }
 
     companion object {
