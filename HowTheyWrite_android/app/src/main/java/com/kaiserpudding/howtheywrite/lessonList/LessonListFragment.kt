@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailActivity
-import com.kaiserpudding.howtheywrite.model.Lesson
 
 /**
  * A simple [Fragment] subclass.
@@ -30,7 +27,7 @@ class LessonListFragment
     : Fragment(),
     LessonListAdapter.OnLessonListAdapterItemInteractionListener{
 
-    private var listenerLesson: OnLessonFragmentInteractionListener? = null
+    private var listener: OnLessonFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,14 +55,14 @@ class LessonListFragment
         return view
     }
 
-    fun onButtonPressed(lesson: Lesson) {
-        listenerLesson?.onLessonFragmentInteraction(lesson)
+    fun onButtonPressed(lessonId: Int) {
+        listener?.onLessonFragmentInteraction(lessonId)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnLessonFragmentInteractionListener) {
-            listenerLesson = context
+            listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnLessonFragmentInteractionListener")
         }
@@ -73,12 +70,11 @@ class LessonListFragment
 
     override fun onDetach() {
         super.onDetach()
-        listenerLesson = null
+        listener = null
     }
 
     override fun onLessonListAdapterItemInteraction(lessonId: Int) {
-        Navigation.createNavigateOnClickListener(R.id.action_next)
-
+        onButtonPressed(lessonId)
     }
 
     /**
@@ -93,7 +89,7 @@ class LessonListFragment
      * for more information.
      */
     interface OnLessonFragmentInteractionListener {
-        fun onLessonFragmentInteraction(lesson: Lesson)
+        fun onLessonFragmentInteraction(lessonId: Int)
     }
 
     companion object {

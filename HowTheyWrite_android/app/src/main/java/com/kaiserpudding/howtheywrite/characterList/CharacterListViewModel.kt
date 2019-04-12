@@ -10,10 +10,11 @@ import java.util.concurrent.Executors
 
 class CharacterListViewModel(
         application: Application,
-        lessonId: Int = -1) : AndroidViewModel(application) {
+        lessonId: Int = -1)
+    : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
-    private val executor: Executor = Executors.newCachedThreadPool()
+    private val executor: Executor = Executors.newCachedThreadPool()!!
 
     val characters: LiveData<List<Character>>
 

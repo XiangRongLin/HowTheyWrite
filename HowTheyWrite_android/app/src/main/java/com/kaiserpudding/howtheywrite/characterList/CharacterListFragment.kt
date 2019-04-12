@@ -1,21 +1,19 @@
 package com.kaiserpudding.howtheywrite.characterList
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
-import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailViewModel
-import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -27,16 +25,16 @@ import com.kaiserpudding.howtheywrite.lessonDetail.LessonDetailViewModelFactory
  *
  */
 class CharacterListFragment
-    : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener{
+    : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener {
     private var lessonId: Int? = null
     private var listenerCharacterList: OnCharacterListFragmentInteractionListener? = null
     private lateinit var characterListViewModel: CharacterListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            lessonId = it.getInt(ARG_LESSON_ID)
-        }
+
+        val safeArgs: CharacterListFragmentArgs by navArgs()
+        lessonId = safeArgs.lessonId
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -49,25 +47,31 @@ class CharacterListFragment
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
+
         val tmpId = lessonId
         characterListViewModel =
                 if (tmpId != null) {
                     ViewModelProviders.of(
-                            this, LessonDetailViewModelFactory(activity!!.application, tmpId))
+                            this, CharacterListViewModelFactory(activity!!.application, tmpId))
                             .get(CharacterListViewModel::class.java)
 
                 } else {
                     ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
                 }
+        characterListViewModel.characters.observe(this,
+                Observer { characters ->
+                    adapter.setCharacters(characters)
+                }
+        )
 
-        val toQuiz = view.findViewById<Button>(R.id.to_quiz_button)
-        toQuiz.setOnClickListener { onToQuizButtonPressed() }
+//        val toQuiz = view.findViewById<Button>(R.id.to_quiz_button)
+//        toQuiz.setOnClickListener { onToQuizButtonPressed() }
 
         return view
     }
 
     fun onToQuizButtonPressed() {
-        listenerCharacterList?.onToQuizButtonInteraction(lessonId)
+        lessonId?.let { listenerCharacterList?.onToQuizButtonInteraction(it) }
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
@@ -101,7 +105,7 @@ class CharacterListFragment
      * for more information.
      */
     interface OnCharacterListFragmentInteractionListener {
-        fun onToQuizButtonInteraction(lessonId: Int?)
+        fun onToQuizButtonInteraction(lessonId: Int)
     }
 
     companion object {

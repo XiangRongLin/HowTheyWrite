@@ -30,7 +30,8 @@ internal class CharacterListAdapter(
         }
 
         fun onAdapterItemPressed() {
-            listener.onCharacterListAdapterInteraction(adapterPosition)
+            //+ 1 because adapter positions starts at 0 while Room ids start at 1
+            listener.onCharacterListAdapterInteraction(adapterPosition + 1)
         }
     }
 

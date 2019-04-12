@@ -1,16 +1,16 @@
 package com.kaiserpudding.howtheywrite.quiz
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
 
@@ -35,9 +35,9 @@ class QuizFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            lessonId = it.getInt(ARG_LESSON_ID)
-        }
+
+        val safeArgs: QuizFragmentArgs by navArgs()
+        lessonId = safeArgs.lessonId
         //TODO adjust to no lesson id
         quizViewModel = ViewModelProviders.of(
                 this,

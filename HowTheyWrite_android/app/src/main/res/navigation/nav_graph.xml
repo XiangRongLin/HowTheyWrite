@@ -23,12 +23,20 @@
     <action
         android:id="@+id/action_next"
         app:destination="@id/quizFragment"/>
+    <argument
+      android:name="lessonId"
+      app:argType="integer"
+      android:defaultValue="1"/>
   </fragment>
 
   <fragment
     android:id="@+id/quizFragment"
     android:label="QuizFragment"
-    android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment"/>
+    android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment">
+    <argument
+      android:name="lessonId"
+      app:argType="integer"/>
+  </fragment>
 
 
 

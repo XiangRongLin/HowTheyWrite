@@ -9,7 +9,6 @@ import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment
 import com.kaiserpudding.howtheywrite.lessonList.LessonListFragment
 import com.kaiserpudding.howtheywrite.model.Character
-import com.kaiserpudding.howtheywrite.model.Lesson
 
 class QuizActivity : AppCompatActivity(),
         QuizFragment.OnQuizFragmentInteractionListener,
@@ -25,13 +24,13 @@ class QuizActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
-        if (savedInstanceState == null) startLessonListFragment()
+//        if (savedInstanceState == null) startLessonListFragment()
     }
 
 
 
-    override fun onLessonFragmentInteraction(lesson: Lesson) {
-        startCharacterListFragment(lesson.id)
+    override fun onLessonFragmentInteraction(lessonId: Int) {
+        startCharacterListFragment(lessonId)
     }
 
     override fun onQuizFragmentInteraction(character: Character) {
@@ -40,7 +39,7 @@ class QuizActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
-    override fun onToQuizButtonInteraction(lessonId: Int?) {
+    override fun onToQuizButtonInteraction(lessonId: Int) {
         startQuizFragment(lessonId)
     }
 

@@ -2,23 +2,22 @@ package com.kaiserpudding.howtheywrite.main
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.os.AsyncTask
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailActivity
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment
+import com.kaiserpudding.howtheywrite.characterList.CharacterListFragmentDirections
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
 import com.kaiserpudding.howtheywrite.lessonList.LessonListFragment
+import com.kaiserpudding.howtheywrite.lessonList.LessonListFragmentDirections
 import com.kaiserpudding.howtheywrite.model.Character
-import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.quiz.QuizFragment
 
 class MainActivity : AppCompatActivity(),
@@ -27,6 +26,7 @@ class MainActivity : AppCompatActivity(),
         LessonListFragment.OnLessonFragmentInteractionListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(),
                 .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
 
         //Set up Action Bar
-        val navController = host.navController
+        navController = host.navController
 
         appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun setUpBottomNavMenu(navController: NavController) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-        NavigationUI.setupWithNavController(bottomNav, navController)
+        bottomNav?.setupWithNavController(navController)
     }
 
     private fun setupActionBar(navController: NavController, appBarConfiguration: AppBarConfiguration) {
@@ -69,13 +69,16 @@ class MainActivity : AppCompatActivity(),
     override fun onQuizFragmentInteraction(character: Character) {
         val intent = Intent(this, CharacterDetailActivity::class.java)
         intent.putExtra(CharacterDetailActivity.REPLY_CHARACTER_ID, character.id)
-        startActivity(intent)}
-
-    override fun onToQuizButtonInteraction(lessonId: Int?) {
-        Navigation.createNavigateOnClickListener(R.id.action_next)
+        startActivity(intent)
     }
 
-    override fun onLessonFragmentInteraction(lesson: Lesson) {
+    override fun onToQuizButtonInteraction(lessonId: Int) {
+        val action = CharacterListFragmentDirections.actionNext(lessonId)
+        navController.navigate(action)
+    }
 
+    override fun onLessonFragmentInteraction(lessonId: Int) {
+        val action = LessonListFragmentDirections.actionNext(lessonId)
+        navController.navigate(action)
     }
 }

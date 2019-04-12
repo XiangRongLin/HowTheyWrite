@@ -30,7 +30,8 @@ class LessonListAdapter(
         }
 
         fun onAdapterItemPressed() {
-            listener.onLessonListAdapterItemInteraction(adapterPosition)
+            //+ 1 because adapter positions starts at 0 while Room ids start at 1
+            listener.onLessonListAdapterItemInteraction(adapterPosition + 1)
         }
     }
 
