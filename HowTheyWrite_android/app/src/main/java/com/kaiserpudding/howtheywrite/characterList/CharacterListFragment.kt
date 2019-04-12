@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaiserpudding.howtheywrite.R
 
 /**
@@ -63,18 +64,25 @@ class CharacterListFragment
                 }
         )
 
-        val toQuiz = view.findViewById<Button>(R.id.to_quiz_button)
-        toQuiz.setOnClickListener { onToQuizButtonPressed() }
+        val newCharacterFab = view.findViewById<FloatingActionButton>(R.id.new_character_fab)
+        newCharacterFab.setOnClickListener { onToNewCharacterFabPressed() }
+
+        val toQuizButton = view.findViewById<Button>(R.id.to_quiz_button)
+        toQuizButton.setOnClickListener { onToQuizButtonPressed() }
 
         return view
     }
 
     fun onToQuizButtonPressed() {
-        lessonId?.let { listener?.onToQuizButtonInteraction(it) }
+        lessonId?.let { listener?.onToQuizInteraction(it) }
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
         listener?.onCharacterListItemInteraction(characterId)
+    }
+
+    fun onToNewCharacterFabPressed() {
+        listener?.onNewCharacterInteraction()
     }
 
     override fun onAttach(context: Context) {
@@ -103,8 +111,9 @@ class CharacterListFragment
      * for more information.
      */
     interface OnCharacterListFragmentInteractionListener {
-        fun onToQuizButtonInteraction(lessonId: Int)
+        fun onToQuizInteraction(lessonId: Int)
         fun onCharacterListItemInteraction(characterId: Int)
+        fun onNewCharacterInteraction()
     }
 
     companion object {

@@ -38,7 +38,7 @@ class LessonListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
-        val itemView = inflater.inflate(R.layout.lesson_recyclerview_item, parent, false)
+        val itemView = inflater.inflate(R.layout.recyclerview_item_lesson, parent, false)
         return LessonViewHolder(context, itemView)
     }
 

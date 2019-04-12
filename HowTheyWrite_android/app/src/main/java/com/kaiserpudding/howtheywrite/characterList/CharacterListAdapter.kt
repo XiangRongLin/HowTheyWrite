@@ -34,7 +34,7 @@ internal class CharacterListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        val itemView = inflater.inflate(R.layout.character_recyclerview_item, parent, false)
+        val itemView = inflater.inflate(R.layout.recyclerview_item_character, parent, false)
         return CharacterViewHolder(context, itemView)
     }
 

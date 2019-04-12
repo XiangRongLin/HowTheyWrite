@@ -16,19 +16,6 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".lessonList.LessonListActivity">
-    </activity>
-    <activity android:name=".lessonList.NewLessonActivity">
-    </activity>
-    <activity android:name=".characterList.CharacterListActivity">
-    </activity>
-    <activity android:name=".characterList.NewCharacterActivity">
-    </activity>
-    <activity android:name=".lessonDetail.LessonDetailActivity">
-    </activity>
-    <activity android:name=".quiz.QuizActivity"
-              android:windowSoftInputMode="stateAlwaysVisible">
-    </activity>
   </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.kaiserpudding.howtheywrite.lessonList
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.fragment.app.Fragment
@@ -27,7 +26,7 @@ class LessonListFragment
     : Fragment(),
     LessonListAdapter.OnLessonListAdapterItemInteractionListener{
 
-    private var listenerList: OnLessonListFragmentInteractionListener? = null
+    private var listener: OnLessonListFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,35 +45,24 @@ class LessonListFragment
         lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
         lessonListViewModel.lessons.observe(this, Observer { it?.let { it1 -> adapter.setLessons(it1) } })
 
-        val fab = view.findViewById<FloatingActionButton>(R.id.add_lessen_fab)
+        val fab = view.findViewById<FloatingActionButton>(R.id.new_lessen_fab)
         fab.setOnClickListener{
-            val intent = Intent(activity, NewLessonActivity::class.java)
-            startActivity(intent)
+            onNewLessonButtonPressed()
         }
 
         return view
     }
 
-    fun onButtonPressed(lessonId: Int) {
-        listenerList?.onLessonListFragmentInteraction(lessonId)
+    private fun onListItemPressed(lessonId: Int) {
+        listener?.onLessonListItemInteraction(lessonId)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnLessonListFragmentInteractionListener) {
-            listenerList = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnLessonListFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listenerList = null
+    private fun onNewLessonButtonPressed() {
+        listener?.onToNewLessonInteraction()
     }
 
     override fun onLessonListAdapterItemInteraction(lessonId: Int) {
-        onButtonPressed(lessonId)
+        onListItemPressed(lessonId)
     }
 
     /**
@@ -89,7 +77,8 @@ class LessonListFragment
      * for more information.
      */
     interface OnLessonListFragmentInteractionListener {
-        fun onLessonListFragmentInteraction(lessonId: Int)
+        fun onLessonListItemInteraction(lessonId: Int)
+        fun onToNewLessonInteraction()
     }
 
     companion object {
@@ -101,5 +90,20 @@ class LessonListFragment
          */
         @JvmStatic
         fun newInstance() = LessonListFragment()
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnLessonListFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnLessonListFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
     }
 }

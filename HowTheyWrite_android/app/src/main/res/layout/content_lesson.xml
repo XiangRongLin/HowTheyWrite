@@ -7,7 +7,7 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".lessonList.LessonListActivity"
+  tools:context=".lessonList.LessonListFragment"
   tools:showIn="@layout/fragment_lesson_list">
 
   <androidx.recyclerview.widget.RecyclerView
@@ -16,6 +16,6 @@
     android:layout_height="match_parent"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     android:background="@android:color/darker_gray"
-    tools:listitem="@layout/lesson_recyclerview_item" />
+    tools:listitem="@layout/recyclerview_item_lesson" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
