@@ -18,8 +18,6 @@ import com.kaiserpudding.howtheywrite.R
  * Activities that contain this fragment must implement the
  * [LessonListFragment.OnLessonListFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [LessonListFragment.newInstance] factory method to
- * create an instance of this fragment.
  *
  */
 class LessonListFragment
@@ -80,18 +78,6 @@ class LessonListFragment
         fun onLessonListItemInteraction(lessonId: Int)
         fun onToNewLessonInteraction()
     }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment LessonListFragment.
-         */
-        @JvmStatic
-        fun newInstance() = LessonListFragment()
-    }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

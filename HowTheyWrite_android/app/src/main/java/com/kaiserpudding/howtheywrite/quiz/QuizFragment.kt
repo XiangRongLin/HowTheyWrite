@@ -19,8 +19,6 @@ import com.kaiserpudding.howtheywrite.model.Character
  * Activities that contain this fragment must implement the
  * [QuizFragment.OnQuizFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [QuizFragment.newInstance] factory method to
- * create an instance of this fragment.
  *
  */
 class QuizFragment : Fragment() {
@@ -133,30 +131,5 @@ class QuizFragment : Fragment() {
     interface OnQuizFragmentInteractionListener {
         fun onQuizCharacterInteraction(character: Character)
         fun onQuizFinishInteraction()
-    }
-
-    companion object {
-
-        //the fragment initialization parameters
-        private const val ARG_LESSON_ID = "lessonId"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param lessonId Id of the lesson.
-         * @return A new instance of fragment QuizFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(lessonId: Int) =
-                QuizFragment().apply {
-                    arguments = Bundle().apply {
-                        putInt(ARG_LESSON_ID, lessonId)
-                    }
-                }
-
-        @JvmStatic
-        fun newInstance() = QuizFragment()
     }
 }
