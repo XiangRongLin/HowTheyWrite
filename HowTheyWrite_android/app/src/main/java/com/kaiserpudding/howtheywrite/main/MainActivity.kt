@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(),
         navController.popBackStack()
     }
 
-    override fun onNewCharacterFinishInteraction(hanzi: String, pinyin: String, translation: String) {
+    override fun onNewCharacterFinishInteraction() {
         navController.popBackStack()
     }
 

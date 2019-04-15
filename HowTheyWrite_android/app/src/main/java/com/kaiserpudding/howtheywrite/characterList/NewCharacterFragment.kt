@@ -2,14 +2,16 @@ package com.kaiserpudding.howtheywrite.characterList
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.model.Character
 
 /**
  * A simple [Fragment] subclass.
@@ -24,11 +26,14 @@ class NewCharacterFragment : Fragment() {
     private lateinit var newCharacterHanziEditText: EditText
     private lateinit var newCharacterPinyinEditText: EditText
     private lateinit var newCharacterTranslationEditText: EditText
+    private lateinit var characterListViewModel: CharacterListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_new_character, container, false)
+
+        characterListViewModel = ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
 
         newCharacterHanziEditText = view.findViewById(R.id.editNewCharHanzi)
         newCharacterPinyinEditText = view.findViewById(R.id.editNewCharPinyin)
@@ -36,12 +41,15 @@ class NewCharacterFragment : Fragment() {
 
         val button = view.findViewById<Button>(R.id.button_save_new_char)
         button.setOnClickListener {
-            if(checkEditText()) {
-                listener?.onNewCharacterFinishInteraction(
-                        newCharacterHanziEditText.text.toString(),
-                        newCharacterPinyinEditText.text.toString(),
-                        newCharacterTranslationEditText.text.toString()
+            if (checkEditText()) {
+                characterListViewModel.insertCharacter(
+                        Character(newCharacterHanziEditText.text.toString(),
+                                newCharacterPinyinEditText.text.toString(),
+                                newCharacterTranslationEditText.text.toString())
                 )
+                val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+                onFinish()
             }//TODO else show error
 
         }
@@ -58,9 +66,8 @@ class NewCharacterFragment : Fragment() {
         return true
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onFinish(hanzi: String, pinyin: String, translation: String) {
-        listener?.onNewCharacterFinishInteraction(hanzi, pinyin, translation)
+    fun onFinish() {
+        listener?.onNewCharacterFinishInteraction()
     }
 
     override fun onAttach(context: Context) {
@@ -82,14 +89,9 @@ class NewCharacterFragment : Fragment() {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
      */
     interface OnNewCharacterFragmentInteractionListener {
-        fun onNewCharacterFinishInteraction(hanzi: String, pinyin: String, translation: String)
+        fun onNewCharacterFinishInteraction()
     }
 
 }

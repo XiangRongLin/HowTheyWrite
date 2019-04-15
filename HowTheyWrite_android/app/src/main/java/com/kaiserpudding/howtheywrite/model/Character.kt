@@ -2,6 +2,7 @@ package com.kaiserpudding.howtheywrite.model
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "characters")
@@ -18,11 +19,9 @@ class Character(
     @Embedded
     var progress: Progress = Progress()
 
-//    @Ignore
-//    constructor(id: Int, hanzi: String, pinyin: String, translationKey: String?, translation: String?, isCustom: Boolean, progress: Progress = Progress())
-//            : this(hanzi, pinyin, translationKey, translation, isCustom, progress) {
-//        this.id = id
-//    }
+    @Ignore
+    constructor(hanzi: String, pinyin: String, translation: String?)
+            : this(hanzi, pinyin, null, translation, true)
 
     override fun toString(): String {
         //TODO include translation and translationKey

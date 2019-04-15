@@ -10,4 +10,6 @@ class CharacterListViewModelFactory(private val application: Application, privat
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return CharacterListViewModel(application, lessonId) as T
     }
+
+
 }

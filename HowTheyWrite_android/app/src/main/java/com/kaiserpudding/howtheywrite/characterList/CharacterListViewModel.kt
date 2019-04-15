@@ -24,6 +24,9 @@ class CharacterListViewModel(
                 else characterRepository.getLiveDataCharacterByLessonId(lessonId)
     }
 
+    //This method is used
+    constructor(application: Application): this(application, -1)
+
     fun insertCharacter(character: Character) {
         executor.execute { characterRepository.insertCharacter(character) }
     }
