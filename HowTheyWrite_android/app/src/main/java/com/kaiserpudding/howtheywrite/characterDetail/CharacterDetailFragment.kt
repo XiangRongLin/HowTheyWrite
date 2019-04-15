@@ -15,14 +15,15 @@ import com.kaiserpudding.howtheywrite.model.Character
 
 /**
  * A simple [Fragment] subclass.
+ * It displays a single character.
  *
  */
 class CharacterDetailFragment : Fragment() {
 
-    private var hanziTextView: TextView? = null
-    private var pinyinTextView: TextView? = null
-    private var translationTextView: TextView? = null
-    private var characterDetailViewModel: CharacterDetailViewModel? = null
+    private lateinit var hanziTextView: TextView
+    private lateinit var pinyinTextView: TextView
+    private lateinit var translationTextView: TextView
+    private lateinit var characterDetailViewModel: CharacterDetailViewModel
 
     private var characterId: Int = 0
 
@@ -45,16 +46,16 @@ class CharacterDetailFragment : Fragment() {
         var character: Character? = null
 
         while (character == null) {
-            character = characterDetailViewModel!!.character
+            character = characterDetailViewModel.character
         }
 
         hanziTextView = view.findViewById(R.id.hanzi)
-        hanziTextView!!.text = character.hanzi
+        hanziTextView.text = character.hanzi
         pinyinTextView = view.findViewById(R.id.pinyin)
-        pinyinTextView!!.text = character.pinyin
+        pinyinTextView.text = character.pinyin
         translationTextView = view.findViewById(R.id.translation)
         if (character.translationKey != null) {
-            translationTextView!!.setText(
+            translationTextView.setText(
                     resources.getIdentifier(
                             character.translationKey,
                             "string",
@@ -62,7 +63,7 @@ class CharacterDetailFragment : Fragment() {
                     )
             )
         } else {
-            translationTextView!!.text = character.translation
+            translationTextView.text = character.translation
         }
 
         return view

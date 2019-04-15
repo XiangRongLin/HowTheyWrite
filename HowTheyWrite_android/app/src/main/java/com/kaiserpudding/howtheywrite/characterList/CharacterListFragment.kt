@@ -17,6 +17,8 @@ import com.kaiserpudding.howtheywrite.R
 
 /**
  * A simple [Fragment] subclass.
+ * It contains a recyclerView which displays all characters for a given lessonId.
+ * Shows all characters if no lessonId is given.
  * Activities that contain this fragment must implement the
  * [CharacterListFragment.OnCharacterListFragmentInteractionListener] interface
  * to handle interaction events.
@@ -102,11 +104,6 @@ class CharacterListFragment
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
      */
     interface OnCharacterListFragmentInteractionListener {
         fun onToQuizInteraction(lessonId: Int)

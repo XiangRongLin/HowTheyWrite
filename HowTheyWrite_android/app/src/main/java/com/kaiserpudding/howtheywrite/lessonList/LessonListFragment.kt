@@ -15,6 +15,7 @@ import com.kaiserpudding.howtheywrite.R
 
 /**
  * A simple [Fragment] subclass.
+ * It contains a recyclerView which displays all lessons.
  * Activities that contain this fragment must implement the
  * [LessonListFragment.OnLessonListFragmentInteractionListener] interface
  * to handle interaction events.
@@ -26,10 +27,6 @@ class LessonListFragment
 
     private var listener: OnLessonListFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,22 +60,6 @@ class LessonListFragment
         onListItemPressed(lessonId)
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnLessonListFragmentInteractionListener {
-        fun onLessonListItemInteraction(lessonId: Int)
-        fun onToNewLessonInteraction()
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnLessonListFragmentInteractionListener) {
@@ -91,5 +72,17 @@ class LessonListFragment
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     */
+    interface OnLessonListFragmentInteractionListener {
+        fun onLessonListItemInteraction(lessonId: Int)
+        fun onToNewLessonInteraction()
     }
 }

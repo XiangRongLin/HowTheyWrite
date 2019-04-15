@@ -16,6 +16,9 @@ import com.kaiserpudding.howtheywrite.model.Character
 
 /**
  * A simple [Fragment] subclass.
+ * It displays the quiz for a given lesson.
+ * The translation and pinyin for a character will be shown
+ * and the user has to input the correct hanzi.
  * Activities that contain this fragment must implement the
  * [QuizFragment.OnQuizFragmentInteractionListener] interface
  * to handle interaction events.
@@ -99,7 +102,7 @@ class QuizFragment : Fragment() {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(character: Character) {
+    private fun onButtonPressed(character: Character) {
         listener?.onQuizCharacterInteraction(character)
     }
 
@@ -122,11 +125,6 @@ class QuizFragment : Fragment() {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
      */
     interface OnQuizFragmentInteractionListener {
         fun onQuizCharacterInteraction(character: Character)

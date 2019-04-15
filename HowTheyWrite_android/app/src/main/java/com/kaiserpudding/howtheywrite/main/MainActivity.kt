@@ -21,6 +21,11 @@ import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.quiz.QuizFragment
 import com.kaiserpudding.howtheywrite.quiz.QuizFragmentDirections
 
+/**
+ * The single activity in the projects which hosts all fragments.
+ * It checks if the database needs to be updated.
+ * It only handles the navigation between different fragment per callbacks from the fragments
+ */
 class MainActivity : AppCompatActivity(),
         QuizFragment.OnQuizFragmentInteractionListener,
         CharacterListFragment.OnCharacterListFragmentInteractionListener,
@@ -54,10 +59,6 @@ class MainActivity : AppCompatActivity(),
     private fun setUpBottomNavMenu(navController: NavController) {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottomNav?.setupWithNavController(navController)
-    }
-
-    private fun setupActionBar(navController: NavController, appBarConfiguration: AppBarConfiguration) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private inner class DatabaseInitializer : AsyncTask<Context, Void, Void>() {
