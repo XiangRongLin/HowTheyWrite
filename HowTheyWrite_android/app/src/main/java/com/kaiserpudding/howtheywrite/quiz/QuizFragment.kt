@@ -34,7 +34,7 @@ class QuizFragment : Fragment() {
     private lateinit var quizViewModel: QuizViewModel
     private lateinit var quizTranslation: TextView
     private lateinit var quizPinyin: TextView
-    private lateinit var quizInput: EditText
+    private lateinit var quizEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,7 @@ class QuizFragment : Fragment() {
         quizPinyin = view.findViewById(R.id.quiz_pinyin)
         //open [CharacterDetailActivity] when clicked
         quizTranslation.setOnClickListener {
-            onButtonPressed(quizViewModel.currentWord)
+            onTranslationPressed(view, quizViewModel.currentWord)
         }
 
         var a: List<Character>? = null
@@ -67,9 +67,9 @@ class QuizFragment : Fragment() {
 
         setQuizWord(quizViewModel.currentWord)
 
-        quizInput = view.findViewById(R.id.quiz_input_edit_text)
-        quizInput.setOnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
-            if (quizInput.text != null && quizInput.text.toString() == quizViewModel.currentWord.hanzi) {
+        quizEditText = view.findViewById(R.id.quiz_input_edit_text)
+        quizEditText.setOnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
+            if (quizEditText.text != null && quizEditText.text.toString() == quizViewModel.currentWord.hanzi) {
                 val nextCharacter = quizViewModel.nextWord
                 if (nextCharacter != null) {
                     setQuizWord(nextCharacter)
@@ -83,6 +83,7 @@ class QuizFragment : Fragment() {
             true
         }
         //automatically show focus editText and show keyboard
+        quizEditText.requestFocus()
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
@@ -102,11 +103,14 @@ class QuizFragment : Fragment() {
     }
 
     private fun resetQuizInput() {
-        quizInput.setText("")
+        quizEditText.setText("")
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    private fun onButtonPressed(character: Character) {
+    private fun onTranslationPressed(view: View, character: Character) {
+        //clear focus on editText and hide keyboard
+        quizEditText.clearFocus()
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
         listener?.onQuizCharacterInteraction(character)
     }
 
