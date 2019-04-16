@@ -20,8 +20,8 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     internal val currentWord: Character
         get() = characters!![currentCharacterIndex]
 
-    internal//TODO multiple calls return different values
-    val nextWord: Character?
+    //TODO multiple calls return different values
+    internal val nextWord: Character?
         get() {
             return if (currentCharacterIndex + 1 >= charactersSize) null
             else characters!![++currentCharacterIndex]
@@ -30,14 +30,10 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     init {
         this.characterRepository = CharacterRepository(application)
         this.executor = Executors.newCachedThreadPool()
-        this.currentCharacterIndex = -1
         executor.execute {
             characters = characterRepository.getCharacterByLessonId(lessonId)
             charactersSize = characters!!.size
+            characters!!.shuffle()
         }
-    }
-
-    internal fun randomizeList() {
-        characters!!.shuffle()
     }
 }

@@ -65,8 +65,7 @@ class QuizFragment : Fragment() {
             a = quizViewModel.characters
         }
 
-        quizViewModel.randomizeList()
-        quizViewModel.nextWord?.let { setQuizWord(it) }
+        setQuizWord(quizViewModel.currentWord)
 
         quizInput = view.findViewById(R.id.quiz_input_edit_text)
         quizInput.setOnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
