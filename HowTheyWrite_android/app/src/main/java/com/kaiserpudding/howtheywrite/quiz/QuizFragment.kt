@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
+import kotlinx.android.synthetic.main.fragment_quiz.*
 
 
 /**
@@ -82,10 +83,7 @@ class QuizFragment : Fragment() {
             }
             true
         }
-        //automatically show focus editText and show keyboard
-        quizEditText.requestFocus()
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        showKeyboardAndFocus()
 
         return view
     }
@@ -107,10 +105,6 @@ class QuizFragment : Fragment() {
     }
 
     private fun onTranslationPressed(view: View, character: Character) {
-        //clear focus on editText and hide keyboard
-        quizEditText.clearFocus()
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
         listener?.onQuizCharacterInteraction(character)
     }
 
@@ -126,6 +120,34 @@ class QuizFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        view?.let { hideKeyboardAndDefocus(it) }
+    }
+
+    /**
+     * Focus quizInputEditText and show keyboard
+     *
+     * @param view
+     */
+    private fun showKeyboardAndFocus() {
+        quizEditText.requestFocus()
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    }
+
+    /**
+     * Clear focus of quizInputEditText and hide keyboard
+     *
+     * @param view
+     */
+    private fun hideKeyboardAndDefocus(view: View) {
+        quiz_input_edit_text.clearFocus()
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     /**
