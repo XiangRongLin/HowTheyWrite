@@ -17,15 +17,35 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     private var currentCharacterIndex: Int = 0
     private var charactersSize: Int = 0
 
-    internal val currentWord: Character
+    internal val currentCharacter: Character
         get() = characters!![currentCharacterIndex]
 
-    //TODO multiple calls return different values
-    internal val nextWord: Character?
+    internal val currentCharacterTranslation: String
         get() {
-            return if (currentCharacterIndex + 1 >= charactersSize) null
-            else characters!![++currentCharacterIndex]
+            return if (currentCharacter.translationKey != null) {
+                val resources = getApplication<Application>().resources
+                resources.getText(
+                        resources.getIdentifier(
+                                currentCharacter.translationKey,
+                                "string",
+                                getApplication<Application>().applicationContext.packageName
+                        )
+                ).toString()
+            } else {
+                currentCharacter.translation!!
+            }
         }
+
+    internal val currentCharacterPinyin: String
+        get() = currentCharacter.pinyin
+
+    /**
+     * Increases the index, so currentCharacter is the next one
+     *
+     */
+    internal fun nextCharacter() {
+        currentCharacterIndex++
+    }
 
     init {
         this.characterRepository = CharacterRepository(application)
@@ -35,5 +55,13 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
             charactersSize = characters!!.size
             characters!!.shuffle()
         }
+    }
+
+    fun inputIsCorrect(input: String): Boolean {
+        return input == currentCharacter.hanzi
+    }
+
+    fun hasNext(): Boolean {
+        return currentCharacterIndex < charactersSize - 1
     }
 }

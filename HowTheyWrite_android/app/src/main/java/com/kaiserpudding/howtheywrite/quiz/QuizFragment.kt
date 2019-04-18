@@ -58,7 +58,7 @@ class QuizFragment : Fragment() {
         quizPinyin = view.findViewById(R.id.quiz_pinyin)
         //open [CharacterDetailActivity] when clicked
         quizTranslation.setOnClickListener {
-            onTranslationPressed(view, quizViewModel.currentWord)
+            onTranslationPressed(quizViewModel.currentCharacter)
         }
 
         var a: List<Character>? = null
@@ -66,15 +66,15 @@ class QuizFragment : Fragment() {
             a = quizViewModel.characters
         }
 
-        setQuizWord(quizViewModel.currentWord)
+        setQuizCharacter()
 
         quizEditText = view.findViewById(R.id.quiz_input_edit_text)
-        quizEditText.setOnEditorActionListener { textView: TextView, i: Int, keyEvent: KeyEvent? ->
-            if (quizEditText.text != null && quizEditText.text.toString() == quizViewModel.currentWord.hanzi) {
-                val nextCharacter = quizViewModel.nextWord
-                if (nextCharacter != null) {
-                    setQuizWord(nextCharacter)
+        quizEditText.setOnEditorActionListener { _: TextView, _: Int, _: KeyEvent? ->
+            if (quizEditText.text != null && quizViewModel.inputIsCorrect(quizEditText.text.toString())) {
+                if (quizViewModel.hasNext()) {
                     resetQuizInput()
+                    quizViewModel.nextCharacter()
+                    setQuizCharacter()
                 } else {
                     listener!!.onQuizFinishInteraction()
                 }
@@ -83,28 +83,25 @@ class QuizFragment : Fragment() {
             }
             true
         }
-        showKeyboardAndFocus()
 
         return view
     }
 
-    private fun setQuizWord(character: Character) {
-        quizTranslation.text = if (character.translationKey == null) {
-            character.translation
-        } else {
-            resources.getText(resources.getIdentifier(
-                    character.translationKey,
-                    "string",
-                    context!!.packageName))
-        }
-        quizPinyin.text = character.pinyin
+    /**
+     * Sets the [TextView] for the translation and pinyin to the current character,
+     * provided by [QuizViewModel]
+     *
+     */
+    private fun setQuizCharacter() {
+        quizTranslation.text = quizViewModel.currentCharacterTranslation
+        quizPinyin.text = quizViewModel.currentCharacterPinyin
     }
 
     private fun resetQuizInput() {
         quizEditText.setText("")
     }
 
-    private fun onTranslationPressed(view: View, character: Character) {
+    private fun onTranslationPressed(character: Character) {
         listener?.onQuizCharacterInteraction(character)
     }
 
@@ -122,6 +119,10 @@ class QuizFragment : Fragment() {
         listener = null
     }
 
+    override fun onStart() {
+        super.onStart()
+//        showKeyboardAndFocus()
+    }
 
     override fun onPause() {
         super.onPause()
