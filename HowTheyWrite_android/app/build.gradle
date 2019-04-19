@@ -37,19 +37,17 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // Room components
-    def room_version = '2.1.0-alpha06'
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
     // Lifecycle components
-    def lifecycle_version = '2.1.0-alpha03'
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    //recyclerview
+    //RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0-alpha04"
-    implementation "com.google.android.material:material:1.1.0-alpha04"
+    implementation "com.google.android.material:material:1.1.0-alpha05"
 
     //show db in browser
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
@@ -58,9 +56,18 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //androidX navigation
-    def nav_version = "2.1.0-alpha02"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    //Kotlin coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    //ViewModel extensions for coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    //Room extension for coroutines
+    implementation "androidx.room:room-ktx:$room_version"
+
+
 }
 repositories {
     mavenCentral()
