@@ -12,8 +12,7 @@ class CharacterRepository(application: Application) {
     private val characterDao: CharacterDao
     private val lessonCharacterJoinDao: LessonCharacterJoinDao
 
-    val allLiveDataCharacters: LiveData<List<Character>>
-        get() = characterDao.allCharacters
+
 
     init {
         val db = AppDatabase.getDatabase(application)
@@ -21,24 +20,27 @@ class CharacterRepository(application: Application) {
         lessonCharacterJoinDao = db.lessonCharacterJoinJoinDao()
     }
 
-    fun insertCharacter(character: Character) {
+    suspend fun insert(character: Character) {
         characterDao.insert(character)
     }
 
-    fun deleteCharacter(character: Character) {
+    suspend fun delete(character: Character) {
         characterDao.delete(character)
     }
 
-    fun getCharacterById(id: Int): Character {
+    suspend fun getCharacterById(id: Int): Character {
         return characterDao.getCharacterById(id)
     }
 
-    fun getLiveDataCharacterByLessonId(lessonId: Int): LiveData<List<Character>> {
+    suspend fun getLiveDataCharacterByLessonId(lessonId: Int): LiveData<List<Character>> {
         return lessonCharacterJoinDao.getLiveDataCharacterByLessonId(lessonId)
     }
 
-    fun getCharacterByLessonId(lessonId: Int): MutableList<Character> {
+    suspend fun getCharacterByLessonId(lessonId: Int): MutableList<Character> {
         return lessonCharacterJoinDao.getCharacterByLessonId(lessonId)
     }
 
+    suspend fun allLiveDataCharacters(): LiveData<List<Character>> {
+        return characterDao.allCharacters()
+    }
 }
