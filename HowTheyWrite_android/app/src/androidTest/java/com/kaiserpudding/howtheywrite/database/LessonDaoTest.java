@@ -40,39 +40,39 @@ public class LessonDaoTest {
     db.close();
   }
 
-  @Test
-  public void insertAndGetLesson() {
-    Lesson lesson = new Lesson("beginner");
-    int id = (int) lessonDao.insertLesson(lesson);
-    lesson.setId(id);
-
-    Lesson actualLesson = lessonDao.getLessonByName("beginner");
-
-    assertEquals(lesson.toString(), actualLesson.toString());
-  }
-
-  @Test
-  public void getLessonNames() {
-    Lesson lesson1 = new Lesson("a");
-    Lesson lesson2 = new Lesson("b");
-    Lesson lesson3 = new Lesson("c");
-    Lesson lesson4 = new Lesson("d");
-    Lesson lesson5 = new Lesson("e");
-    lessonDao.insertLesson(lesson1);
-    lessonDao.insertLesson(lesson2);
-    lessonDao.insertLesson(lesson3);
-    lessonDao.insertLesson(lesson4);
-    lessonDao.insertLesson(lesson5);
-
-    List<String> expectedLessonNames = new LinkedList<>();
-    expectedLessonNames.add("a");
-    expectedLessonNames.add("b");
-    expectedLessonNames.add("c");
-    expectedLessonNames.add("d");
-    expectedLessonNames.add("e");
-    List<String> actualLessonNames = lessonDao.getAllLessonNames();
-
-    assertEquals(expectedLessonNames, actualLessonNames);
-
-  }
+//  @Test
+//  public void insertAndGetLesson() {
+//    Lesson lesson = new Lesson("beginner");
+//    int id = (int) lessonDao.insertLesson(lesson);
+//    lesson.setId(id);
+//
+//    Lesson actualLesson = lessonDao.getLessonByName("beginner");
+//
+//    assertEquals(lesson.toString(), actualLesson.toString());
+//  }
+//
+//  @Test
+//  public void getLessonNames() {
+//    Lesson lesson1 = new Lesson("a");
+//    Lesson lesson2 = new Lesson("b");
+//    Lesson lesson3 = new Lesson("c");
+//    Lesson lesson4 = new Lesson("d");
+//    Lesson lesson5 = new Lesson("e");
+//    lessonDao.insertLesson(lesson1);
+//    lessonDao.insertLesson(lesson2);
+//    lessonDao.insertLesson(lesson3);
+//    lessonDao.insertLesson(lesson4);
+//    lessonDao.insertLesson(lesson5);
+//
+//    List<String> expectedLessonNames = new LinkedList<>();
+//    expectedLessonNames.add("a");
+//    expectedLessonNames.add("b");
+//    expectedLessonNames.add("c");
+//    expectedLessonNames.add("d");
+//    expectedLessonNames.add("e");
+//    List<String> actualLessonNames = lessonDao.getAllLessonNames();
+//
+//    assertEquals(expectedLessonNames, actualLessonNames);
+//
+//  }
 }
