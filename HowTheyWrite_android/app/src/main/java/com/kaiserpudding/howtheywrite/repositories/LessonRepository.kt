@@ -7,6 +7,8 @@ import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao
 import com.kaiserpudding.howtheywrite.database.dao.LessonDao
 import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LessonRepository(application: Application) {
 
@@ -21,13 +23,19 @@ class LessonRepository(application: Application) {
     }
 
     suspend fun insert(lesson: Lesson) {
-        lessonDao.insert(lesson)
-        insertLessonCharacterJoin(lesson)
+        withContext(Dispatchers.IO) {
+            lessonDao.insert(lesson)
+            insertLessonCharacterJoin(lesson)
+        }
+
     }
 
     suspend fun delete(lesson: Lesson) {
-        lessonDao.delete(lesson)
-        //TODO delete lessonCharacterJoin
+        withContext(Dispatchers.IO) {
+            lessonDao.delete(lesson)
+            //TODO delete lessonCharacterJoin
+        }
+
     }
 
     fun allLiveDataLessons(): LiveData<List<Lesson>> {
@@ -35,15 +43,17 @@ class LessonRepository(application: Application) {
     }
 
     private suspend fun insertLessonCharacterJoin(lesson: Lesson) {
-        val characters = lesson.characters
-        val numberOfCharacters = characters.size
-        if (numberOfCharacters > 0) {
-            val lessonId = lesson.id
-            val toInsert = arrayOf<LessonCharacterJoin>()
-            for (i in 0 until numberOfCharacters) {
-                toInsert[i] = LessonCharacterJoin(lessonId, characters[i].id)
+        withContext(Dispatchers.IO) {
+            val characters = lesson.characters
+            val numberOfCharacters = characters.size
+            if (numberOfCharacters > 0) {
+                val lessonId = lesson.id
+                val toInsert = arrayOf<LessonCharacterJoin>()
+                for (i in 0 until numberOfCharacters) {
+                    toInsert[i] = LessonCharacterJoin(lessonId, characters[i].id)
+                }
+                lessonCharacterJoinDao.insertLessonCharacterJoin(toInsert)
             }
-            lessonCharacterJoinDao.insertLessonCharacterJoin(toInsert)
         }
     }
 }

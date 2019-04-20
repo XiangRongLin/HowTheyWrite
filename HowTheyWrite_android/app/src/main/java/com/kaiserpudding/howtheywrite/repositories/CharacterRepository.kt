@@ -6,6 +6,8 @@ import com.kaiserpudding.howtheywrite.database.AppDatabase
 import com.kaiserpudding.howtheywrite.database.dao.CharacterDao
 import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao
 import com.kaiserpudding.howtheywrite.model.Character
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class CharacterRepository(application: Application) {
 
@@ -19,11 +21,17 @@ class CharacterRepository(application: Application) {
     }
 
     suspend fun insert(character: Character) {
-        characterDao.insert(character)
+        withContext(Dispatchers.IO) {
+            characterDao.insert(character)
+        }
+
     }
 
     suspend fun delete(character: Character) {
-        characterDao.delete(character)
+        withContext(Dispatchers.IO) {
+            characterDao.delete(character)
+        }
+
     }
 
     fun getLiveDataCharacterById(id: Int) :LiveData<Character> {
@@ -40,5 +48,9 @@ class CharacterRepository(application: Application) {
 
     fun allLiveDataCharacters(): LiveData<List<Character>> {
         return characterDao.allCharacters()
+    }
+
+    suspend fun getCharactersById(id: Int): Character {
+        return characterDao.getCharacterById(id)
     }
 }
