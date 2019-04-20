@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 
@@ -43,28 +44,33 @@ class CharacterDetailFragment : Fragment() {
         characterDetailViewModel = ViewModelProviders.of(
                 this, CharacterDetailViewModelFactory(activity!!.application, characterId))
                 .get(CharacterDetailViewModel::class.java)
-        var character: Character? = null
 
-        while (character == null) {
-            character = characterDetailViewModel.character
-        }
+//        var character: Character? = null
+//
+//        while (character == null) {
+//            character = characterDetailViewModel.character
+//        }
 
-        hanziTextView = view.findViewById(R.id.hanzi)
-        hanziTextView.text = character.hanzi
-        pinyinTextView = view.findViewById(R.id.pinyin)
-        pinyinTextView.text = character.pinyin
-        translationTextView = view.findViewById(R.id.translation)
-        if (character.translationKey != null) {
-            translationTextView.setText(
-                    resources.getIdentifier(
-                            character.translationKey,
-                            "string",
-                            context!!.packageName
-                    )
-            )
-        } else {
-            translationTextView.text = character.translation
-        }
+        characterDetailViewModel.character.observe(this, Observer {character ->
+            hanziTextView = view.findViewById(R.id.hanzi)
+            hanziTextView.text = character.hanzi
+            pinyinTextView = view.findViewById(R.id.pinyin)
+            pinyinTextView.text = character.pinyin
+            translationTextView = view.findViewById(R.id.translation)
+            if (character.translationKey != null) {
+                translationTextView.setText(
+                        resources.getIdentifier(
+                                character.translationKey,
+                                "string",
+                                context!!.packageName
+                        )
+                )
+            } else {
+                translationTextView.text = character.translation
+            }
+        })
+
+
 
         return view
     }

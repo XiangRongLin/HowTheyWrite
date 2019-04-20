@@ -2,17 +2,25 @@ package com.kaiserpudding.howtheywrite.quiz
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
+import kotlin.LazyThreadSafetyMode.NONE
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(application) {
 
-    private val characterRepository: CharacterRepository
-    private val executor: Executor
+    private val characterRepository: CharacterRepository = CharacterRepository(application)
 
-    var characters: MutableList<Character>? = null
+    val characterLiveData: LiveData<List<Character>> by lazy<LiveData<List<Character>>>(NONE) {
+        Transformations.map(characterRepository.getLiveDataCharacterByLessonId(lessonId)) {
+            it
+        }
+    }
+
+    lateinit var characters: MutableList<Character>
         private set
     private var currentCharacterIndex: Int = 0
     private var charactersSize: Int = 0
@@ -39,22 +47,18 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     internal val currentCharacterPinyin: String
         get() = currentCharacter.pinyin
 
+    internal fun initCharacters(list: List<Character>) {
+        characters = list.toMutableList()
+        charactersSize = characters.size
+        characters.shuffle()
+    }
+
     /**
      * Increases the index, so currentCharacter is the next one
      *
      */
     internal fun nextCharacter() {
         currentCharacterIndex++
-    }
-
-    init {
-        this.characterRepository = CharacterRepository(application)
-        this.executor = Executors.newCachedThreadPool()
-        executor.execute {
-            characters = characterRepository.getCharacterByLessonId(lessonId)
-            charactersSize = characters!!.size
-            characters!!.shuffle()
-        }
     }
 
     fun inputIsCorrect(input: String): Boolean {
