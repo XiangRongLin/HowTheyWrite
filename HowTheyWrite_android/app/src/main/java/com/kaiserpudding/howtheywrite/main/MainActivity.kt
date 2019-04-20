@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity(),
         override fun doInBackground(vararg contexts: Context): Void? {
             val a = ChineseDbHelper(contexts[0])
             a.readableDatabase
+            a.close()
             return null
         }
     }
