@@ -34,6 +34,10 @@ class CharacterRepository(application: Application) {
         return lessonCharacterJoinDao.getLiveDataCharacterByLessonId(lessonId)
     }
 
+    fun getLiveDataCharacterByLessonIdInRandomOrder(lessonId: Int): LiveData<List<Character>> {
+        return lessonCharacterJoinDao.getLiveDataCharacterByLessonIdInRandomOrder(lessonId)
+    }
+
     fun allLiveDataCharacters(): LiveData<List<Character>> {
         return characterDao.allCharacters()
     }

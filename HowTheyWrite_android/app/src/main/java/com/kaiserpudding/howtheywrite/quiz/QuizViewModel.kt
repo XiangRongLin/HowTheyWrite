@@ -13,7 +13,8 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     private val characterRepository: CharacterRepository = CharacterRepository(application)
 
     val characterLiveData: LiveData<List<Character>> by lazy<LiveData<List<Character>>>(NONE) {
-        Transformations.map(characterRepository.getLiveDataCharacterByLessonId(lessonId)) {
+        Transformations.map(
+                characterRepository.getLiveDataCharacterByLessonIdInRandomOrder(lessonId)) {
             it
         }
     }
@@ -48,7 +49,6 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     internal fun initCharacters(list: List<Character>) {
         characters = list.toMutableList()
         charactersSize = characters.size
-        characters.shuffle()
     }
 
     /**

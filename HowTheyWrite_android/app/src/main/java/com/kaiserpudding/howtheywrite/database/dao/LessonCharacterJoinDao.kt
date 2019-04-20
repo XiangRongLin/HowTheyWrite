@@ -26,6 +26,12 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
 
     @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
             + "characters.id = lesson_character_join.characterId WHERE\n"
+            + "lesson_character_join.lessonId = :id\n"
+            + "ORDER BY RANDOM()")
+    fun getLiveDataCharacterByLessonIdInRandomOrder(id: Int): LiveData<List<Character>>
+
+    @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
+            +   "characters.id = lesson_character_join.characterId WHERE\n"
             + "lesson_character_join.lessonId = :id")
     fun getLiveDataCharacterByLessonId(id: Int): LiveData<List<Character>>
 
