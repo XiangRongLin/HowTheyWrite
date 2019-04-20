@@ -14,7 +14,7 @@ class LessonListAdapter(
         private val listener: OnLessonListAdapterItemInteractionListener)
     : RecyclerView.Adapter<LessonListAdapter.LessonViewHolder>() {
 
-    private val inflater: LayoutInflater
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var lessons: List<Lesson>? = null
 
@@ -27,14 +27,10 @@ class LessonListAdapter(
             lessonItemView = itemView.findViewById(R.id.lessonTextView)
         }
 
-        fun onAdapterItemPressed() {
+        private fun onAdapterItemPressed() {
             //+ 1 because adapter positions starts at 0 while Room ids start at 1
             listener.onLessonListAdapterItemInteraction(adapterPosition + 1)
         }
-    }
-
-    init {
-        this.inflater = LayoutInflater.from(context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
@@ -67,11 +63,6 @@ class LessonListAdapter(
 
     interface OnLessonListAdapterItemInteractionListener {
         fun onLessonListAdapterItemInteraction(lessonId: Int)
-    }
-
-    companion object {
-
-        val SELECTED_LESSON_ID = "howTheyWrite.selectedLessonId"
     }
 
 }

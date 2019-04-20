@@ -73,7 +73,7 @@ class CharacterListFragment
         return view
     }
 
-    fun onToQuizButtonPressed() {
+    private fun onToQuizButtonPressed() {
         lessonId?.let { listener?.onToQuizInteraction(it) }
     }
 
@@ -81,7 +81,7 @@ class CharacterListFragment
         listener?.onCharacterListItemInteraction(characterId)
     }
 
-    fun onToNewCharacterFabPressed() {
+    private fun onToNewCharacterFabPressed() {
         listener?.onNewCharacterInteraction()
     }
 
@@ -90,7 +90,7 @@ class CharacterListFragment
         if (context is OnCharacterListFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnCharacterListFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnCharacterListFragmentInteractionListener")
         }
     }
 

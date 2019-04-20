@@ -133,13 +133,12 @@ class QuizFragment : Fragment() {
     /**
      * Focus quizInputEditText and show keyboard
      *
-     * @param view
      */
-    private fun showKeyboardAndFocus() {
-        quizEditText.requestFocus()
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-    }
+//    private fun showKeyboardAndFocus() {
+//        quizEditText.requestFocus()
+//        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+//    }
 
     /**
      * Clear focus of quizInputEditText and hide keyboard

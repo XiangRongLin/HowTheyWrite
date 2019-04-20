@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
@@ -23,9 +22,6 @@ class CharacterListViewModel(
                 if (lessonId == -1) characterRepository.allLiveDataCharacters()
                 else characterRepository.getLiveDataCharacterByLessonId(lessonId)
     }
-
-    //This method is used
-    constructor(application: Application) : this(application, -1)
 
     fun insertCharacter(character: Character) {
         viewModelScope.launch {

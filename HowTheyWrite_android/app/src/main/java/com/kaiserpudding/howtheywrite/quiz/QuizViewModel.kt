@@ -7,8 +7,6 @@ import androidx.lifecycle.Transformations
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
 import kotlin.LazyThreadSafetyMode.NONE
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(application) {
 
@@ -26,7 +24,7 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     private var charactersSize: Int = 0
 
     internal val currentCharacter: Character
-        get() = characters!![currentCharacterIndex]
+        get() = characters[currentCharacterIndex]
 
     internal val currentCharacterTranslation: String
         get() {

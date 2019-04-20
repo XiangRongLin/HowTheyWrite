@@ -2,7 +2,6 @@ package com.kaiserpudding.howtheywrite.database
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.AssetManager
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import java.io.File

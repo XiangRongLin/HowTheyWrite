@@ -66,7 +66,7 @@ class NewCharacterFragment : Fragment() {
         return true
     }
 
-    fun onFinish() {
+    private fun onFinish() {
         listener?.onNewCharacterFinishInteraction()
     }
 
@@ -75,7 +75,7 @@ class NewCharacterFragment : Fragment() {
         if (context is OnNewCharacterFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnNewCharacterFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnNewCharacterFragmentInteractionListener")
         }
     }
 

@@ -21,11 +21,4 @@ class Lesson(
         return id.toString() + name
     }
 
-    fun addCharacter(character: Character) {
-        this.characters.add(character)
-    }
-
-    fun removeCharacter(character: Character) {
-        this.characters.remove(character)
-    }
 }

@@ -2,12 +2,10 @@ package com.kaiserpudding.howtheywrite.repositories
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.kaiserpudding.howtheywrite.database.AppDatabase
 import com.kaiserpudding.howtheywrite.database.dao.CharacterDao
 import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao
 import com.kaiserpudding.howtheywrite.model.Character
-import kotlin.LazyThreadSafetyMode.NONE
 
 class CharacterRepository(application: Application) {
 
@@ -28,20 +26,12 @@ class CharacterRepository(application: Application) {
         characterDao.delete(character)
     }
 
-    suspend fun getCharacterById(id: Int): Character {
-        return characterDao.getCharacterById(id)
-    }
-
     fun getLiveDataCharacterById(id: Int) :LiveData<Character> {
         return characterDao.getLiveDataCharacterById(id)
     }
 
     fun getLiveDataCharacterByLessonId(lessonId: Int): LiveData<List<Character>> {
         return lessonCharacterJoinDao.getLiveDataCharacterByLessonId(lessonId)
-    }
-
-    suspend fun getCharacterByLessonId(lessonId: Int): MutableList<Character> {
-        return lessonCharacterJoinDao.getCharacterByLessonId(lessonId)
     }
 
     fun allLiveDataCharacters(): LiveData<List<Character>> {

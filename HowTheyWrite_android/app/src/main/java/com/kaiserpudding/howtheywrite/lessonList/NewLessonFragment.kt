@@ -64,7 +64,7 @@ class NewLessonFragment : Fragment() {
                 false
             }
             //TODO remove !!
-            lessonListViewModel.lessonNames!!.contains(newLessonEditText.text.toString()) -> {
+            lessonListViewModel.lessonNames.contains(newLessonEditText.text.toString()) -> {
                 newLessonEditText.error = resources.getString(R.string.error_duplicate_lesson_name)
                 false
             }
@@ -72,7 +72,7 @@ class NewLessonFragment : Fragment() {
         }
     }
 
-    fun onFinish() {
+    private fun onFinish() {
         listener?.onNewLessonFinishInteraction()
     }
 
@@ -81,7 +81,7 @@ class NewLessonFragment : Fragment() {
         if (context is OnNewLessonFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnNewCharacterFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnNewCharacterFragmentInteractionListener")
         }
     }
 
