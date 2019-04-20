@@ -47,7 +47,7 @@ public class LessonCharacterJoinTest {
   @Test
   public void relationIsUnique() {
     Character character = new Character(null, "あ", "a", null, false);
-    int characterId = (int) characterDao.insertCharacter(character);
+    int characterId = (int) characterDao.insert(character);
     Lesson lesson = new Lesson("basics");
     int lessonId = (int) lessonDao.insertLesson(lesson);
     LessonCharacterJoin lessonCharacterJoinA = new LessonCharacterJoin(lessonId, characterId);

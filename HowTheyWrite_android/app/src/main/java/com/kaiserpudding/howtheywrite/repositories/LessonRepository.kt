@@ -13,11 +13,6 @@ class LessonRepository(application: Application) {
     private val lessonDao: LessonDao
     private val lessonCharacterJoinDao: LessonCharacterJoinDao
 
-    val allLiveDataLessons: LiveData<List<Lesson>>
-        get() = lessonDao.allLessons
-
-    val allLessonNames: List<String>
-        get() = lessonDao.allLessonNames
 
     init {
         val db = AppDatabase.getDatabase(application)
@@ -25,13 +20,21 @@ class LessonRepository(application: Application) {
         lessonCharacterJoinDao = db.lessonCharacterJoinJoinDao()
     }
 
-    fun insert(lesson: Lesson) {
-        lessonDao.insert(lesson)
+    suspend fun insert(lesson: Lesson) {
         lessonDao.insert(lesson)
         insertLessonCharacterJoin(lesson)
     }
 
-    fun insertLessonCharacterJoin(lesson: Lesson) {
+    suspend fun delete(lesson: Lesson) {
+        lessonDao.delete(lesson)
+        //TODO delete lessonCharacterJoin
+    }
+
+    fun allLiveDataLessons(): LiveData<List<Lesson>> {
+        return lessonDao.allLessons()
+    }
+
+    private suspend fun insertLessonCharacterJoin(lesson: Lesson) {
         val characters = lesson.characters
         val numberOfCharacters = characters.size
         if (numberOfCharacters > 0) {
@@ -42,13 +45,5 @@ class LessonRepository(application: Application) {
             }
             lessonCharacterJoinDao.insertLessonCharacterJoin(toInsert)
         }
-    }
-
-    fun getLessonWithRelationById(id: Int): Lesson {
-        return lessonCharacterJoinDao.getLessonByLessonId(id)
-    }
-
-    fun getLiveDataLessonWithRelationById(id: Int): LiveData<Lesson> {
-        return lessonCharacterJoinDao.getLiveDataLessonByLessonId(id)
     }
 }

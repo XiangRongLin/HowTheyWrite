@@ -27,7 +27,7 @@ internal class CharacterListAdapter(
             characterItemView = itemView.findViewById(R.id.characterTextView)
         }
 
-        fun onAdapterItemPressed() {
+        private fun onAdapterItemPressed() {
             //+ 1 because adapter positions starts at 0 while Room ids start at 1
             listener.onCharacterListAdapterInteraction(characters!![adapterPosition].id)
         }

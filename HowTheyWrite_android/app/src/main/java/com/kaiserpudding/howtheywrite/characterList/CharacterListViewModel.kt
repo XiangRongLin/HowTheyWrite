@@ -3,10 +3,10 @@ package com.kaiserpudding.howtheywrite.characterList
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import kotlinx.coroutines.launch
 
 class CharacterListViewModel(
         application: Application,
@@ -14,20 +14,19 @@ class CharacterListViewModel(
     : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
-    private val executor: Executor = Executors.newCachedThreadPool()!!
 
     val characters: LiveData<List<Character>>
 
     init {
-        this.characters =
-                if (lessonId == -1) characterRepository.allLiveDataCharacters
+        characters =
+                if (lessonId == -1) characterRepository.allLiveDataCharacters()
                 else characterRepository.getLiveDataCharacterByLessonId(lessonId)
     }
 
-    //This method is used
-    constructor(application: Application): this(application, -1)
-
     fun insertCharacter(character: Character) {
-        executor.execute { characterRepository.insertCharacter(character) }
+        viewModelScope.launch {
+            characterRepository.insert(character)
+        }
+
     }
 }

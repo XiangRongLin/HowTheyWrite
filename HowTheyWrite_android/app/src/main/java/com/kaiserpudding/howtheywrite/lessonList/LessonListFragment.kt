@@ -65,7 +65,7 @@ class LessonListFragment
         if (context is OnLessonListFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnLessonListFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnLessonListFragmentInteractionListener")
         }
     }
 

@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.kaiserpudding.howtheywrite.R
@@ -61,28 +62,28 @@ class QuizFragment : Fragment() {
             onTranslationPressed(quizViewModel.currentCharacter)
         }
 
-        var a: List<Character>? = null
-        while (a == null) {
-            a = quizViewModel.characters
-        }
+        quizViewModel.characterLiveData.observe(this, Observer {list ->
+            quizViewModel.initCharacters(list)
+            setQuizCharacter()
 
-        setQuizCharacter()
-
-        quizEditText = view.findViewById(R.id.quiz_input_edit_text)
-        quizEditText.setOnEditorActionListener { _: TextView, _: Int, _: KeyEvent? ->
-            if (quizEditText.text != null && quizViewModel.inputIsCorrect(quizEditText.text.toString())) {
-                if (quizViewModel.hasNext()) {
-                    resetQuizInput()
-                    quizViewModel.nextCharacter()
-                    setQuizCharacter()
+            quizEditText = view.findViewById(R.id.quiz_input_edit_text)
+            quizEditText.setOnEditorActionListener { _: TextView, _: Int, _: KeyEvent? ->
+                if (quizEditText.text != null && quizViewModel.inputIsCorrect(quizEditText.text.toString())) {
+                    if (quizViewModel.hasNext()) {
+                        resetQuizInput()
+                        quizViewModel.nextCharacter()
+                        setQuizCharacter()
+                    } else {
+                        listener!!.onQuizFinishInteraction()
+                    }
                 } else {
-                    listener!!.onQuizFinishInteraction()
+                    resetQuizInput()
                 }
-            } else {
-                resetQuizInput()
+                true
             }
-            true
-        }
+        })
+
+
 
         return view
     }
@@ -132,13 +133,12 @@ class QuizFragment : Fragment() {
     /**
      * Focus quizInputEditText and show keyboard
      *
-     * @param view
      */
-    private fun showKeyboardAndFocus() {
-        quizEditText.requestFocus()
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-    }
+//    private fun showKeyboardAndFocus() {
+//        quizEditText.requestFocus()
+//        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+//    }
 
     /**
      * Clear focus of quizInputEditText and hide keyboard
