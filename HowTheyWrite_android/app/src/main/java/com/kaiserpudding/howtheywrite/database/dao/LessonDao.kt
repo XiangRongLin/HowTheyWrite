@@ -13,7 +13,7 @@ import com.kaiserpudding.howtheywrite.model.Lesson
 interface LessonDao : BaseDao<Lesson>{
 
     @Query("SELECT * FROM lessons")
-    suspend fun allLessons(): LiveData<List<Lesson>>
+    fun allLessons(): LiveData<List<Lesson>>
 
     @Query("SELECT name FROM lessons")
     suspend fun allLessonNames(): List<String>

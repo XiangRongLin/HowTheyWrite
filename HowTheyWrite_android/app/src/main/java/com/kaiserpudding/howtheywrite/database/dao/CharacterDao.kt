@@ -8,9 +8,12 @@ import com.kaiserpudding.howtheywrite.model.Character
 interface CharacterDao : BaseDao<Character> {
 
     @Query("SELECT * FROM characters")
-    suspend fun allCharacters(): LiveData<List<Character>>
+    fun allCharacters(): LiveData<List<Character>>
 
     @Query("SELECT * FROM characters WHERE id = :id LIMIT 1")
     suspend fun getCharacterById(id: Int): Character
+
+    @Query("SELECT * FROM characters WHERE id = :id LIMIT 1")
+    fun getLiveDataCharacterById(id: Int): LiveData<Character>
 
 }

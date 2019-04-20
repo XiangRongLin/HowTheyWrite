@@ -7,6 +7,7 @@ import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao
 import com.kaiserpudding.howtheywrite.database.dao.LessonDao
 import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin
+import kotlinx.coroutines.withContext
 
 class LessonRepository(application: Application) {
 
@@ -30,7 +31,7 @@ class LessonRepository(application: Application) {
         //TODO delete lessonCharacterJoin
     }
 
-    suspend fun allLiveDataLessons(): LiveData<List<Lesson>> {
+    fun allLiveDataLessons(): LiveData<List<Lesson>> {
         return lessonDao.allLessons()
     }
 
