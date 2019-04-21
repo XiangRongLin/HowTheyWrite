@@ -18,15 +18,11 @@ import kotlinx.coroutines.launch
  * Can be left empty and it will load all characters.
  */
 class CharacterListViewModel(
-        application: Application)
+        application: Application,
+        lessonId: Int = -1)
     : AndroidViewModel(application) {
 
-    constructor(application: Application, lessonId: Int) : this(application) {
-        this.lessonId = lessonId
-    }
-
     private val characterRepository: CharacterRepository = CharacterRepository(application)
-    private var lessonId: Int = -1
 
     val characters: LiveData<List<Character>>
 
