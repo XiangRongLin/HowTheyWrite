@@ -9,6 +9,11 @@ import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.repositories.LessonRepository
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel to load a list of [Lesson]
+ *
+ * @param application
+ */
 class LessonListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val lessonRepository: LessonRepository = LessonRepository(application)

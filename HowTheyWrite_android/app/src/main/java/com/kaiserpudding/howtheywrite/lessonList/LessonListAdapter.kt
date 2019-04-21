@@ -9,6 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Lesson
 
+/**
+ * Adapter for the recyclerView for lessions
+ *
+ * Classes using this must implement [LessonListAdapter.OnLessonListAdapterItemInteractionListener]
+ * to handle interaction events with an item in the list.
+ *
+ * @property context
+ * @property listener
+ */
 class LessonListAdapter(
         private val context: Context,
         private val listener: OnLessonListAdapterItemInteractionListener)

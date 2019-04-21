@@ -18,6 +18,8 @@ import com.kaiserpudding.howtheywrite.model.Lesson
 /**
  * A simple [Fragment] subclass.
  *
+ * Add a new lesson to the data source
+ *
  * Activities that contain this fragment must implement the
  * [NewLessonFragment.OnNewLessonFragmentInteractionListener] interface
  * to handle interaction events.

@@ -15,7 +15,9 @@ import com.kaiserpudding.howtheywrite.R
 
 /**
  * A simple [Fragment] subclass.
+ *
  * It contains a recyclerView which displays all lessons.
+ *
  * Activities that contain this fragment must implement the
  * [LessonListFragment.OnLessonListFragmentInteractionListener] interface
  * to handle interaction events.
@@ -28,16 +30,24 @@ class LessonListFragment
     private var listener: OnLessonListFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //instantiate the viewModel
+        lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_lesson_list, container, false)
 
+        //instantiate the recyclerView with its adapter
         val recyclerView = view.findViewById<RecyclerView>(R.id.lesson_recyclerview)
         val adapter = LessonListAdapter(view.context, this)
         recyclerView.adapter = adapter
 
-        lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
+        //add observer to viewModel to set lessons into the adapter
         lessonListViewModel.lessons.observe(this, Observer { it?.let { it1 -> adapter.setLessons(it1) } })
 
         val fab = view.findViewById<FloatingActionButton>(R.id.new_lessen_fab)
