@@ -10,6 +10,15 @@ import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel to load the [Character] from the lesson with the given id
+ *
+ * Before accessing it check if [finishedLoading].value is true, or add a listener to it to be
+ * notified when it finishes
+ *
+ * @param application
+ * @param lessonId
+ */
 class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)

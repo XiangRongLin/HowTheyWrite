@@ -20,9 +20,11 @@ import kotlinx.android.synthetic.main.fragment_quiz.*
 
 /**
  * A simple [Fragment] subclass.
+ *
  * It displays the quiz for a given lesson.
  * The translation and pinyin for a character will be shown
  * and the user has to input the correct hanzi.
+ *
  * Activities that contain this fragment must implement the
  * [QuizFragment.OnQuizFragmentInteractionListener] interface
  * to handle interaction events.
@@ -60,7 +62,6 @@ class QuizFragment : Fragment() {
         quizTranslation = view.findViewById(R.id.quiz_translation)
         quizPinyin = view.findViewById(R.id.quiz_pinyin)
         quizEditText = view.findViewById(R.id.quiz_input_edit_text)
-        //open [CharacterDetailActivity] when clicked
         quizTranslation.setOnClickListener {
             onTranslationPressed(quizViewModel.currentCharacter)
         }
