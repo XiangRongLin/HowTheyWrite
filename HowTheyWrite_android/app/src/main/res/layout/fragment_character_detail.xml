@@ -15,7 +15,6 @@
     android:layout_marginBottom="50dp"
     android:fontFamily="@font/hanzi_stroke_order_0_0_4_7"
     android:gravity="center"
-    android:text="私の私の"
     android:textSize="100sp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +24,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="50dp"
-    android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/hanzi"/>
@@ -34,7 +32,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="50dp"
-    android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/pinyin"/>

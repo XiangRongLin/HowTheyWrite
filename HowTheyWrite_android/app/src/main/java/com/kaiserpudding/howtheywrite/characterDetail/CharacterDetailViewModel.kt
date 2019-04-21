@@ -3,22 +3,28 @@ package com.kaiserpudding.howtheywrite.characterDetail
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
-import kotlin.LazyThreadSafetyMode.NONE
+import kotlinx.coroutines.launch
 
 class CharacterDetailViewModel(application: Application, characterId: Int)
     : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
+    private val _finishedLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val finishedLoading: LiveData<Boolean>
+        get() = _finishedLoading
 
-//    var character: Character? = null
-//        private set
+    lateinit var character: Character
+        private set
 
-    val character: LiveData<Character> by lazy<LiveData<Character>>(NONE) {
-        Transformations.map(characterRepository.getLiveDataCharacterById(characterId)) {
-            it
+    init {
+        viewModelScope.launch {
+            character = characterRepository.getCharactersById(characterId)
+            _finishedLoading.value = true
         }
+
     }
 }

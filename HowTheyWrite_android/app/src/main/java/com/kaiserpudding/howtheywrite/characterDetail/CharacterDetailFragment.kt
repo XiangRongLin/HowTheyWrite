@@ -31,6 +31,10 @@ class CharacterDetailFragment : Fragment() {
 
         val safeArgs: CharacterDetailFragmentArgs by navArgs()
         characterId = safeArgs.characterId
+
+        characterDetailViewModel = ViewModelProviders.of(
+                this, CharacterDetailViewModelFactory(activity!!.application, characterId))
+                .get(CharacterDetailViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,38 +42,29 @@ class CharacterDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_character_detail, container, false)
 
-        //TODO proper fix for racing condition of initChar and getChar
-        characterDetailViewModel = ViewModelProviders.of(
-                this, CharacterDetailViewModelFactory(activity!!.application, characterId))
-                .get(CharacterDetailViewModel::class.java)
+        hanziTextView = view.findViewById(R.id.hanzi)
+        pinyinTextView = view.findViewById(R.id.pinyin)
+        translationTextView = view.findViewById(R.id.translation)
 
-//        var character: Character? = null
-//
-//        while (character == null) {
-//            character = characterDetailViewModel.character
-//        }
+        characterDetailViewModel.finishedLoading.observe(this, Observer {
+            if (it) {
+                hanziTextView.text = characterDetailViewModel.character.hanzi
 
-        characterDetailViewModel.character.observe(this, Observer {character ->
-            hanziTextView = view.findViewById(R.id.hanzi)
-            hanziTextView.text = character.hanzi
-            pinyinTextView = view.findViewById(R.id.pinyin)
-            pinyinTextView.text = character.pinyin
-            translationTextView = view.findViewById(R.id.translation)
-            if (character.translationKey != null) {
-                translationTextView.setText(
-                        resources.getIdentifier(
-                                character.translationKey,
-                                "string",
-                                context!!.packageName
-                        )
-                )
-            } else {
-                translationTextView.text = character.translation
+                pinyinTextView.text = characterDetailViewModel.character.pinyin
+
+                if (characterDetailViewModel.character.translationKey != null) {
+                    translationTextView.setText(
+                            resources.getIdentifier(
+                                    characterDetailViewModel.character.translationKey,
+                                    "string",
+                                    context!!.packageName
+                            )
+                    )
+                } else {
+                    translationTextView.text = characterDetailViewModel.character.translation
+                }
             }
         })
-
-
-
         return view
     }
 

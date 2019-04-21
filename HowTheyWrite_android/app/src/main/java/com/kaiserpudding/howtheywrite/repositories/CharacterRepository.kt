@@ -53,4 +53,8 @@ class CharacterRepository(application: Application) {
     suspend fun getCharactersById(id: Int): Character {
         return characterDao.getCharacterById(id)
     }
+
+    suspend fun getCharactersByLessonId(lessonId: Int): List<Character> {
+        return lessonCharacterJoinDao.getCharacterByLessonId(lessonId)
+    }
 }

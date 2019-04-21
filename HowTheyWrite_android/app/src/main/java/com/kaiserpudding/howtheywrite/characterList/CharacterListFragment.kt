@@ -35,6 +35,17 @@ class CharacterListFragment
 
         val safeArgs: CharacterListFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
+
+        val tmpId = lessonId
+        characterListViewModel =
+                if (tmpId != null) {
+                    ViewModelProviders.of(
+                            this, CharacterListViewModelFactory(activity!!.application, tmpId))
+                            .get(CharacterListViewModel::class.java)
+
+                } else {
+                    ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
+                }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -48,16 +59,7 @@ class CharacterListFragment
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
 
-        val tmpId = lessonId
-        characterListViewModel =
-                if (tmpId != null) {
-                    ViewModelProviders.of(
-                            this, CharacterListViewModelFactory(activity!!.application, tmpId))
-                            .get(CharacterListViewModel::class.java)
 
-                } else {
-                    ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
-                }
         characterListViewModel.characters.observe(this,
                 Observer { characters ->
                     adapter.setCharacters(characters)

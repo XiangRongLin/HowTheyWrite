@@ -47,7 +47,9 @@ class QuizFragment : Fragment() {
         quizViewModel = ViewModelProviders.of(
                 this,
                 QuizViewModelFactory(activity!!.application, lessonId!!)).get(QuizViewModel::class.java)
-
+        quizViewModel.finishedLoading.observe(this, Observer {
+            setQuizCharacter()
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -57,31 +59,31 @@ class QuizFragment : Fragment() {
 
         quizTranslation = view.findViewById(R.id.quiz_translation)
         quizPinyin = view.findViewById(R.id.quiz_pinyin)
+        quizEditText = view.findViewById(R.id.quiz_input_edit_text)
         //open [CharacterDetailActivity] when clicked
         quizTranslation.setOnClickListener {
             onTranslationPressed(quizViewModel.currentCharacter)
         }
 
-        quizViewModel.characterLiveData.observe(this, Observer {list ->
-            quizViewModel.initCharacters(list)
+        val finishedLoading = quizViewModel.finishedLoading.value
+        if (finishedLoading != null  && finishedLoading) {
             setQuizCharacter()
+        }
 
-            quizEditText = view.findViewById(R.id.quiz_input_edit_text)
-            quizEditText.setOnEditorActionListener { _: TextView, _: Int, _: KeyEvent? ->
-                if (quizEditText.text != null && quizViewModel.inputIsCorrect(quizEditText.text.toString())) {
-                    if (quizViewModel.hasNext()) {
-                        resetQuizInput()
-                        quizViewModel.nextCharacter()
-                        setQuizCharacter()
-                    } else {
-                        listener!!.onQuizFinishInteraction()
-                    }
-                } else {
+        quizEditText.setOnEditorActionListener { _: TextView, _: Int, _: KeyEvent? ->
+            if (quizEditText.text != null && quizViewModel.inputIsCorrect(quizEditText.text.toString())) {
+                if (quizViewModel.hasNext()) {
                     resetQuizInput()
+                    quizViewModel.nextCharacter()
+                    setQuizCharacter()
+                } else {
+                    listener!!.onQuizFinishInteraction()
                 }
-                true
+            } else {
+                resetQuizInput()
             }
-        })
+            true
+        }
 
 
 

@@ -3,21 +3,20 @@ package com.kaiserpudding.howtheywrite.quiz
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
-import kotlin.LazyThreadSafetyMode.NONE
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
 
-    val characterLiveData: LiveData<List<Character>> by lazy<LiveData<List<Character>>>(NONE) {
-        Transformations.map(
-                characterRepository.getLiveDataCharacterByLessonIdInRandomOrder(lessonId)) {
-            it
-        }
-    }
+    private val _finishedLoading = MutableLiveData<Boolean>()
+    val finishedLoading: LiveData<Boolean>
+        get() = _finishedLoading
 
     lateinit var characters: MutableList<Character>
         private set
@@ -46,9 +45,11 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     internal val currentCharacterPinyin: String
         get() = currentCharacter.pinyin
 
-    internal fun initCharacters(list: List<Character>) {
-        characters = list.toMutableList()
-        charactersSize = characters.size
+    init {
+        viewModelScope.launch {
+            characters = characterRepository.getCharactersByLessonId(lessonId).toMutableList()
+            _finishedLoading.value = true
+        }
     }
 
     /**
