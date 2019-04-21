@@ -40,6 +40,8 @@ class QuizFragment : Fragment() {
     private lateinit var quizPinyin: TextView
     private lateinit var quizEditText: EditText
 
+    var first: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,6 +54,8 @@ class QuizFragment : Fragment() {
         quizViewModel.finishedLoading.observe(this, Observer {
             setQuizCharacter()
         })
+
+        first = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -125,7 +129,12 @@ class QuizFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-//        showKeyboardAndFocus()
+        showKeyboard()
+        if (!first) {
+            quizEditText.requestFocus()
+        }
+        first = false
+
     }
 
     override fun onPause() {
@@ -137,11 +146,10 @@ class QuizFragment : Fragment() {
      * Focus quizInputEditText and show keyboard
      *
      */
-//    private fun showKeyboardAndFocus() {
-//        quizEditText.requestFocus()
-//        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-//    }
+    private fun showKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    }
 
     /**
      * Clear focus of quizInputEditText and hide keyboard
