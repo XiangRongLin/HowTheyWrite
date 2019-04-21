@@ -24,14 +24,14 @@ class CharacterDetailFragment : Fragment() {
     private lateinit var translationTextView: TextView
     private lateinit var characterDetailViewModel: CharacterDetailViewModel
 
-    private var characterId: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Get characterId from safeArgs
         val safeArgs: CharacterDetailFragmentArgs by navArgs()
-        characterId = safeArgs.characterId
+        val characterId = safeArgs.characterId
 
+        //instantiate the viewModel with the characterId from above
         characterDetailViewModel = ViewModelProviders.of(
                 this, CharacterDetailViewModelFactory(activity!!.application, characterId))
                 .get(CharacterDetailViewModel::class.java)
@@ -42,10 +42,12 @@ class CharacterDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_character_detail, container, false)
 
+        //instantiate the TextViews
         hanziTextView = view.findViewById(R.id.hanzi)
         pinyinTextView = view.findViewById(R.id.pinyin)
         translationTextView = view.findViewById(R.id.translation)
 
+        // Add a observer to the finishedLoading field and set the text in the textViews when it is true
         characterDetailViewModel.finishedLoading.observe(this, Observer {
             if (it) {
                 hanziTextView.text = characterDetailViewModel.character.hanzi
