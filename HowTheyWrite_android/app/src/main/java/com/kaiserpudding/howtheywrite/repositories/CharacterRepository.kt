@@ -34,16 +34,8 @@ class CharacterRepository(application: Application) {
 
     }
 
-    fun getLiveDataCharacterById(id: Int) :LiveData<Character> {
-        return characterDao.getLiveDataCharacterById(id)
-    }
-
     fun getLiveDataCharacterByLessonId(lessonId: Int): LiveData<List<Character>> {
         return lessonCharacterJoinDao.getLiveDataCharacterByLessonId(lessonId)
-    }
-
-    fun getLiveDataCharacterByLessonIdInRandomOrder(lessonId: Int): LiveData<List<Character>> {
-        return lessonCharacterJoinDao.getLiveDataCharacterByLessonIdInRandomOrder(lessonId)
     }
 
     fun allLiveDataCharacters(): LiveData<List<Character>> {
@@ -56,5 +48,9 @@ class CharacterRepository(application: Application) {
 
     suspend fun getCharactersByLessonId(lessonId: Int): List<Character> {
         return lessonCharacterJoinDao.getCharacterByLessonId(lessonId)
+    }
+
+    suspend fun getCharactersByLessonIdInRandomOrder(lessonId: Int): List<Character> {
+        return lessonCharacterJoinDao.getCharacterByLessonIdInRandomOrder(lessonId)
     }
 }

@@ -48,7 +48,7 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
 
     init {
         viewModelScope.launch {
-            characters = characterRepository.getCharactersByLessonId(lessonId).toMutableList()
+            characters = characterRepository.getCharactersByLessonIdInRandomOrder(lessonId).toMutableList()
             _finishedLoading.value = true
         }
     }
