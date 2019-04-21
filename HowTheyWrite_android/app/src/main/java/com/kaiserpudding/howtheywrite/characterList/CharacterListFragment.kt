@@ -17,8 +17,11 @@ import com.kaiserpudding.howtheywrite.R
 
 /**
  * A simple [Fragment] subclass.
+ *
  * It contains a recyclerView which displays all characters for a given lessonId.
+ *
  * Shows all characters if no lessonId is given.
+ *
  * Activities that contain this fragment must implement the
  * [CharacterListFragment.OnCharacterListFragmentInteractionListener] interface
  * to handle interaction events.
@@ -26,19 +29,22 @@ import com.kaiserpudding.howtheywrite.R
  */
 class CharacterListFragment
     : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener {
-    private var lessonId: Int? = null
+    private var lessonId: Int = -1
     private var listener: OnCharacterListFragmentInteractionListener? = null
     private lateinit var characterListViewModel: CharacterListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //default value is -1
         val safeArgs: CharacterListFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
 
+        //to make it immutable
         val tmpId = lessonId
+        //instantiate the viewModel
         characterListViewModel =
-                if (tmpId != null) {
+                if (tmpId != -1) {
                     ViewModelProviders.of(
                             this, CharacterListViewModelFactory(activity!!.application, tmpId))
                             .get(CharacterListViewModel::class.java)
@@ -53,13 +59,13 @@ class CharacterListFragment
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_character_list, container, false)
 
+        //instantiate the recyclerView with its adapter
         val recyclerView = view.findViewById<RecyclerView>(R.id.character_recyclerview)
         val adapter = CharacterListAdapter(view.context, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
-
-
+        //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
                 Observer { characters ->
                     adapter.setCharacters(characters)
@@ -76,7 +82,7 @@ class CharacterListFragment
     }
 
     private fun onToQuizButtonPressed() {
-        lessonId?.let { listener?.onToQuizInteraction(it) }
+        lessonId.let { listener?.onToQuizInteraction(it) }
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {

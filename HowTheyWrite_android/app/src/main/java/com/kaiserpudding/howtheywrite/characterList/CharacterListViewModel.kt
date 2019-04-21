@@ -8,6 +8,15 @@ import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel to load a list of [Character] from the lesson with the given id
+ * or load all characters
+ *
+ * @param application
+ * @param lessonId The id of the lesson, from which the characters will be loaded.
+ *
+ * Can be left empty and it will load all characters.
+ */
 class CharacterListViewModel(
         application: Application,
         lessonId: Int = -1)

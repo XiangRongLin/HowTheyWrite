@@ -15,6 +15,9 @@ import com.kaiserpudding.howtheywrite.model.Character
 
 /**
  * A simple [Fragment] subclass.
+ *
+ * Add a new character to the data source
+ *
  * Activities that contain this fragment must implement the
  * [NewCharacterFragment.OnNewCharacterFragmentInteractionListener] interface
  * to handle interaction events.

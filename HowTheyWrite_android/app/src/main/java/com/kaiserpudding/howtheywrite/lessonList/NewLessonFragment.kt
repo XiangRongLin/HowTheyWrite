@@ -17,6 +17,7 @@ import com.kaiserpudding.howtheywrite.model.Lesson
 
 /**
  * A simple [Fragment] subclass.
+ *
  * Activities that contain this fragment must implement the
  * [NewLessonFragment.OnNewLessonFragmentInteractionListener] interface
  * to handle interaction events.

@@ -9,6 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
 
+/**
+ * Adapter for the recyclerView for characters.
+ *
+ * Classes using this must implement [CharacterListAdapter.OnCharacterListAdapterItemInteractionListener]
+ * to handle interaction events with an item in the list.
+ *
+ * @property context
+ * @property listener
+ */
 internal class CharacterListAdapter(
         private val context: Context,
         private val listener: OnCharacterListAdapterItemInteractionListener)
@@ -28,7 +37,6 @@ internal class CharacterListAdapter(
         }
 
         private fun onAdapterItemPressed() {
-            //+ 1 because adapter positions starts at 0 while Room ids start at 1
             listener.onCharacterListAdapterInteraction(characters!![adapterPosition].id)
         }
     }
