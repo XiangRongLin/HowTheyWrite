@@ -50,21 +50,11 @@ class CharacterDetailFragment : Fragment() {
         // Add a observer to the finishedLoading field and set the text in the textViews when it is true
         characterDetailViewModel.finishedLoading.observe(this, Observer {
             if (it) {
-                hanziTextView.text = characterDetailViewModel.character.hanzi
+                hanziTextView.text = characterDetailViewModel.hanzi
 
-                pinyinTextView.text = characterDetailViewModel.character.pinyin
+                pinyinTextView.text = characterDetailViewModel.pinyin
 
-                if (characterDetailViewModel.character.translationKey != null) {
-                    translationTextView.setText(
-                            resources.getIdentifier(
-                                    characterDetailViewModel.character.translationKey,
-                                    "string",
-                                    context!!.packageName
-                            )
-                    )
-                } else {
-                    translationTextView.text = characterDetailViewModel.character.translation
-                }
+                translationTextView.text = characterDetailViewModel.translation
             }
         })
         return view

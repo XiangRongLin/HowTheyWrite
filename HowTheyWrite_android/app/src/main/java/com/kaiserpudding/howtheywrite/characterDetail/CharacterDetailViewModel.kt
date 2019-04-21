@@ -27,8 +27,7 @@ class CharacterDetailViewModel(application: Application, characterId: Int)
     val finishedLoading: LiveData<Boolean>
         get() = _finishedLoading
 
-    lateinit var character: Character
-        private set
+    private lateinit var character: Character
 
     init {
         viewModelScope.launch {
@@ -37,4 +36,25 @@ class CharacterDetailViewModel(application: Application, characterId: Int)
         }
 
     }
+
+    val hanzi: String
+        get() = character.hanzi
+    val pinyin: String
+        get() = character.pinyin
+    val translation: String
+        get() {
+            return if (character.translationKey != null) {
+                val application = getApplication<Application>()
+                val resources = application.resources
+                resources.getText(
+                        resources.getIdentifier(
+                                character.translationKey,
+                                "string",
+                                application.applicationContext.packageName
+                        )
+                ).toString()
+            } else {
+                character.translation.toString()
+            }
+        }
 }

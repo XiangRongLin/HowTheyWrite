@@ -29,16 +29,17 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
     internal val currentCharacterTranslation: String
         get() {
             return if (currentCharacter.translationKey != null) {
-                val resources = getApplication<Application>().resources
+                val application = getApplication<Application>()
+                val resources = application.resources
                 resources.getText(
                         resources.getIdentifier(
                                 currentCharacter.translationKey,
                                 "string",
-                                getApplication<Application>().applicationContext.packageName
+                                application.applicationContext.packageName
                         )
                 ).toString()
             } else {
-                currentCharacter.translation!!
+                currentCharacter.translation.toString()
             }
         }
 
