@@ -14,6 +14,6 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:fontFamily="@font/hbzb_37"
-    android:background="@android:color/background_light"/>
+    android:background="@drawable/character_item_background"/>
 
 </LinearLayout>

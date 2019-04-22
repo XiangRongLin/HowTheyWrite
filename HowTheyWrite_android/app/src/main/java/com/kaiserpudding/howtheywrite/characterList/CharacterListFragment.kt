@@ -10,10 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,6 +32,8 @@ class CharacterListFragment
     private var lessonId: Int = -1
     private var listener: OnCharacterListFragmentInteractionListener? = null
     private lateinit var characterListViewModel: CharacterListViewModel
+    private lateinit var adapter: CharacterListAdapter
+    private var inSelectionMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +59,13 @@ class CharacterListFragment
 
         //instantiate the recyclerView with its adapter
         val recyclerView = view.findViewById<RecyclerView>(R.id.character_recyclerview)
-        val adapter = CharacterListAdapter(view.context, this)
+        adapter = CharacterListAdapter(view.context, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
+
+        adapter.inSelectionMode.observe(this, Observer {
+            inSelectionMode = it
+        })
 
         //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
@@ -86,7 +88,17 @@ class CharacterListFragment
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
-        listener?.onCharacterListItemInteraction(characterId)
+        if (inSelectionMode) adapter.toggleSelected(characterId)
+        else listener?.onCharacterListItemInteraction(characterId)
+    }
+
+    /**
+     * TODO
+     *
+     * @param characterId
+     */
+    override fun onCharacterListAdapterLongInteraction(characterId: Int) {
+        adapter.toggleSelected(characterId)
     }
 
     private fun onToNewCharacterFabPressed() {
