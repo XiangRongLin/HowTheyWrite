@@ -33,6 +33,8 @@ class CharacterListFragment
     private lateinit var lessonName: String
     private var listener: OnCharacterListFragmentInteractionListener? = null
     private lateinit var characterListViewModel: CharacterListViewModel
+    private lateinit var adapter: CharacterListAdapter
+    private var inSelectionMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +62,13 @@ class CharacterListFragment
 
         //instantiate the recyclerView with its adapter
         val recyclerView = view.findViewById<RecyclerView>(R.id.character_recyclerview)
-        val adapter = CharacterListAdapter(view.context, this)
+        adapter = CharacterListAdapter(view.context, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
+
+        adapter.inSelectionMode.observe(this, Observer {
+            inSelectionMode = it
+        })
 
         //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
@@ -89,7 +95,17 @@ class CharacterListFragment
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
-        listener?.onCharacterListItemInteraction(characterId)
+        if (inSelectionMode) adapter.toggleSelected(characterId)
+        else listener?.onCharacterListItemInteraction(characterId)
+    }
+
+    /**
+     * TODO
+     *
+     * @param characterId
+     */
+    override fun onCharacterListAdapterLongInteraction(characterId: Int) {
+        adapter.toggleSelected(characterId)
     }
 
     private fun onToNewCharacterFabPressed() {
