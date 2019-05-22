@@ -30,6 +30,7 @@ import com.kaiserpudding.howtheywrite.R
 class CharacterListFragment
     : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener {
     private var lessonId: Int = -1
+    private lateinit var lessonName: String
     private var listener: OnCharacterListFragmentInteractionListener? = null
     private lateinit var characterListViewModel: CharacterListViewModel
 
@@ -39,6 +40,7 @@ class CharacterListFragment
         //default value is -1
         val safeArgs: CharacterListFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
+        lessonName = safeArgs.lessonName
 
         //to make it immutable
         val tmpId = lessonId
@@ -47,6 +49,7 @@ class CharacterListFragment
                 ViewModelProviders.of(
                         this, CharacterListViewModelFactory(activity!!.application, tmpId))
                         .get(CharacterListViewModel::class.java)
+        updateToolBarTitle()
 
     }
 
@@ -77,8 +80,12 @@ class CharacterListFragment
         return view
     }
 
+    private fun updateToolBarTitle() {
+        listener?.updateTitle(lessonName)
+    }
+
     private fun onToQuizButtonPressed() {
-        lessonId.let { listener?.onToQuizInteraction(it) }
+        listener?.onToQuizInteraction(lessonId, lessonName)
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
@@ -110,8 +117,9 @@ class CharacterListFragment
      * activity.
      */
     interface OnCharacterListFragmentInteractionListener {
-        fun onToQuizInteraction(lessonId: Int)
+        fun onToQuizInteraction(lessonId: Int, lessonName: String)
         fun onCharacterListItemInteraction(characterId: Int)
         fun onNewCharacterInteraction()
+        fun updateTitle(title: String)
     }
 }

@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_quiz.*
 class QuizFragment : Fragment() {
 
     private var lessonId: Int? = 0
+    private lateinit var lessonName: String
     private var listener: OnQuizFragmentInteractionListener? = null
 
     private lateinit var quizViewModel: QuizViewModel
@@ -47,6 +48,8 @@ class QuizFragment : Fragment() {
 
         val safeArgs: QuizFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
+        lessonName = safeArgs.lessonName
+
         //TODO adjust to no lesson id
         quizViewModel = ViewModelProviders.of(
                 this,
@@ -56,6 +59,9 @@ class QuizFragment : Fragment() {
         })
 
         first = true
+
+        listener?.updateTitle(lessonName)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -171,5 +177,6 @@ class QuizFragment : Fragment() {
     interface OnQuizFragmentInteractionListener {
         fun onQuizCharacterInteraction(character: Character)
         fun onQuizFinishInteraction()
+        fun updateTitle(title: String)
     }
 }

@@ -20,7 +20,7 @@
 
   <fragment
       android:id="@+id/characterListFragment"
-      android:label="fragment_character_list"
+      android:label="CharacterList"
       android:name="com.kaiserpudding.howtheywrite.characterList.CharacterListFragment"
       tools:layout="@layout/fragment_character_list">
     <action
@@ -36,39 +36,46 @@
     <action
       android:id="@+id/action_characterList_to_newCharacter"
       app:destination="@id/newCharacterFragment"/>
+    <argument
+      android:name="lessonName"
+      app:argType="string"
+      android:defaultValue="All Characters"/>
   </fragment>
 
   <fragment
-    android:id="@+id/quizFragment"
-    android:label="QuizFragment"
-    android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment">
+      android:id="@+id/quizFragment"
+      android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment">
     <argument
-      android:name="lessonId"
-      app:argType="integer"/>
+        android:name="lessonId"
+        app:argType="integer" />
     <action
-      android:id="@+id/action_quiz_to_characterDetail"
-      app:destination="@id/characterDetailFragment"/>
-  </fragment>
-  <fragment
-    android:id="@+id/characterDetailFragment"
-    android:name="com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailFragment"
-    android:label="fragment_character_detail"
-    tools:layout="@layout/fragment_character_detail">
+        android:id="@+id/action_quiz_to_characterDetail"
+        app:destination="@id/characterDetailFragment" />
     <argument
-      android:name="characterId"
-      app:argType="integer"
-      android:defaultValue="0"/>
+        android:name="lessonName"
+        android:defaultValue="All Characters"
+        app:argType="string" />
   </fragment>
   <fragment
-    android:id="@+id/newCharacterFragment"
-    android:name="com.kaiserpudding.howtheywrite.characterList.NewCharacterFragment"
-    android:label="fragment_new_character"
-    tools:layout="@layout/fragment_new_character"/>
+      android:id="@+id/characterDetailFragment"
+      android:name="com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailFragment"
+      android:label="Character Detail"
+      tools:layout="@layout/fragment_character_detail">
+    <argument
+        android:name="characterId"
+        android:defaultValue="0"
+        app:argType="integer" />
+  </fragment>
   <fragment
-    android:id="@+id/newLessonFragment"
-    android:name="com.kaiserpudding.howtheywrite.lessonList.NewLessonFragment"
-    android:label="fragment_new_lesson"
-    tools:layout="@layout/fragment_new_lesson"/>
+      android:id="@+id/newCharacterFragment"
+      android:name="com.kaiserpudding.howtheywrite.characterList.NewCharacterFragment"
+      android:label="new Character"
+      tools:layout="@layout/fragment_new_character" />
+  <fragment
+      android:id="@+id/newLessonFragment"
+      android:name="com.kaiserpudding.howtheywrite.lessonList.NewLessonFragment"
+      android:label="New Lesson"
+      tools:layout="@layout/fragment_new_lesson" />
 
 
 </navigation>

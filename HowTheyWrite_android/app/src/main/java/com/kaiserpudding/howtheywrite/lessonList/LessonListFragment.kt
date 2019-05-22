@@ -58,16 +58,16 @@ class LessonListFragment
         return view
     }
 
-    private fun onListItemPressed(lessonId: Int) {
-        listener?.onLessonListItemInteraction(lessonId)
+    private fun onListItemPressed(lessonId: Int, lessonName: String) {
+        listener?.onLessonListItemInteraction(lessonId, lessonName)
     }
 
     private fun onNewLessonButtonPressed() {
         listener?.onToNewLessonInteraction()
     }
 
-    override fun onLessonListAdapterItemInteraction(lessonId: Int) {
-        onListItemPressed(lessonId)
+    override fun onLessonListAdapterItemInteraction(lessonId: Int, lessonName: String) {
+        onListItemPressed(lessonId, lessonName)
     }
 
     override fun onAttach(context: Context) {
@@ -92,7 +92,7 @@ class LessonListFragment
      * activity.
      */
     interface OnLessonListFragmentInteractionListener {
-        fun onLessonListItemInteraction(lessonId: Int)
+        fun onLessonListItemInteraction(lessonId: Int, lessonName: String)
         fun onToNewLessonInteraction()
     }
 }

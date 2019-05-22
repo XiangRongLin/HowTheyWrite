@@ -5,8 +5,16 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  tools:context=".main.MainActivity">
 
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
 
   <fragment
     android:id="@+id/nav_host_fragment"
@@ -18,9 +26,9 @@
     app:navGraph="@navigation/nav_graph"/>
 
   <com.google.android.material.bottomnavigation.BottomNavigationView
-      android:id="@+id/bottom_nav_view"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      app:menu="@menu/bottom_nav_menu"/>
+    android:id="@+id/bottom_nav_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    app:menu="@menu/bottom_nav_menu"/>
 </LinearLayout>
