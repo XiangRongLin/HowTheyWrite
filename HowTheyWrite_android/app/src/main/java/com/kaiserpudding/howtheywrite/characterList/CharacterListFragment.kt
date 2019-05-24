@@ -2,9 +2,7 @@ package com.kaiserpudding.howtheywrite.characterList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -35,6 +33,32 @@ class CharacterListFragment
     private lateinit var characterListViewModel: CharacterListViewModel
     private lateinit var adapter: CharacterListAdapter
     private var inSelectionMode: Boolean = false
+    private var actionMode: ActionMode? = null
+    private var selectedNumber = 0
+
+    private val actionModeCallback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            val inflater = mode.menuInflater
+            inflater.inflate(R.menu.selection_menu, menu)
+            mode.title = "${++selectedNumber} selected"
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            return true
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            adapter.clearSelected()
+            selectedNumber = 0
+            actionMode = null
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +75,6 @@ class CharacterListFragment
                 ViewModelProviders.of(
                         this, CharacterListViewModelFactory(activity!!.application, tmpId))
                         .get(CharacterListViewModel::class.java)
-        updateToolBarTitle()
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -66,8 +88,15 @@ class CharacterListFragment
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
-        adapter.inSelectionMode.observe(this, Observer {
-            inSelectionMode = it
+        adapter.inSelectionMode.observe(this, Observer {inSelectionMode ->
+            this.inSelectionMode = inSelectionMode
+            if (inSelectionMode && actionMode == null) actionMode = activity?.startActionMode(actionModeCallback)
+            else if (!inSelectionMode) actionMode?.finish()
+        })
+
+        adapter.numberOfSelected.observe(this, Observer {
+
+            actionMode?.title = "$it selected"
         })
 
         //add observer to viewModel to set characters into the adapter
@@ -82,6 +111,8 @@ class CharacterListFragment
 
         val toQuizButton = view.findViewById<Button>(R.id.to_quiz_button)
         toQuizButton.setOnClickListener { onToQuizButtonPressed() }
+
+        updateToolBarTitle()
 
         return view
     }
@@ -107,6 +138,7 @@ class CharacterListFragment
     override fun onCharacterListAdapterLongInteraction(characterId: Int) {
         adapter.toggleSelected(characterId)
     }
+
 
     private fun onToNewCharacterFabPressed() {
         listener?.onNewCharacterInteraction()

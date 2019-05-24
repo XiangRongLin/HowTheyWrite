@@ -29,9 +29,12 @@ internal class CharacterListAdapter(
 
     private var characters: List<Character>? = null
     private var selectedCharactersId: MutableSet<Int> = mutableSetOf()
-    private val _inSelectionMode: MutableLiveData<Boolean> = MutableLiveData()
+    private val _inSelectionMode = MutableLiveData<Boolean>()
+    private val _numberOfSelected = MutableLiveData<Int>()
     val inSelectionMode: LiveData<Boolean>
         get() = _inSelectionMode
+    val numberOfSelected: LiveData<Int>
+        get() = _numberOfSelected
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item_character, parent, false)
@@ -60,6 +63,15 @@ internal class CharacterListAdapter(
         if (selectedCharactersId.contains(id)) selectedCharactersId.remove(id)
         else selectedCharactersId.add(id)
         _inSelectionMode.postValue(!selectedCharactersId.isEmpty())
+        val a = selectedCharactersId.size
+        _numberOfSelected.postValue(selectedCharactersId.size)
+        notifyDataSetChanged()
+    }
+
+    fun clearSelected() {
+        print("")
+        selectedCharactersId.clear()
+        _inSelectionMode.postValue(false)
         notifyDataSetChanged()
     }
 
