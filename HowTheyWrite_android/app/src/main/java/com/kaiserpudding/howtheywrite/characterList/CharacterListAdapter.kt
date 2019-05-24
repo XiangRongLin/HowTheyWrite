@@ -69,7 +69,6 @@ internal class CharacterListAdapter(
     }
 
     fun clearSelected() {
-        print("")
         selectedCharactersId.clear()
         _inSelectionMode.postValue(false)
         notifyDataSetChanged()

@@ -49,7 +49,8 @@ class CharacterListFragment
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            return true
+            //TODO handle delete button
+            return false
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
@@ -115,6 +116,12 @@ class CharacterListFragment
         updateToolBarTitle()
 
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+        actionMode?.finish()
+        adapter.clearSelected()
     }
 
     private fun updateToolBarTitle() {
