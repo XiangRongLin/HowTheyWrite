@@ -129,7 +129,8 @@ class CharacterListFragment
     }
 
     private fun onToQuizButtonPressed() {
-        listener?.onToQuizInteraction(lessonId, lessonName)
+        if (inSelectionMode) listener?.onToQuizInteraction(adapter.selectedCharacterId, lessonName)
+        else listener?.onToQuizInteraction(lessonId, lessonName)
     }
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
@@ -173,6 +174,7 @@ class CharacterListFragment
      */
     interface OnCharacterListFragmentInteractionListener {
         fun onToQuizInteraction(lessonId: Int, lessonName: String)
+        fun onToQuizInteraction(characterIds: IntArray, lessonName: String)
         fun onCharacterListItemInteraction(characterId: Int)
         fun onNewCharacterInteraction()
         fun updateTitle(title: String)

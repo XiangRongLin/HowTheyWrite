@@ -19,11 +19,31 @@ import kotlinx.coroutines.launch
  * @param application
  * @param lessonId
  */
-class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(application) {
+class QuizViewModel : AndroidViewModel {
 
-    private val characterRepository: CharacterRepository = CharacterRepository(application)
+    constructor(application: Application, lessonId: Int) : super(application) {
+        this.characterRepository = CharacterRepository(application)
+        this._finishedLoading = MutableLiveData()
+        viewModelScope.launch {
+            characters = characterRepository.getCharactersByLessonIdInRandomOrder(lessonId).toMutableList()
+            charactersSize = characters.size
+            _finishedLoading.value = true
+        }
+    }
 
-    private val _finishedLoading = MutableLiveData<Boolean>()
+    constructor(application: Application, characterIds: IntArray): super(application) {
+        this.characterRepository = CharacterRepository(application)
+        this._finishedLoading = MutableLiveData()
+        viewModelScope.launch {
+            characters = characterRepository.getCharactersByIds(characterIds).toMutableList()
+            charactersSize = characters.size
+            _finishedLoading.value = true
+        }
+    }
+
+    private val characterRepository: CharacterRepository
+
+    private val _finishedLoading: MutableLiveData<Boolean>
     val finishedLoading: LiveData<Boolean>
         get() = _finishedLoading
 
@@ -54,14 +74,6 @@ class QuizViewModel(application: Application, lessonId: Int) : AndroidViewModel(
 
     internal val currentCharacterPinyin: String
         get() = currentCharacter.pinyin
-
-    init {
-        viewModelScope.launch {
-            characters = characterRepository.getCharactersByLessonIdInRandomOrder(lessonId).toMutableList()
-            charactersSize = characters.size
-            _finishedLoading.value = true
-        }
-    }
 
     /**
      * Increases the index, so currentCharacter is the next one

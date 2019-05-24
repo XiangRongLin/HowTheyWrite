@@ -35,6 +35,8 @@ internal class CharacterListAdapter(
         get() = _inSelectionMode
     val numberOfSelected: LiveData<Int>
         get() = _numberOfSelected
+    val selectedCharacterId
+        get() = selectedCharactersId.toIntArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item_character, parent, false)

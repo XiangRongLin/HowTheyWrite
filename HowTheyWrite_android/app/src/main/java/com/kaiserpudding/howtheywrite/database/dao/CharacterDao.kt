@@ -16,4 +16,7 @@ interface CharacterDao : BaseDao<Character> {
     @Query("SELECT * FROM characters WHERE id = :id LIMIT 1")
     fun getLiveDataCharacterById(id: Int): LiveData<Character>
 
+    @Query("SELECT * FROM characters WHERE id IN (:ids) ORDER BY RANDOM()")
+    suspend fun getCharactersByIdInRandomOrder(ids: IntArray): List<Character>
+
 }

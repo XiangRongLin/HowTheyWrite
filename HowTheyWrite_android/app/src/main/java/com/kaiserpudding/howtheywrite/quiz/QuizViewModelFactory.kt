@@ -10,9 +10,26 @@ import androidx.lifecycle.ViewModelProvider
  * @property application
  * @property lessonId
  */
-class QuizViewModelFactory(private val application: Application, private val lessonId: Int) : ViewModelProvider.Factory {
+class QuizViewModelFactory : ViewModelProvider.Factory {
+
+    private val application: Application
+    private val lessonId: Int
+    private val characterIds: IntArray?
+
+    constructor(application: Application, lessonId: Int) {
+        this.application = application
+        this.lessonId = lessonId
+        this.characterIds = null
+    }
+
+    constructor(application: Application, characterIds: IntArray) {
+        this.application = application
+        this.lessonId = -1
+        this.characterIds = characterIds
+    }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return QuizViewModel(application, lessonId) as T
+        return if (lessonId != -1) QuizViewModel(application, lessonId) as T
+        else QuizViewModel(application, characterIds!!) as T
     }
 }

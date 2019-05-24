@@ -42,8 +42,12 @@ class CharacterRepository(application: Application) {
         return characterDao.allCharacters()
     }
 
-    suspend fun getCharactersById(id: Int): Character {
+    suspend fun getCharacterById(id: Int): Character {
         return characterDao.getCharacterById(id)
+    }
+
+    suspend fun getCharactersByIds(ids: IntArray): List<Character> {
+        return characterDao.getCharactersByIdInRandomOrder(ids)
     }
 
     suspend fun getCharactersByLessonId(lessonId: Int): List<Character> {

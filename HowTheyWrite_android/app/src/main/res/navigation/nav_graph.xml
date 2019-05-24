@@ -47,7 +47,8 @@
       android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment">
     <argument
         android:name="lessonId"
-        app:argType="integer" />
+        app:argType="integer"
+      android:defaultValue="-1"/>
     <action
         android:id="@+id/action_quiz_to_characterDetail"
         app:destination="@id/characterDetailFragment" />
@@ -55,6 +56,10 @@
         android:name="lessonName"
         android:defaultValue="All Characters"
         app:argType="string" />
+    <argument
+      android:name="characterIds"
+      app:argType="integer[]"
+      app:nullable="true"/>
   </fragment>
   <fragment
       android:id="@+id/characterDetailFragment"

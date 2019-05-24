@@ -99,7 +99,12 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun onToQuizInteraction(lessonId: Int, lessonName: String) {
-        val action = CharacterListFragmentDirections.actionCharacterListToQuiz(lessonId, lessonName)
+        val action = CharacterListFragmentDirections.actionCharacterListToQuiz(lessonId, lessonName, null)
+        navController.navigate(action)
+    }
+
+    override fun onToQuizInteraction(characterIds: IntArray, lessonName: String) {
+        val action = CharacterListFragmentDirections.actionCharacterListToQuiz(-1, lessonName, characterIds)
         navController.navigate(action)
     }
 

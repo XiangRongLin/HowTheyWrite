@@ -31,7 +31,7 @@ class CharacterDetailViewModel(application: Application, characterId: Int)
 
     init {
         viewModelScope.launch {
-            character = characterRepository.getCharactersById(characterId)
+            character = characterRepository.getCharacterById(characterId)
             _finishedLoading.value = true
         }
 

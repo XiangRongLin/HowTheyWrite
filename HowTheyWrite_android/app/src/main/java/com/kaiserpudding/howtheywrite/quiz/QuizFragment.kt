@@ -32,8 +32,9 @@ import kotlinx.android.synthetic.main.fragment_quiz.*
  */
 class QuizFragment : Fragment() {
 
-    private var lessonId: Int? = 0
+    private var lessonId: Int = -1
     private lateinit var lessonName: String
+    private var characterIds: IntArray? = null
     private var listener: OnQuizFragmentInteractionListener? = null
 
     private lateinit var quizViewModel: QuizViewModel
@@ -49,11 +50,17 @@ class QuizFragment : Fragment() {
         val safeArgs: QuizFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
         lessonName = safeArgs.lessonName
+        characterIds = safeArgs.characterIds
 
         //TODO adjust to no lesson id
-        quizViewModel = ViewModelProviders.of(
-                this,
-                QuizViewModelFactory(activity!!.application, lessonId!!)).get(QuizViewModel::class.java)
+        quizViewModel = if (lessonId != -1) {
+            ViewModelProviders.of(this, QuizViewModelFactory(activity!!.application, lessonId))
+                    .get(QuizViewModel::class.java)
+        } else {
+            ViewModelProviders.of(this, QuizViewModelFactory(activity!!.application, characterIds!!))
+                    .get(QuizViewModel::class.java)
+
+        }
         quizViewModel.finishedLoading.observe(this, Observer {
             setQuizCharacter()
         })
@@ -77,7 +84,7 @@ class QuizFragment : Fragment() {
         }
 
         val finishedLoading = quizViewModel.finishedLoading.value
-        if (finishedLoading != null  && finishedLoading) {
+        if (finishedLoading != null && finishedLoading) {
             setQuizCharacter()
         }
 
