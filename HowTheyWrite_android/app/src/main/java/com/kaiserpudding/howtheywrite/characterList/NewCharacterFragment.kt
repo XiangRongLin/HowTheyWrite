@@ -29,14 +29,14 @@ class NewCharacterFragment : Fragment() {
     private lateinit var newCharacterHanziEditText: EditText
     private lateinit var newCharacterPinyinEditText: EditText
     private lateinit var newCharacterTranslationEditText: EditText
-    private lateinit var characterListViewModel: CharacterListViewModel
+    private lateinit var insertionViewModel: InsertionViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_new_character, container, false)
 
-        characterListViewModel = ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
+        insertionViewModel = ViewModelProviders.of(this).get(InsertionViewModel::class.java)
 
         newCharacterHanziEditText = view.findViewById(R.id.editNewCharHanzi)
         newCharacterPinyinEditText = view.findViewById(R.id.editNewCharPinyin)
@@ -45,7 +45,7 @@ class NewCharacterFragment : Fragment() {
         val button = view.findViewById<Button>(R.id.button_save_new_char)
         button.setOnClickListener {
             if (checkEditText()) {
-                characterListViewModel.insertCharacter(
+                insertionViewModel.insertCharacter(
                         Character(newCharacterHanziEditText.text.toString(),
                                 newCharacterPinyinEditText.text.toString(),
                                 newCharacterTranslationEditText.text.toString())
