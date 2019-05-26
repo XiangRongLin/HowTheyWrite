@@ -40,5 +40,7 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
             + "ORDER BY RANDOM()")
     suspend fun getCharacterByLessonIdInRandomOrder(id: Int): List<Character>
 
+    @Query("DELETE FROM lesson_character_join WHERE lessonId = :lessonId AND characterId IN (:characterIds)")
+    suspend fun deleteLessonCharacterJoins(lessonId: Int, characterIds: IntArray)
 
 }

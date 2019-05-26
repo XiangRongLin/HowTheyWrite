@@ -21,7 +21,7 @@ import com.kaiserpudding.howtheywrite.R
  *
  */
 class CharacterListFragment
-    : BaseCharacterListFragment(){
+    : BaseCharacterListFragment() {
 
     override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -36,8 +36,14 @@ class CharacterListFragment
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            //TODO handle delete button
-            return false
+            return when (item.itemId) {
+                R.id.action_delete -> {
+                    characterListViewModel.deleteCharactersFromLesson(adapter.selectedCharacterId)
+                    mode.finish()
+                    true
+                }
+                else -> false
+            }
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {

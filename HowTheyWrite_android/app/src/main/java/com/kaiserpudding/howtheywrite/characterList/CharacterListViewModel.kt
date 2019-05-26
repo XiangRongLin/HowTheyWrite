@@ -34,9 +34,14 @@ class CharacterListViewModel(
     }
 
     fun addCharactersToLesson(characterIds: IntArray) {
-        print("")
         viewModelScope.launch {
             characterRepository.addCharactersToLesson(lessonId, characterIds)
+        }
+    }
+
+    fun deleteCharactersFromLesson(characterIds: IntArray) {
+        viewModelScope.launch {
+            characterRepository.deleteCharactersFromLesson(lessonId, characterIds)
         }
     }
 }
