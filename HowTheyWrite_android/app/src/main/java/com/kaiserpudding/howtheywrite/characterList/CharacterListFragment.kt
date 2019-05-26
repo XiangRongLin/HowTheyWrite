@@ -3,10 +3,12 @@ package com.kaiserpudding.howtheywrite.characterList
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -21,7 +23,8 @@ import com.kaiserpudding.howtheywrite.R
  *
  */
 class CharacterListFragment
-    : BaseCharacterListFragment() {
+    : BaseCharacterListFragment(),
+    ConfirmationDialogFragment.ConfirmationDialogListener{
 
     override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -38,8 +41,7 @@ class CharacterListFragment
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.action_delete -> {
-                    characterListViewModel.deleteCharactersFromLesson(adapter.selectedCharacterId)
-                    mode.finish()
+                    showConfirmationDialog()
                     true
                 }
                 else -> false
@@ -87,4 +89,18 @@ class CharacterListFragment
         else listener?.onToQuizInteraction(lessonId, lessonName)
     }
 
+    private fun showConfirmationDialog() {
+        val dialog = ConfirmationDialogFragment(this)
+        dialog.show(childFragmentManager, "dialog")
+    }
+
+    override fun onDialogPositiveClick() {
+        characterListViewModel.deleteCharactersFromLesson(adapter.selectedCharacterId)
+        actionMode?.finish()
+    }
+
+    override fun onDialogNegativeClick() {
+        val toast = Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT)
+        toast.show()
+    }
 }
