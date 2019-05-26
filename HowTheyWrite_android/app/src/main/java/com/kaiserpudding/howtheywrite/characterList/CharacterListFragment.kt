@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaiserpudding.howtheywrite.R
 
@@ -27,7 +26,7 @@ class CharacterListFragment
     override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
-            inflater.inflate(R.menu.selection_menu, menu)
+            inflater.inflate(R.menu.selection_delete_menu, menu)
             mode.title = "${++selectedNumber} selected"
             return true
         }
