@@ -40,6 +40,9 @@
       android:name="lessonName"
       app:argType="string"
       android:defaultValue="All Characters"/>
+    <action
+      android:id="@+id/action_characterListFragment_to_addCharactersFragment"
+      app:destination="@id/addCharactersFragment"/>
   </fragment>
 
   <fragment
@@ -81,6 +84,17 @@
       android:name="com.kaiserpudding.howtheywrite.lessonList.NewLessonFragment"
       android:label="New Lesson"
       tools:layout="@layout/fragment_new_lesson" />
+  <fragment
+    android:id="@+id/addCharactersFragment"
+    android:name="com.kaiserpudding.howtheywrite.characterList.AddCharactersFragment"
+    android:label="AddCharactersFragment">
+    <argument
+      android:name="lessonId"
+      app:argType="integer"/>
+    <argument
+      android:name="lessonName"
+      app:argType="string"/>
+  </fragment>
 
 
 </navigation>

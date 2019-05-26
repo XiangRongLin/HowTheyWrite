@@ -6,6 +6,7 @@ import com.kaiserpudding.howtheywrite.database.AppDatabase
 import com.kaiserpudding.howtheywrite.database.dao.CharacterDao
 import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao
 import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -56,5 +57,14 @@ class CharacterRepository(application: Application) {
 
     suspend fun getCharactersByLessonIdInRandomOrder(lessonId: Int): List<Character> {
         return lessonCharacterJoinDao.getCharacterByLessonIdInRandomOrder(lessonId)
+    }
+
+    suspend fun addCharactersToLesson(lessonId: Int, characterIds: IntArray) {
+        withContext(Dispatchers.IO) {
+            val lessonCharacterJoins = Array<LessonCharacterJoin>(characterIds.size) {i ->
+                LessonCharacterJoin(lessonId, characterIds[i])
+            }
+            lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoins)
+        }
     }
 }
