@@ -61,10 +61,16 @@ class CharacterRepository(application: Application) {
 
     suspend fun addCharactersToLesson(lessonId: Int, characterIds: IntArray) {
         withContext(Dispatchers.IO) {
-            val lessonCharacterJoins = Array<LessonCharacterJoin>(characterIds.size) {i ->
+            val lessonCharacterJoins = Array(characterIds.size) { i ->
                 LessonCharacterJoin(lessonId, characterIds[i])
             }
             lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoins)
+        }
+    }
+
+    suspend fun deleteCharactersFromLesson(lessonId: Int, characterIds: IntArray) {
+        withContext(Dispatchers.IO) {
+            lessonCharacterJoinDao.deleteLessonCharacterJoins(lessonId, characterIds)
         }
     }
 }
