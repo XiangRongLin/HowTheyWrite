@@ -12,9 +12,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
     override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
-            inflater.inflate(R.menu.selection_menu, menu)
-            menu.findItem(R.id.action_confirm).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            menu.findItem(R.id.action_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            inflater.inflate(R.menu.selection_add_menu, menu)
             mode.title = "${++selectedNumber} selected"
             return true
         }
