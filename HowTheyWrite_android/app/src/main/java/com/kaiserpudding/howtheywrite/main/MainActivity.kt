@@ -4,16 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ActionMode
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.characterList.CharacterListFragment
+import com.kaiserpudding.howtheywrite.characterList.AddCharactersFragment
+import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragmentDirections
 import com.kaiserpudding.howtheywrite.characterList.NewCharacterFragment
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
@@ -32,10 +30,10 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity(),
         QuizFragment.OnQuizFragmentInteractionListener,
-        CharacterListFragment.OnCharacterListFragmentInteractionListener,
+        BaseCharacterListFragment.OnCharacterListFragmentInteractionListener,
         LessonListFragment.OnLessonListFragmentInteractionListener,
         NewCharacterFragment.OnNewCharacterFragmentInteractionListener,
-        NewLessonFragment.OnNewLessonFragmentInteractionListener {
+        NewLessonFragment.OnNewLessonFragmentInteractionListener{
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -128,8 +126,8 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onNewCharacterInteraction() {
-        val action = CharacterListFragmentDirections.actionCharacterListToNewCharacter()
+    override fun onNewCharacterInteraction(lessonId: Int, lessonName: String) {
+        val action = CharacterListFragmentDirections.actionCharacterListFragmentToAddCharactersFragment(lessonId, lessonName)
         navController.navigate(action)
     }
 
@@ -147,6 +145,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun updateTitle(title: String) {
         toolbar.title = title
+    }
+
+    override fun onFinish() {
+        navController.popBackStack()
     }
 
 }

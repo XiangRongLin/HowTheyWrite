@@ -3,31 +3,18 @@ package com.kaiserpudding.howtheywrite.characterList
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaiserpudding.howtheywrite.R
 
-/**
- * A simple [Fragment] subclass.
- *
- * It contains a recyclerView which displays all characters for a given lessonId.
- *
- * Shows all characters if no lessonId is given.
- *
- * Activities that contain this fragment must implement the
- * [CharacterListFragment.OnCharacterListFragmentInteractionListener] interface
- * to handle interaction events.
- *
- */
-class CharacterListFragment
-    : BaseCharacterListFragment(){
+class AddCharactersFragment : BaseCharacterListFragment() {
 
     override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_menu, menu)
+            menu.findItem(R.id.action_confirm).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            menu.findItem(R.id.action_delete).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             mode.title = "${++selectedNumber} selected"
             return true
         }
@@ -37,8 +24,15 @@ class CharacterListFragment
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            //TODO handle delete button
-            return false
+            return when (item.itemId) {
+                R.id.action_confirm -> {
+                    characterListViewModel.addCharactersToLesson(adapter.selectedCharacterId)
+                    mode.finish()
+                    listener?.onFinish()
+                    true
+                }
+                else -> false
+            }
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
@@ -52,34 +46,22 @@ class CharacterListFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //to make it immutable
-        val tmpId = lessonId
-        //instantiate the viewModel
         characterListViewModel =
                 ViewModelProviders.of(
-                        this, CharacterListViewModelFactory(activity!!.application, tmpId, false))
+                        this, CharacterListViewModelFactory(activity!!.application, lessonId, true))
                         .get(CharacterListViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        val newCharacterFab = view.findViewById<FloatingActionButton>(R.id.new_character_fab)
-        newCharacterFab.setOnClickListener { onToNewCharacterFabPressed() }
-
-        val toQuizButton = view.findViewById<Button>(R.id.to_quiz_button)
-        toQuizButton.setOnClickListener { onToQuizButtonPressed() }
+        view.findViewById<FloatingActionButton>(R.id.new_character_fab).visibility = View.GONE
+        view.findViewById<Button>(R.id.to_quiz_button).visibility = View.GONE
 
         return view
     }
 
     override fun updateToolBarTitle() {
-        listener?.updateTitle(lessonName)
+        listener?.updateTitle("Add to $lessonName")
     }
-
-    private fun onToQuizButtonPressed() {
-        if (inSelectionMode) listener?.onToQuizInteraction(adapter.selectedCharacterId, lessonName)
-        else listener?.onToQuizInteraction(lessonId, lessonName)
-    }
-
 }

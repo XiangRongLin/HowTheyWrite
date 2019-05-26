@@ -20,7 +20,7 @@ import com.kaiserpudding.howtheywrite.model.Character
  * @property context
  * @property listener
  */
-internal class CharacterListAdapter(
+class CharacterListAdapter(
         private val context: Context,
         private val listener: OnCharacterListAdapterItemInteractionListener)
     : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {

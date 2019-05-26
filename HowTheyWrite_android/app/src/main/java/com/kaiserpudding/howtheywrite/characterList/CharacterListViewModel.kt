@@ -19,7 +19,8 @@ import kotlinx.coroutines.launch
  */
 class CharacterListViewModel(
         application: Application,
-        lessonId: Int = -1)
+        val lessonId: Int,
+        loadAll: Boolean)
     : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
@@ -28,14 +29,14 @@ class CharacterListViewModel(
 
     init {
         characters =
-                if (lessonId == -1) characterRepository.allLiveDataCharacters()
+                if (loadAll) characterRepository.allLiveDataCharacters()
                 else characterRepository.getLiveDataCharacterByLessonId(lessonId)
     }
 
-    fun insertCharacter(character: Character) {
+    fun addCharactersToLesson(characterIds: IntArray) {
+        print("")
         viewModelScope.launch {
-            characterRepository.insert(character)
+            characterRepository.addCharactersToLesson(lessonId, characterIds)
         }
-
     }
 }
