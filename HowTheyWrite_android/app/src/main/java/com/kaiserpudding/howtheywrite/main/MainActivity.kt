@@ -4,13 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.characterList.AddCharactersFragment
+import com.kaiserpudding.howtheywrite.characterList.AddCharactersFragmentDirections
 import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment
 import com.kaiserpudding.howtheywrite.characterList.CharacterListFragmentDirections
 import com.kaiserpudding.howtheywrite.characterList.NewCharacterFragment
@@ -33,10 +37,11 @@ class MainActivity : AppCompatActivity(),
         BaseCharacterListFragment.OnCharacterListFragmentInteractionListener,
         LessonListFragment.OnLessonListFragmentInteractionListener,
         NewCharacterFragment.OnNewCharacterFragmentInteractionListener,
-        NewLessonFragment.OnNewLessonFragmentInteractionListener{
+        NewLessonFragment.OnNewLessonFragmentInteractionListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private lateinit var menu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,11 +74,12 @@ class MainActivity : AppCompatActivity(),
         bottomNav?.setupWithNavController(navController)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-////        super.onCreateOptionsMenu(menu)
-//        menuInflater.inflate(R.menu.toolbar_menu, menu)
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        super.onCreateOptionsMenu(menu)
+        menu?.let { this.menu = it }
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
 
 //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
@@ -95,7 +101,6 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-
     override fun onToQuizInteraction(lessonId: Int, lessonName: String) {
         val action = CharacterListFragmentDirections.actionCharacterListToQuiz(lessonId, lessonName, null)
         navController.navigate(action)
@@ -106,8 +111,9 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onCharacterListItemInteraction(characterId: Int) {
-        val action = CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
+    override fun onCharacterListItemInteraction(characterId: Int, type: Int) {
+        val action = if (type == 0) CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
+        else AddCharactersFragmentDirections.actionAddCharactersFragmentToCharacterDetailFragment(characterId)
         navController.navigate(action)
     }
 
@@ -127,6 +133,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onNewCharacterInteraction(lessonId: Int, lessonName: String) {
+        val action = CharacterListFragmentDirections.actionCharacterListToNewCharacter()
+        navController.navigate(action)
+    }
+
+    override fun onAddToLessonInteraction(lessonId: Int, lessonName: String) {
         val action = CharacterListFragmentDirections.actionCharacterListFragmentToAddCharactersFragment(lessonId, lessonName)
         navController.navigate(action)
     }

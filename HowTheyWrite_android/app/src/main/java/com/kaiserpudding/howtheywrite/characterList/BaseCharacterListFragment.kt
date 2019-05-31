@@ -74,8 +74,10 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
         if (inSelectionMode) adapter.toggleSelected(characterId)
-        else listener?.onCharacterListItemInteraction(characterId)
+        else onCharacterListInteraction(characterId)
     }
+
+    protected abstract fun onCharacterListInteraction(characterId: Int)
 
     /**
      * TODO
@@ -87,7 +89,7 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
     }
 
 
-    protected fun onToNewCharacterFabPressed() {
+    protected fun onToNewCharacterPressed() {
         listener?.onNewCharacterInteraction(lessonId, lessonName)
     }
 
@@ -114,8 +116,13 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
     interface OnCharacterListFragmentInteractionListener {
         fun onToQuizInteraction(lessonId: Int, lessonName: String)
         fun onToQuizInteraction(characterIds: IntArray, lessonName: String)
-        fun onCharacterListItemInteraction(characterId: Int)
+        /**
+         * @param characterId
+         * @param type Specifies from which specialized fragment it was called. 0 for CharacterList, 1 for AddCharacters
+         */
+        fun onCharacterListItemInteraction(characterId: Int, type: Int)
         fun onNewCharacterInteraction(lessonId: Int, lessonName: String)
+        fun onAddToLessonInteraction(lessonId:Int, lessonName: String)
         fun updateTitle(title: String)
         fun onFinish()
     }

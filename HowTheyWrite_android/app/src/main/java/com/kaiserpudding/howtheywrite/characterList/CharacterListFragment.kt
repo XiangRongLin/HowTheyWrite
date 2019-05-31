@@ -24,7 +24,7 @@ import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
  */
 class CharacterListFragment
     : BaseCharacterListFragment(),
-    ConfirmationDialogFragment.ConfirmationDialogListener{
+        ConfirmationDialogFragment.ConfirmationDialogListener {
 
     override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -56,6 +56,11 @@ class CharacterListFragment
 
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,9 +75,6 @@ class CharacterListFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-
-        val newCharacterFab = view.findViewById<FloatingActionButton>(R.id.new_character_fab)
-        newCharacterFab.setOnClickListener { onToNewCharacterFabPressed() }
 
         val toQuizButton = view.findViewById<Button>(R.id.to_quiz_button)
         toQuizButton.setOnClickListener { onToQuizButtonPressed() }
@@ -94,6 +96,10 @@ class CharacterListFragment
         dialog.show(childFragmentManager, "dialog")
     }
 
+    private fun onAddToLessonPressed() {
+        listener?.onAddToLessonInteraction(lessonId, lessonName)
+    }
+
     override fun onDialogPositiveClick() {
         characterListViewModel.deleteCharactersFromLesson(adapter.selectedCharacterId)
         actionMode?.finish()
@@ -102,5 +108,28 @@ class CharacterListFragment
     override fun onDialogNegativeClick() {
         val toast = Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT)
         toast.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.character_list_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.add_new_character -> {
+                onToNewCharacterPressed()
+                true
+            }
+            R.id.add_to_lesson -> {
+                onAddToLessonPressed()
+                true
+            }
+            else -> false
+        }
+    }
+
+    override fun onCharacterListInteraction(characterId: Int) {
+        listener?.onCharacterListItemInteraction(characterId, 0)
     }
 }

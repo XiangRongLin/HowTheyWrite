@@ -94,6 +94,9 @@
     <argument
       android:name="lessonName"
       app:argType="string"/>
+    <action
+      android:id="@+id/action_addCharactersFragment_to_characterDetailFragment"
+      app:destination="@id/characterDetailFragment"/>
   </fragment>
 
 

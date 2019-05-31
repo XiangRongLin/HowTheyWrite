@@ -53,7 +53,6 @@ class AddCharactersFragment : BaseCharacterListFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        view.findViewById<FloatingActionButton>(R.id.new_character_fab).visibility = View.GONE
         view.findViewById<Button>(R.id.to_quiz_button).visibility = View.GONE
 
         return view
@@ -61,5 +60,9 @@ class AddCharactersFragment : BaseCharacterListFragment() {
 
     override fun updateToolBarTitle() {
         listener?.updateTitle("Add to $lessonName")
+    }
+
+    override fun onCharacterListInteraction(characterId: Int) {
+        listener?.onCharacterListItemInteraction(characterId, 1)
     }
 }
