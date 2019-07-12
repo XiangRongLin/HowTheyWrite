@@ -32,7 +32,13 @@ class CharacterRepository(application: Application) {
         withContext(Dispatchers.IO) {
             characterDao.delete(character)
         }
+    }
 
+    suspend fun delete(characterIds: IntArray) {
+        withContext(Dispatchers.IO) {
+            characterDao.delete(characterIds)
+            lessonCharacterJoinDao.deleteAllLessonCharacterJoinsFromCharacter(characterIds)
+        }
     }
 
     fun getLiveDataCharacterByLessonId(lessonId: Int): LiveData<List<Character>> {
