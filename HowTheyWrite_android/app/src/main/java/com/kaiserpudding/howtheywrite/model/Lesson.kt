@@ -4,9 +4,7 @@ import androidx.room.*
 import java.util.*
 
 @Entity(tableName = "lessons", indices = [Index(value = ["name"], unique = true)])
-class Lesson(
-        @ColumnInfo(name = "name") var name: String
-) {
+class Lesson(@ColumnInfo(name = "name") var name: String) {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

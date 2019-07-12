@@ -44,4 +44,10 @@ class CharacterListViewModel(
             characterRepository.deleteCharactersFromLesson(lessonId, characterIds)
         }
     }
+
+    fun deleteCharacters(characterIds: IntArray) {
+        viewModelScope.launch {
+            characterRepository.delete(characterIds)
+        }
+    }
 }

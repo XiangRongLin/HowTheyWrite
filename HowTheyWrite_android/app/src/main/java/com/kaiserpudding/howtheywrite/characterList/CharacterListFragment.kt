@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
 
@@ -66,12 +65,11 @@ class CharacterListFragment
 
         //to make it immutable
         val tmpId = lessonId
-        //instantiate the viewModel
-        characterListViewModel =
-                ViewModelProviders.of(
-                        this, CharacterListViewModelFactory(activity!!.application, tmpId, false))
-                        .get(CharacterListViewModel::class.java)
+        characterListViewModel = ViewModelProviders.of(
+                this, CharacterListViewModelFactory(activity!!.application, tmpId, false))
+                .get(CharacterListViewModel::class.java)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
