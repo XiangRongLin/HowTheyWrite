@@ -19,4 +19,7 @@ interface CharacterDao : BaseDao<Character> {
     @Query("SELECT * FROM characters WHERE id IN (:ids) ORDER BY RANDOM()")
     suspend fun getCharactersByIdInRandomOrder(ids: IntArray): List<Character>
 
+    @Query("DELETE FROM characters WHERE id IN (:characterIds)")
+    suspend fun delete(characterIds: IntArray)
+
 }

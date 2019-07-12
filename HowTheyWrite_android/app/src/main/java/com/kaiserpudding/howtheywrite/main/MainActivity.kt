@@ -14,10 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kaiserpudding.howtheywrite.R
-import com.kaiserpudding.howtheywrite.characterList.AddCharactersFragmentDirections
-import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment
-import com.kaiserpudding.howtheywrite.characterList.CharacterListFragmentDirections
-import com.kaiserpudding.howtheywrite.characterList.NewCharacterFragment
+import com.kaiserpudding.howtheywrite.characterList.*
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
 import com.kaiserpudding.howtheywrite.lessonList.LessonListFragment
 import com.kaiserpudding.howtheywrite.lessonList.LessonListFragmentDirections
@@ -112,8 +109,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCharacterListItemInteraction(characterId: Int, type: Int) {
-        val action = if (type == 0) CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
-        else AddCharactersFragmentDirections.actionAddCharactersFragmentToCharacterDetailFragment(characterId)
+        val action = when (type) {
+            0 -> CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
+            1 -> AddCharactersFragmentDirections.actionAddCharactersFragmentToCharacterDetailFragment(characterId)
+            else -> AllCharactersFragmentDirections.actionAllCharactersFragmentToCharacterDetailFragment(characterId)
+        }
         navController.navigate(action)
     }
 
@@ -123,7 +123,8 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onLessonListItemInteraction(lessonId: Int, lessonName: String) {
-        val action = LessonListFragmentDirections.actionLessonListToCharacterList(lessonId, lessonName)
+        val action = if (lessonId == 0) LessonListFragmentDirections.actionLessonListFragmentToAllCharactersFragment()
+        else LessonListFragmentDirections.actionLessonListToCharacterList(lessonId, lessonName)
         navController.navigate(action)
     }
 

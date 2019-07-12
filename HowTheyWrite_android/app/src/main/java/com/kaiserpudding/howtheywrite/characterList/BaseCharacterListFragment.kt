@@ -2,7 +2,10 @@ package com.kaiserpudding.howtheywrite.characterList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.ActionMode
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -20,7 +23,7 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
     protected var actionMode: ActionMode? = null
     protected var selectedNumber = 0
 
-    protected abstract val actionModeCallback : ActionMode.Callback
+    protected abstract val actionModeCallback: ActionMode.Callback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,8 +124,9 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
          * @param type Specifies from which specialized fragment it was called. 0 for CharacterList, 1 for AddCharacters
          */
         fun onCharacterListItemInteraction(characterId: Int, type: Int)
+
         fun onNewCharacterInteraction(lessonId: Int, lessonName: String)
-        fun onAddToLessonInteraction(lessonId:Int, lessonName: String)
+        fun onAddToLessonInteraction(lessonId: Int, lessonName: String)
         fun updateTitle(title: String)
         fun onFinish()
     }

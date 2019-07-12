@@ -1,0 +1,75 @@
+package com.kaiserpudding.howtheywrite.characterList
+
+import android.os.Bundle
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
+import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
+
+class AllCharactersFragment : BaseCharacterListFragment(),
+        ConfirmationDialogFragment.ConfirmationDialogListener {
+
+    override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
+
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            val inflater = mode.menuInflater
+            inflater.inflate(R.menu.selection_delete_menu, menu)
+            mode.title = "${++selectedNumber} selected"
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.action_delete -> {
+                    showConfirmationDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            adapter.clearSelected()
+            selectedNumber = 0
+            actionMode = null
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        characterListViewModel = ViewModelProviders.of(
+                this, CharacterListViewModelFactory(activity!!.application, -1, true))
+                .get(CharacterListViewModel::class.java)
+    }
+
+    private fun showConfirmationDialog() {
+        val dialog = ConfirmationDialogFragment(this)
+        dialog.show(childFragmentManager, "dialog")
+    }
+
+    override fun onDialogPositiveClick() {
+        characterListViewModel.deleteCharacters(adapter.selectedCharacterId)
+        actionMode?.finish()
+    }
+
+    override fun onDialogNegativeClick() {
+        val toast = Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
+    override fun updateToolBarTitle() {
+        listener?.updateTitle("All Characters")
+    }
+
+    override fun onCharacterListInteraction(characterId: Int) {
+        listener?.onCharacterListItemInteraction(characterId, 2)
+    }
+}

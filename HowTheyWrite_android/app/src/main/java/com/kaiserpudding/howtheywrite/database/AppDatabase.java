@@ -1,9 +1,9 @@
 package com.kaiserpudding.howtheywrite.database;
 
+import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import android.content.Context;
 import com.kaiserpudding.howtheywrite.database.dao.CharacterDao;
 import com.kaiserpudding.howtheywrite.database.dao.LessonCharacterJoinDao;
 import com.kaiserpudding.howtheywrite.database.dao.LessonDao;
@@ -20,13 +20,8 @@ import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin;
 public abstract class AppDatabase extends RoomDatabase {
 
 
-  public abstract CharacterDao characterDao();
-  public abstract LessonDao lessonDao();
-  public abstract LessonCharacterJoinDao lessonCharacterJoinJoinDao();
-
   //singleton
   private static AppDatabase INSTANCE;
-
   private Context context;
 
   public static AppDatabase getDatabase(final Context context) {
@@ -44,6 +39,12 @@ public abstract class AppDatabase extends RoomDatabase {
     }
     return INSTANCE;
   }
+
+  public abstract CharacterDao characterDao();
+
+  public abstract LessonDao lessonDao();
+
+  public abstract LessonCharacterJoinDao lessonCharacterJoinJoinDao();
 
 }
 
