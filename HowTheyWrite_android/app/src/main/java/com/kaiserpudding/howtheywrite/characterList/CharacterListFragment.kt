@@ -127,7 +127,7 @@ class CharacterListFragment
         }
     }
 
-    override fun onCharacterListInteraction(characterId: Int) {
-        listener?.onCharacterListItemInteraction(characterId, 0)
+    override fun onListInteraction(itemId: Int) {
+        listener?.onCharacterListItemInteraction(itemId, 0)
     }
 }

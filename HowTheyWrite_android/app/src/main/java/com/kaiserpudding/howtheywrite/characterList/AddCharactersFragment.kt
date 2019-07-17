@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kaiserpudding.howtheywrite.R
 
 class AddCharactersFragment : BaseCharacterListFragment() {
@@ -62,7 +61,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         listener?.updateTitle("Add to $lessonName")
     }
 
-    override fun onCharacterListInteraction(characterId: Int) {
-        listener?.onCharacterListItemInteraction(characterId, 1)
+    override fun onListInteraction(itemId: Int) {
+        listener?.onCharacterListItemInteraction(itemId, 1)
     }
 }

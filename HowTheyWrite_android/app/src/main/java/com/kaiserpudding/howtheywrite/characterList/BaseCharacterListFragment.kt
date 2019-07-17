@@ -2,28 +2,23 @@ package com.kaiserpudding.howtheywrite.characterList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectFragment
 
-abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCharacterListAdapterItemInteractionListener {
+abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
     protected var lessonId: Int = -1
     protected lateinit var lessonName: String
     protected var listener: OnCharacterListFragmentInteractionListener? = null
     protected lateinit var characterListViewModel: CharacterListViewModel
-    protected lateinit var adapter: CharacterListAdapter
-    protected var inSelectionMode: Boolean = false
-    protected var actionMode: ActionMode? = null
     protected var selectedNumber = 0
-
-    protected abstract val actionModeCallback: ActionMode.Callback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +39,10 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
-        adapter.inSelectionMode.observe(this, Observer { inSelectionMode ->
-            this.inSelectionMode = inSelectionMode
-            if (inSelectionMode && actionMode == null) actionMode = activity?.startActionMode(actionModeCallback)
-            else if (!inSelectionMode) actionMode?.finish()
-        })
-
-        adapter.numberOfSelected.observe(this, Observer {
-
-            actionMode?.title = "$it selected"
-        })
-
         //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
                 Observer { characters ->
-                    adapter.setCharacters(characters)
+                    (adapter as CharacterListAdapter).setCharacters(characters)
                 }
         )
 
@@ -67,30 +51,8 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
         return view
     }
 
-    override fun onStop() {
-        super.onStop()
-        actionMode?.finish()
-        adapter.clearSelectedThenNotify()
-    }
 
     protected abstract fun updateToolBarTitle()
-
-    override fun onCharacterListAdapterInteraction(characterId: Int) {
-        if (inSelectionMode) adapter.toggleSelectedThenNotify(characterId)
-        else onCharacterListInteraction(characterId)
-    }
-
-    protected abstract fun onCharacterListInteraction(characterId: Int)
-
-    /**
-     * TODO
-     *
-     * @param characterId
-     */
-    override fun onCharacterListAdapterLongInteraction(characterId: Int) {
-        adapter.toggleSelectedThenNotify(characterId)
-    }
-
 
     protected fun onToNewCharacterPressed() {
         listener?.onNewCharacterInteraction(lessonId, lessonName)
