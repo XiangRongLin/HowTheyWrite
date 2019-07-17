@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.shared.MultiSelectRecyclerViewAdapter
 
 /**
  * Adapter for the recyclerView for characters.
@@ -23,20 +24,11 @@ import com.kaiserpudding.howtheywrite.model.Character
 class CharacterListAdapter(
         private val context: Context,
         private val listener: OnCharacterListAdapterItemInteractionListener)
-    : RecyclerView.Adapter<CharacterListAdapter.CharacterViewHolder>() {
+    : MultiSelectRecyclerViewAdapter<CharacterListAdapter.CharacterViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var characters: List<Character>? = null
-    private var selectedCharactersId: MutableSet<Int> = mutableSetOf()
-    private val _inSelectionMode = MutableLiveData<Boolean>()
-    private val _numberOfSelected = MutableLiveData<Int>()
-    val inSelectionMode: LiveData<Boolean>
-        get() = _inSelectionMode
-    val numberOfSelected: LiveData<Int>
-        get() = _numberOfSelected
-    val selectedCharacterId
-        get() = selectedCharactersId.toIntArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item_character, parent, false)
@@ -53,26 +45,11 @@ class CharacterListAdapter(
             "No Characters"
         }
         holder.characterItemView.text = representation
-        holder.itemView.isActivated = selectedCharactersId.contains(characters!![position].id)
+        holder.itemView.isActivated = selectedId.contains(characters!![position].id)
     }
 
     fun setCharacters(characters: List<Character>) {
         this.characters = characters
-        notifyDataSetChanged()
-    }
-
-    fun toggleSelected(id: Int) {
-        if (selectedCharactersId.contains(id)) selectedCharactersId.remove(id)
-        else selectedCharactersId.add(id)
-        _inSelectionMode.postValue(!selectedCharactersId.isEmpty())
-        val a = selectedCharactersId.size
-        _numberOfSelected.postValue(selectedCharactersId.size)
-        notifyDataSetChanged()
-    }
-
-    fun clearSelected() {
-        selectedCharactersId.clear()
-        _inSelectionMode.postValue(false)
         notifyDataSetChanged()
     }
 

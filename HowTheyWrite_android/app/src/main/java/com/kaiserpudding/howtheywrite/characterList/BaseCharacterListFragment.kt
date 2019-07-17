@@ -70,13 +70,13 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
     override fun onStop() {
         super.onStop()
         actionMode?.finish()
-        adapter.clearSelected()
+        adapter.clearSelectedThenNotify()
     }
 
     protected abstract fun updateToolBarTitle()
 
     override fun onCharacterListAdapterInteraction(characterId: Int) {
-        if (inSelectionMode) adapter.toggleSelected(characterId)
+        if (inSelectionMode) adapter.toggleSelectedThenNotify(characterId)
         else onCharacterListInteraction(characterId)
     }
 
@@ -88,7 +88,7 @@ abstract class BaseCharacterListFragment : Fragment(), CharacterListAdapter.OnCh
      * @param characterId
      */
     override fun onCharacterListAdapterLongInteraction(characterId: Int) {
-        adapter.toggleSelected(characterId)
+        adapter.toggleSelectedThenNotify(characterId)
     }
 
 

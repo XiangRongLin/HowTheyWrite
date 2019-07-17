@@ -35,7 +35,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            adapter.clearSelected()
+            adapter.clearSelectedThenNotify()
             selectedNumber = 0
             actionMode = null
         }
@@ -63,7 +63,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
     }
 
     override fun onDialogPositiveClick() {
-        characterListViewModel.deleteCharacters(adapter.selectedCharacterId)
+        characterListViewModel.deleteCharacters(adapter.selectedId)
         actionMode?.finish()
     }
 

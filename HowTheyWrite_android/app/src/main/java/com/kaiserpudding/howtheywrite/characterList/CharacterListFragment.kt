@@ -48,7 +48,7 @@ class CharacterListFragment
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            adapter.clearSelected()
+            adapter.clearSelectedThenNotify()
             selectedNumber = 0
             actionMode = null
         }
@@ -85,7 +85,7 @@ class CharacterListFragment
     }
 
     private fun onToQuizButtonPressed() {
-        if (inSelectionMode) listener?.onToQuizInteraction(adapter.selectedCharacterId, lessonName)
+        if (inSelectionMode) listener?.onToQuizInteraction(adapter.selectedId, lessonName)
         else listener?.onToQuizInteraction(lessonId, lessonName)
     }
 
@@ -99,7 +99,7 @@ class CharacterListFragment
     }
 
     override fun onDialogPositiveClick() {
-        characterListViewModel.deleteCharactersFromLesson(adapter.selectedCharacterId)
+        characterListViewModel.deleteCharactersFromLesson(adapter.selectedId)
         actionMode?.finish()
     }
 

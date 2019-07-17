@@ -24,7 +24,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.action_confirm -> {
-                    characterListViewModel.addCharactersToLesson(adapter.selectedCharacterId)
+                    characterListViewModel.addCharactersToLesson(adapter.selectedId)
                     mode.finish()
                     listener?.onFinish()
                     true
@@ -34,7 +34,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         }
 
         override fun onDestroyActionMode(mode: ActionMode) {
-            adapter.clearSelected()
+            adapter.clearSelectedThenNotify()
             selectedNumber = 0
             actionMode = null
         }
