@@ -18,14 +18,12 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
     protected lateinit var lessonName: String
     protected var listener: OnCharacterListFragmentInteractionListener? = null
     protected lateinit var characterListViewModel: CharacterListViewModel
-    protected var selectedNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val safeArgs: CharacterListFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
-        lessonName = safeArgs.lessonName
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +43,11 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
                     (adapter as CharacterListAdapter).setCharacters(characters)
                 }
         )
-
-        updateToolBarTitle()
+        characterListViewModel.lessonName.observe(this,
+                Observer {
+                    lessonName = it
+                    updateToolBarTitle()
+                })
 
         return view
     }

@@ -39,10 +39,6 @@
     <action
       android:id="@+id/action_characterList_to_newCharacter"
       app:destination="@id/newCharacterFragment"/>
-    <argument
-      android:name="lessonName"
-      app:argType="string"
-      android:defaultValue="All Characters"/>
     <action
       android:id="@+id/action_characterListFragment_to_addCharactersFragment"
       app:destination="@id/addCharactersFragment"/>

@@ -40,4 +40,10 @@ class LessonListViewModel(application: Application) : AndroidViewModel(applicati
             lessonRepository.insert(lesson)
         }
     }
+
+    fun deleteLessons(lessonIds: IntArray) {
+        viewModelScope.launch {
+            lessonRepository.deleteLessons(lessonIds)
+        }
+    }
 }

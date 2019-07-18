@@ -30,13 +30,12 @@ class LessonRepository(application: Application) {
 
     }
 
-    suspend fun delete(lesson: Lesson) {
-        withContext(Dispatchers.IO) {
-            lessonDao.delete(lesson)
-            //TODO delete lessonCharacterJoin
-        }
-
-    }
+//    suspend fun delete(lesson: Lesson) {
+//        withContext(Dispatchers.IO) {
+//            lessonDao.delete(lesson)
+//            //TODO delete lessonCharacterJoin
+//        }
+//    }
 
     fun allLiveDataLessons(): LiveData<List<Lesson>> {
         return lessonDao.allLessons()
@@ -54,6 +53,17 @@ class LessonRepository(application: Application) {
                 }
                 lessonCharacterJoinDao.insertLessonCharacterJoin(toInsert)
             }
+        }
+    }
+
+    fun getLiveDataLessonNameById(lessonId: Int): LiveData<String> {
+        return lessonDao.getLiveDataLessonNameById(lessonId)
+    }
+
+    suspend fun deleteLessons(lessonIds: IntArray) {
+        withContext(Dispatchers.IO) {
+            lessonDao.deleteLessons(lessonIds)
+            lessonCharacterJoinDao.deleteAllLessonCharacterJoinsFromLesson(lessonIds)
         }
     }
 }

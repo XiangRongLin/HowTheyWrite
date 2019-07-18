@@ -46,5 +46,8 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
     @Query("DELETE FROM lesson_character_join WHERE characterId IN (:characterIds)")
     suspend fun deleteAllLessonCharacterJoinsFromCharacter(characterIds: IntArray)
 
+    @Query("DELETE FROM lesson_character_join WHERE lessonId IN (:lessonIds)")
+    fun deleteAllLessonCharacterJoinsFromLesson(lessonIds: IntArray)
+
 
 }

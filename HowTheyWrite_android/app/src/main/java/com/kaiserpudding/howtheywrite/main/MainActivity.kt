@@ -109,6 +109,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onCharacterListItemInteraction(characterId: Int, type: Int) {
+        navController.currentDestination
         val action = when (type) {
             0 -> CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
             1 -> AddCharactersFragmentDirections.actionAddCharactersFragmentToCharacterDetailFragment(characterId)
@@ -122,9 +123,9 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onLessonListItemInteraction(lessonId: Int, lessonName: String) {
+    override fun onLessonListItemInteraction(lessonId: Int) {
         val action = if (lessonId == 0) LessonListFragmentDirections.actionLessonListFragmentToAllCharactersFragment()
-        else LessonListFragmentDirections.actionLessonListToCharacterList(lessonId, lessonName)
+        else LessonListFragmentDirections.actionLessonListToCharacterList(lessonId)
         navController.navigate(action)
     }
 

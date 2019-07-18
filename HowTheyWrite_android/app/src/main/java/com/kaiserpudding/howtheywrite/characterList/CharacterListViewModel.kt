@@ -3,9 +3,11 @@ package com.kaiserpudding.howtheywrite.characterList
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
+import com.kaiserpudding.howtheywrite.repositories.LessonRepository
 import kotlinx.coroutines.launch
 
 /**
@@ -24,13 +26,22 @@ class CharacterListViewModel(
     : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
+    private val lessonRepository: LessonRepository = LessonRepository(application)
 
     val characters: LiveData<List<Character>>
+    internal val lessonName: LiveData<String>
 
     init {
         characters =
-                if (loadAll) characterRepository.allLiveDataCharacters()
-                else characterRepository.getLiveDataCharacterByLessonId(lessonId)
+                if (loadAll) {
+                    val tmp = MutableLiveData<String>()
+                    lessonName = tmp
+                    tmp.postValue("All")
+                    characterRepository.allLiveDataCharacters()
+                } else {
+                    lessonName = lessonRepository.getLiveDataLessonNameById(lessonId)
+                    characterRepository.getLiveDataCharacterByLessonId(lessonId)
+                }
     }
 
     fun addCharactersToLesson(characterIds: IntArray) {

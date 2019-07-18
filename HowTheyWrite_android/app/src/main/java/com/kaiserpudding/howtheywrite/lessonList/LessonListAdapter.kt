@@ -8,11 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Lesson
+import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectAdapter
 
 /**
  * Adapter for the recyclerView for lessions
  *
- * Classes using this must implement [LessonListAdapter.OnLessonListAdapterItemInteractionListener]
+ * Classes using this must implement [MultiSelectAdapter.MultiSelectAdapterItemInteractionListener]
  * to handle interaction events with an item in the list.
  *
  * @property context
@@ -20,51 +21,44 @@ import com.kaiserpudding.howtheywrite.model.Lesson
  */
 class LessonListAdapter(
         private val context: Context,
-        private val listener: OnLessonListAdapterItemInteractionListener)
-    : RecyclerView.Adapter<LessonListAdapter.LessonViewHolder>() {
+        listener: MultiSelectAdapterItemInteractionListener)
+    : MultiSelectAdapter<Lesson>(listener) {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    override val viewHolderId = R.id.lessonTextView
+    private val all = Lesson("All")
 
-    private var lessons = mutableListOf(Lesson("All"))
-
-    inner class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val lessonItemView: TextView
-
-        init {
-            itemView.setOnClickListener { onAdapterItemPressed() }
-            lessonItemView = itemView.findViewById(R.id.lessonTextView)
-        }
-
-        private fun onAdapterItemPressed() {
-            //+ 1 because adapter positions starts at 0 while Room ids start at 1
-            listener.onLessonListAdapterItemInteraction(lessons[adapterPosition].id, lessonItemView.text.toString())
-        }
+    init {
+        list = mutableListOf(all)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiSelectViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item_lesson, parent, false)
-        return LessonViewHolder(itemView)
+        return createViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
-        //TODO no lesson case
-        val current = lessons[position]
+    override fun onBindViewHolder(holder: MultiSelectViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+
+        val current = list!![position]
         //TODO proper string representation of lesson
-        holder.lessonItemView.text = current.toString()
+        holder.textView.text = current.toString()
     }
 
     internal fun setLessons(lessons: List<Lesson>) {
-        this.lessons.addAll(lessons)
+        val combined = mutableListOf(all)
+        combined.addAll(lessons)
+        list = combined
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return lessons.size
+        return if (list != null) list!!.size
+        else 0
     }
 
-    interface OnLessonListAdapterItemInteractionListener {
-        fun onLessonListAdapterItemInteraction(lessonId: Int, lessonName: String)
+    override fun getMyItemId(position: Int): Int {
+        return if (list != null) list!![position].id
+        else 0
     }
-
 }
