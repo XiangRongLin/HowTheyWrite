@@ -17,7 +17,7 @@ import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
  * Shows all characters if no lessonId is given.
  *
  * Activities that contain this fragment must implement the
- * [CharacterListFragment.OnCharacterListFragmentInteractionListener] interface
+ * [BaseCharacterListFragment.OnCharacterListFragmentInteractionListener] interface
  * to handle interaction events.
  *
  */
@@ -29,7 +29,7 @@ class CharacterListFragment
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_delete_menu, menu)
-            mode.title = "${++selectedNumber} selected"
+            mode.title = "$selectedNumber selected"
             return true
         }
 
@@ -49,7 +49,6 @@ class CharacterListFragment
 
         override fun onDestroyActionMode(mode: ActionMode) {
             adapter.clearSelectedThenNotify()
-            selectedNumber = 0
             actionMode = null
         }
 

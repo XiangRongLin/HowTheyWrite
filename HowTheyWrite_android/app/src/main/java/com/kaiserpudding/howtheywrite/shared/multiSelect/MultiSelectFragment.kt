@@ -15,6 +15,8 @@ abstract class MultiSelectFragment<T> : Fragment(),
     protected abstract val actionModeCallback: ActionMode.Callback
     protected var actionMode: ActionMode? = null
     protected var inSelectionMode = false
+    protected val selectedNumber
+        get() = adapter.selectedId.size
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

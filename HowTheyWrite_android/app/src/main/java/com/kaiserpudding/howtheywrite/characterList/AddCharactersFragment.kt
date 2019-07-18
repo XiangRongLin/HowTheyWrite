@@ -12,7 +12,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_add_menu, menu)
-            mode.title = "${++selectedNumber} selected"
+            mode.title = "$selectedNumber selected"
             return true
         }
 
@@ -34,7 +34,6 @@ class AddCharactersFragment : BaseCharacterListFragment() {
 
         override fun onDestroyActionMode(mode: ActionMode) {
             adapter.clearSelectedThenNotify()
-            selectedNumber = 0
             actionMode = null
         }
 
