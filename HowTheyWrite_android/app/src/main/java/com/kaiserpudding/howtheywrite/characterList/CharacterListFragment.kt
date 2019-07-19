@@ -29,7 +29,7 @@ class CharacterListFragment
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_delete_menu, menu)
-            mode.title = "$selectedNumber selected"
+            mode.title = "${adapter.numberOfSelected} selected"
             return true
         }
 
@@ -84,7 +84,7 @@ class CharacterListFragment
     }
 
     private fun onToQuizButtonPressed() {
-        if (inSelectionMode) listener?.onToQuizInteraction(adapter.selectedId, lessonName)
+        if (adapter.inSelectionMode) listener?.onToQuizInteraction(adapter.selectedIdArray, lessonName)
         else listener?.onToQuizInteraction(lessonId, lessonName)
     }
 
@@ -98,7 +98,7 @@ class CharacterListFragment
     }
 
     override fun onDialogPositiveClick() {
-        characterListViewModel.deleteCharactersFromLesson(adapter.selectedId)
+        characterListViewModel.deleteCharactersFromLesson(adapter.selectedIdArray)
         actionMode?.finish()
     }
 

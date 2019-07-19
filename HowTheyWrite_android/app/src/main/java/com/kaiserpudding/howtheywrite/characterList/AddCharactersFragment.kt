@@ -12,7 +12,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_add_menu, menu)
-            mode.title = "$selectedNumber selected"
+            mode.title = "${adapter.numberOfSelected} selected"
             return true
         }
 
@@ -23,7 +23,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.action_confirm -> {
-                    characterListViewModel.addCharactersToLesson(adapter.selectedId)
+                    characterListViewModel.addCharactersToLesson(adapter.selectedIdArray)
                     mode.finish()
                     listener?.onFinish()
                     true

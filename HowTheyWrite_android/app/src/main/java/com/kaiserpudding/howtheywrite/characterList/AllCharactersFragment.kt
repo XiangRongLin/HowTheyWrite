@@ -16,7 +16,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_delete_menu, menu)
-            mode.title = "$selectedNumber selected"
+            mode.title = "${adapter.numberOfSelected} selected"
             return true
         }
 
@@ -62,7 +62,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
     }
 
     override fun onDialogPositiveClick() {
-        characterListViewModel.deleteCharacters(adapter.selectedId)
+        characterListViewModel.deleteCharacters(adapter.selectedIdArray)
         actionMode?.finish()
     }
 

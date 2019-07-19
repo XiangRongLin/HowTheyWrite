@@ -35,7 +35,7 @@ class LessonListFragment
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             val inflater = mode.menuInflater
             inflater.inflate(R.menu.selection_delete_menu, menu)
-            mode.title = "$selectedNumber selected"
+            mode.title = "${adapter.numberOfSelected} selected"
             return true
         }
 
@@ -114,11 +114,11 @@ class LessonListFragment
     }
 
     override fun onDialogPositiveClick() {
-        if (adapter.selectedId.contains(0)) {
+        if (adapter.selectedIdArray.contains(0)) {
             val toast = Toast.makeText(context, "The All lesson can't be deleted", Toast.LENGTH_LONG)
             toast.show()
         }
-        lessonListViewModel.deleteLessons(adapter.selectedId)
+        lessonListViewModel.deleteLessons(adapter.selectedIdArray)
         actionMode?.finish()
     }
 
