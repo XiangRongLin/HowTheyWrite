@@ -25,33 +25,16 @@ class CharacterListFragment
     : BaseCharacterListFragment(),
         ConfirmationDialogFragment.ConfirmationDialogListener {
 
-    override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            val inflater = mode.menuInflater
-            inflater.inflate(R.menu.selection_delete_menu, menu)
-            mode.title = "${adapter.numberOfSelected} selected"
-            return true
-        }
+    override val actionMenuId = R.menu.selection_delete_menu
 
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            return when (item.itemId) {
-                R.id.action_delete -> {
-                    showConfirmationDialog()
-                    true
-                }
-                else -> false
+    override fun onMyActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete -> {
+                showConfirmationDialog()
+                true
             }
+            else -> false
         }
-
-        override fun onDestroyActionMode(mode: ActionMode) {
-            adapter.clearSelectedThenNotify()
-            actionMode = null
-        }
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

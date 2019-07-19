@@ -31,31 +31,16 @@ class LessonListFragment
     private var listener: OnLessonListFragmentInteractionListener? = null
     private lateinit var lessonListViewModel: LessonListViewModel
 
-    override val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            val inflater = mode.menuInflater
-            inflater.inflate(R.menu.selection_delete_menu, menu)
-            mode.title = "${adapter.numberOfSelected} selected"
-            return true
-        }
+    override val actionMenuId: Int
+        get() = R.menu.selection_delete_menu
 
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            return when (item.itemId) {
-                R.id.action_delete -> {
-                    showConfirmationDialog()
-                    true
-                }
-                else -> false
+    override fun onMyActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete -> {
+                showConfirmationDialog()
+                true
             }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode) {
-            adapter.clearSelectedThenNotify()
-            actionMode = null
+            else -> false
         }
     }
 
@@ -78,7 +63,8 @@ class LessonListFragment
 
         //add observer to viewModel to set lessons into the adapter
         lessonListViewModel.lessons.observe(this, Observer {
-            (adapter as LessonListAdapter).setLessons(it) })
+            (adapter as LessonListAdapter).setLessons(it)
+        })
 
         val fab = view.findViewById<FloatingActionButton>(R.id.new_lessen_fab)
         fab.setOnClickListener {
@@ -88,25 +74,14 @@ class LessonListFragment
         return view
     }
 
-//    private fun onListItemPressed(lessonId: Int, lessonName: String) {
-//        listener?.onLessonListItemInteraction(lessonId, lessonName)
-//    }
 
     private fun onNewLessonButtonPressed() {
         listener?.onToNewLessonInteraction()
     }
 
-//    override fun onLessonListAdapterItemInteraction(lessonId: Int, lessonName: String) {
-//        onListItemPressed(lessonId, lessonName)
-//    }
-
     override fun onListInteraction(itemId: Int) {
         listener?.onLessonListItemInteraction(itemId)
     }
-
-//    override fun onLessonListAdapterItemLongInteraction(lessonId: Int, lessonName: String) {
-//        adapter.toggleSelectedThenNotify(lessonId)
-//    }
 
     private fun showConfirmationDialog() {
         val dialog = ConfirmationDialogFragment(this)
