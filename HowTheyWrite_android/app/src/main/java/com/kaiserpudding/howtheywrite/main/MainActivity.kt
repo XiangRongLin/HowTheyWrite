@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity(),
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    private lateinit var menu: Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,29 +57,11 @@ class MainActivity : AppCompatActivity(),
         appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
 
         setupActionBar(navController, appBarConfiguration)
-
-        setUpBottomNavMenu(navController)
     }
 
     private fun setupActionBar(navController: NavController, appBarConfiguration: AppBarConfiguration) {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
-
-    private fun setUpBottomNavMenu(navController: NavController) {
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-        bottomNav?.setupWithNavController(navController)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        super.onCreateOptionsMenu(menu)
-        menu?.let { this.menu = it }
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
-        return true
-    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-//    }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
