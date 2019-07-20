@@ -9,6 +9,7 @@ https://play.google.com/store/apps/details?id=com.google.android.inputmethod.pin
 - Create, delete and modify lessons
 - Create and delete characters and add them to lessons
 - Test yourself, by writing hanzi with only the translation and pinyin given
+- Contains a dataset with characters needed for the the HSK 1-6 tests
 
 # Gifs
 
