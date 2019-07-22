@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
 import kotlinx.android.synthetic.main.fragment_quiz.*
 
 
@@ -79,7 +80,7 @@ class QuizFragment : Fragment() {
         quizTranslation = view.findViewById(R.id.quiz_translation)
         quizPinyin = view.findViewById(R.id.quiz_pinyin)
         quizEditText = view.findViewById(R.id.quiz_input_edit_text)
-        quizTranslation.setOnClickListener {
+        quizTranslation.setSafeOnClickListener {
             onTranslationPressed(quizViewModel.currentCharacter)
         }
 

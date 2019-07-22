@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Lesson
+import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
 
 /**
  * A simple [Fragment] subclass.
@@ -41,7 +42,7 @@ class NewLessonFragment : Fragment() {
         lessonListViewModel = ViewModelProviders.of(this).get(LessonListViewModel::class.java)
 
         val button = view.findViewById<Button>(R.id.button_save)
-        button.setOnClickListener {
+        button.setSafeOnClickListener {
             //TODO editText.text is mutable, could have changed after or while checkEditText
             if (checkEditText()) {
                 //add lesson to db, hide keyboard and finish this fragment

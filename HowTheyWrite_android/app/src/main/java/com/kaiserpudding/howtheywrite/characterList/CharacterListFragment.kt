@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
+import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
 
 /**
  * A simple [Fragment] subclass.
@@ -57,7 +58,7 @@ class CharacterListFragment
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
         val toQuizButton = view.findViewById<Button>(R.id.to_quiz_button)
-        toQuizButton.setOnClickListener { onToQuizButtonPressed() }
+        toQuizButton.setSafeOnClickListener { onToQuizButtonPressed() }
 
         return view
     }

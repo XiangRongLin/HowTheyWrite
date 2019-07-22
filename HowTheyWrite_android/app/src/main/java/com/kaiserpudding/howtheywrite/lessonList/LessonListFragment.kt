@@ -13,6 +13,7 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.shared.ConfirmationDialogFragment
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectFragment
+import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
 
 /**
  * A simple [Fragment] subclass.
@@ -67,7 +68,7 @@ class LessonListFragment
         })
 
         val fab = view.findViewById<FloatingActionButton>(R.id.new_lessen_fab)
-        fab.setOnClickListener {
+        fab.setSafeOnClickListener {
             onNewLessonButtonPressed()
         }
 

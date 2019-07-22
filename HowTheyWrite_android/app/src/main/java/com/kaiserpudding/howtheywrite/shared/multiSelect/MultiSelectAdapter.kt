@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectAdapter.MultiSelectAdapterItemInteractionListener
+import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
 
 /**
  * An adapter handling the logic needed for a recycler view with clickable and selectable items.
@@ -88,7 +89,7 @@ abstract class MultiSelectAdapter<T>(
         val textView: TextView = view.findViewById(viewHolderId)
 
         init {
-            view.setOnClickListener {
+            view.setSafeOnClickListener {
                 if (inSelectionMode) toggleSelectedThenNotify(adapterPosition)
                 else listener.onMultiSelectAdapterInteraction(getMyItemId(adapterPosition))
             }

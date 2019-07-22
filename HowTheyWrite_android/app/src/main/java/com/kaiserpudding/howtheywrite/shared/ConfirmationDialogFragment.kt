@@ -24,18 +24,4 @@ class ConfirmationDialogFragment(private val listener: ConfirmationDialogListene
         fun onDialogPositiveClick()
         fun onDialogNegativeClick()
     }
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        try {
-//            listener = context as ConfirmationDialogListener
-//        } catch (e: ClassCastException) {
-//            throw ClassCastException("$context must implement ConfirmationDialogFragment")
-//        }
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        listener = null
-//    }
 }

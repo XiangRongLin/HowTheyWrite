@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
+import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
 
 /**
  * A simple [Fragment] subclass.
@@ -43,7 +44,7 @@ class NewCharacterFragment : Fragment() {
         newCharacterTranslationEditText = view.findViewById(R.id.editNewCharTranslation)
 
         val button = view.findViewById<Button>(R.id.button_save_new_char)
-        button.setOnClickListener {
+        button.setSafeOnClickListener {
             if (checkEditText()) {
                 insertionViewModel.insertCharacter(
                         Character(newCharacterHanziEditText.text.toString(),
