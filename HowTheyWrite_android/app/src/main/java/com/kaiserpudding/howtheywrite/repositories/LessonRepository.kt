@@ -56,11 +56,11 @@ class LessonRepository(application: Application) {
         }
     }
 
-    fun getLiveDataLessonNameById(lessonId: Int): LiveData<String> {
+    fun getLiveDataLessonNameById(lessonId: Long): LiveData<String> {
         return lessonDao.getLiveDataLessonNameById(lessonId)
     }
 
-    suspend fun deleteLessons(lessonIds: IntArray) {
+    suspend fun deleteLessons(lessonIds: LongArray) {
         withContext(Dispatchers.IO) {
             lessonDao.deleteLessons(lessonIds)
             lessonCharacterJoinDao.deleteAllLessonCharacterJoinsFromLesson(lessonIds)

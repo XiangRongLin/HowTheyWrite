@@ -80,7 +80,7 @@ class LessonListFragment
         listener?.onToNewLessonInteraction()
     }
 
-    override fun onListInteraction(itemId: Int) {
+    override fun onListInteraction(itemId: Long) {
         listener?.onLessonListItemInteraction(itemId)
     }
 
@@ -125,7 +125,7 @@ class LessonListFragment
      * activity.
      */
     interface OnLessonListFragmentInteractionListener {
-        fun onLessonListItemInteraction(lessonId: Int)
+        fun onLessonListItemInteraction(lessonId: Long)
         fun onToNewLessonInteraction()
     }
 }

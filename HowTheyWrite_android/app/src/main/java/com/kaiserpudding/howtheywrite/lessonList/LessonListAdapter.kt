@@ -2,10 +2,7 @@ package com.kaiserpudding.howtheywrite.lessonList
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectAdapter
@@ -57,7 +54,7 @@ class LessonListAdapter(
         else 0
     }
 
-    override fun getMyItemId(position: Int): Int {
+    override fun getMyItemId(position: Int): Long {
         return if (list != null) list!![position].id
         else 0
     }

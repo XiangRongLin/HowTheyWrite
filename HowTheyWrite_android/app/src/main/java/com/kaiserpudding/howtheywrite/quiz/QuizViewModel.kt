@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
  */
 class QuizViewModel : AndroidViewModel {
 
-    constructor(application: Application, lessonId: Int) : super(application) {
+    constructor(application: Application, lessonId: Long) : super(application) {
         this.characterRepository = CharacterRepository(application)
         this._finishedLoading = MutableLiveData()
         viewModelScope.launch {
@@ -31,7 +31,7 @@ class QuizViewModel : AndroidViewModel {
         }
     }
 
-    constructor(application: Application, characterIds: IntArray): super(application) {
+    constructor(application: Application, characterIds: LongArray): super(application) {
         this.characterRepository = CharacterRepository(application)
         this._finishedLoading = MutableLiveData()
         viewModelScope.launch {

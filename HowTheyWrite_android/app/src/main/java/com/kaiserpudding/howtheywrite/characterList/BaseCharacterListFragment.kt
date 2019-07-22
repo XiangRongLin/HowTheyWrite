@@ -14,7 +14,7 @@ import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectFragment
 
 abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
-    protected var lessonId: Int = -1
+    protected var lessonId: Long = -1
     protected lateinit var lessonName: String
     protected var listener: OnCharacterListFragmentInteractionListener? = null
     protected lateinit var characterListViewModel: CharacterListViewModel
@@ -80,16 +80,16 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
      * activity.
      */
     interface OnCharacterListFragmentInteractionListener {
-        fun onToQuizInteraction(lessonId: Int, lessonName: String)
-        fun onToQuizInteraction(characterIds: IntArray, lessonName: String)
+        fun onToQuizInteraction(lessonId: Long, lessonName: String)
+        fun onToQuizInteraction(characterIds: LongArray, lessonName: String)
         /**
          * @param characterId
          * @param type Specifies from which specialized fragment it was called. 0 for CharacterList, 1 for AddCharacters
          */
-        fun onCharacterListItemInteraction(characterId: Int, type: Int)
+        fun onCharacterListItemInteraction(characterId: Long, type: Int)
 
-        fun onNewCharacterInteraction(lessonId: Int, lessonName: String)
-        fun onAddToLessonInteraction(lessonId: Int, lessonName: String)
+        fun onNewCharacterInteraction(lessonId: Long, lessonName: String)
+        fun onAddToLessonInteraction(lessonId: Long, lessonName: String)
         fun updateTitle(title: String)
         fun onFinish()
     }

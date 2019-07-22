@@ -58,7 +58,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
         listener?.updateTitle("All Characters")
     }
 
-    override fun onListInteraction(itemId: Int) {
+    override fun onListInteraction(itemId: Long) {
         listener?.onCharacterListItemInteraction(itemId, 2)
     }
 }

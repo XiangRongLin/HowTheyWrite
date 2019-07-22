@@ -7,7 +7,7 @@ import java.util.*
 class Lesson(@ColumnInfo(name = "name") var name: String) {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var id: Long = 0
     @Ignore
     var characters: MutableList<Character> = LinkedList()
 

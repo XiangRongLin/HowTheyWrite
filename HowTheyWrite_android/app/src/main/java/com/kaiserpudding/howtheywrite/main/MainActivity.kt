@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -76,17 +77,17 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    override fun onToQuizInteraction(lessonId: Int, lessonName: String) {
+    override fun onToQuizInteraction(lessonId: Long, lessonName: String) {
         val action = CharacterListFragmentDirections.actionCharacterListToQuiz(lessonId, lessonName, null)
         navController.navigate(action)
     }
 
-    override fun onToQuizInteraction(characterIds: IntArray, lessonName: String) {
+    override fun onToQuizInteraction(characterIds: LongArray, lessonName: String) {
         val action = CharacterListFragmentDirections.actionCharacterListToQuiz(-1, lessonName, characterIds)
         navController.navigate(action)
     }
 
-    override fun onCharacterListItemInteraction(characterId: Int, type: Int) {
+    override fun onCharacterListItemInteraction(characterId: Long, type: Int) {
         navController.currentDestination
         val action = when (type) {
             0 -> CharacterListFragmentDirections.actionCharacterListToCharacterDetail(characterId)
@@ -101,8 +102,8 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onLessonListItemInteraction(lessonId: Int) {
-        val action = if (lessonId == 0) LessonListFragmentDirections.actionLessonListFragmentToAllCharactersFragment()
+    override fun onLessonListItemInteraction(lessonId: Long) {
+        val action = if (lessonId == 0L) LessonListFragmentDirections.actionLessonListFragmentToAllCharactersFragment()
         else LessonListFragmentDirections.actionLessonListToCharacterList(lessonId)
         navController.navigate(action)
     }
@@ -112,12 +113,12 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onNewCharacterInteraction(lessonId: Int, lessonName: String) {
+    override fun onNewCharacterInteraction(lessonId: Long, lessonName: String) {
         val action = CharacterListFragmentDirections.actionCharacterListToNewCharacter()
         navController.navigate(action)
     }
 
-    override fun onAddToLessonInteraction(lessonId: Int, lessonName: String) {
+    override fun onAddToLessonInteraction(lessonId: Long, lessonName: String) {
         val action = CharacterListFragmentDirections.actionCharacterListFragmentToAddCharactersFragment(lessonId, lessonName)
         navController.navigate(action)
     }

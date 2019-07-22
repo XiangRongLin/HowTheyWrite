@@ -34,14 +34,14 @@ class CharacterRepository(application: Application) {
         }
     }
 
-    suspend fun delete(characterIds: IntArray) {
+    suspend fun delete(characterIds: LongArray) {
         withContext(Dispatchers.IO) {
             characterDao.delete(characterIds)
             lessonCharacterJoinDao.deleteAllLessonCharacterJoinsFromCharacter(characterIds)
         }
     }
 
-    fun getLiveDataCharacterByLessonId(lessonId: Int): LiveData<List<Character>> {
+    fun getLiveDataCharacterByLessonId(lessonId: Long): LiveData<List<Character>> {
         return lessonCharacterJoinDao.getLiveDataCharacterByLessonId(lessonId)
     }
 
@@ -49,23 +49,23 @@ class CharacterRepository(application: Application) {
         return characterDao.allCharacters()
     }
 
-    suspend fun getCharacterById(id: Int): Character {
+    suspend fun getCharacterById(id: Long): Character {
         return characterDao.getCharacterById(id)
     }
 
-    suspend fun getCharactersByIds(ids: IntArray): List<Character> {
-        return characterDao.getCharactersByIdInRandomOrder(ids)
+    suspend fun getCharactersByIds(characterIds: LongArray): List<Character> {
+        return characterDao.getCharactersByIdInRandomOrder(characterIds)
     }
 
-    suspend fun getCharactersByLessonId(lessonId: Int): List<Character> {
+    suspend fun getCharactersByLessonId(lessonId: Long): List<Character> {
         return lessonCharacterJoinDao.getCharacterByLessonId(lessonId)
     }
 
-    suspend fun getCharactersByLessonIdInRandomOrder(lessonId: Int): List<Character> {
+    suspend fun getCharactersByLessonIdInRandomOrder(lessonId: Long): List<Character> {
         return lessonCharacterJoinDao.getCharacterByLessonIdInRandomOrder(lessonId)
     }
 
-    suspend fun addCharactersToLesson(lessonId: Int, characterIds: IntArray) {
+    suspend fun addCharactersToLesson(lessonId: Long, characterIds: LongArray) {
         withContext(Dispatchers.IO) {
             val lessonCharacterJoins = Array(characterIds.size) { i ->
                 LessonCharacterJoin(lessonId, characterIds[i])
@@ -74,7 +74,7 @@ class CharacterRepository(application: Application) {
         }
     }
 
-    suspend fun deleteCharactersFromLesson(lessonId: Int, characterIds: IntArray) {
+    suspend fun deleteCharactersFromLesson(lessonId: Long, characterIds: LongArray) {
         withContext(Dispatchers.IO) {
             lessonCharacterJoinDao.deleteLessonCharacterJoins(lessonId, characterIds)
         }

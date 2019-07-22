@@ -43,7 +43,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         listener?.updateTitle("Add to $lessonName")
     }
 
-    override fun onListInteraction(itemId: Int) {
+    override fun onListInteraction(itemId: Long) {
         listener?.onCharacterListItemInteraction(itemId, 1)
     }
 }

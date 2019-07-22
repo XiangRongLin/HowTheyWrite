@@ -15,12 +15,12 @@ class Character(
 ) {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var id: Long = 0
     @Embedded
     var progress: Progress = Progress()
 
     @Ignore
-    constructor(hanzi: String, pinyin: String, translation: String?)
+    constructor(hanzi: String, pinyin: String, translation: String)
             : this(hanzi, pinyin, null, translation, true)
 
     override fun toString(): String {

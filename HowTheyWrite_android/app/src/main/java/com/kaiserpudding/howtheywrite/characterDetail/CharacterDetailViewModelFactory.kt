@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
  * @property characterId
  */
 @Suppress("UNCHECKED_CAST")
-class CharacterDetailViewModelFactory(private val application: Application, private val characterId: Int) : ViewModelProvider.Factory {
+class CharacterDetailViewModelFactory(private val application: Application, internal val characterId: Long) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return CharacterDetailViewModel(application, characterId) as T

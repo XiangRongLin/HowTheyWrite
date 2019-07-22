@@ -17,9 +17,9 @@ abstract class MultiSelectAdapter<T>(
         private val listener: MultiSelectAdapterItemInteractionListener)
     : RecyclerView.Adapter<MultiSelectAdapter<T>.MultiSelectViewHolder>() {
 
-    private val selectedIdSet = mutableSetOf<Int>()
-    val selectedIdArray: IntArray
-        get() = selectedIdSet.toIntArray()
+    private val selectedIdSet = mutableSetOf<Long>()
+    val selectedIdArray: LongArray
+        get() = selectedIdSet.toLongArray()
     val numberOfSelected: Int
         get() = selectedIdArray.size
     val inSelectionMode: Boolean
@@ -71,7 +71,7 @@ abstract class MultiSelectAdapter<T>(
      * @param position
      * @return The id of the item
      */
-    protected abstract fun getMyItemId(position: Int): Int
+    protected abstract fun getMyItemId(position: Int): Long
 
     /**
      * Method to create a [MultiSelectViewHolder].
@@ -115,6 +115,6 @@ abstract class MultiSelectAdapter<T>(
          *
          * @param itemId The id of the item that was clicked.
          */
-        fun onMultiSelectAdapterInteraction(itemId: Int)
+        fun onMultiSelectAdapterInteraction(itemId: Long)
     }
 }

@@ -33,9 +33,9 @@ import kotlinx.android.synthetic.main.fragment_quiz.*
  */
 class QuizFragment : Fragment() {
 
-    private var lessonId: Int = -1
+    private var lessonId: Long = -1
     private lateinit var lessonName: String
-    private var characterIds: IntArray? = null
+    private var characterIds: LongArray? = null
     private var listener: OnQuizFragmentInteractionListener? = null
 
     private lateinit var quizViewModel: QuizViewModel
@@ -54,7 +54,7 @@ class QuizFragment : Fragment() {
         characterIds = safeArgs.characterIds
 
         //TODO adjust to no lesson id
-        quizViewModel = if (lessonId != -1) {
+        quizViewModel = if (lessonId != -1L) {
             ViewModelProviders.of(this, QuizViewModelFactory(activity!!.application, lessonId))
                     .get(QuizViewModel::class.java)
         } else {

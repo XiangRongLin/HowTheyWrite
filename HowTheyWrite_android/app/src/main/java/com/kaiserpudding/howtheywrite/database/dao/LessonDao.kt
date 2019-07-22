@@ -15,8 +15,8 @@ interface LessonDao : BaseDao<Lesson>{
     suspend fun allLessonNames(): List<String>
 
     @Query("SELECT name FROM  lessons WHERE id = :lessonId")
-    fun getLiveDataLessonNameById(lessonId: Int): LiveData<String>
+    fun getLiveDataLessonNameById(lessonId: Long): LiveData<String>
 
     @Query("DELETE FROM lessons WHERE id IN (:lessonIds)")
-    fun deleteLessons(lessonIds: IntArray)
+    fun deleteLessons(lessonIds: LongArray)
 }

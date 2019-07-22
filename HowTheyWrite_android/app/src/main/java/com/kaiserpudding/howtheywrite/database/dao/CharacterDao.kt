@@ -11,15 +11,15 @@ interface CharacterDao : BaseDao<Character> {
     fun allCharacters(): LiveData<List<Character>>
 
     @Query("SELECT * FROM characters WHERE id = :id LIMIT 1")
-    suspend fun getCharacterById(id: Int): Character
+    suspend fun getCharacterById(id: Long): Character
 
     @Query("SELECT * FROM characters WHERE id = :id LIMIT 1")
-    fun getLiveDataCharacterById(id: Int): LiveData<Character>
+    fun getLiveDataCharacterById(id: Long): LiveData<Character>
 
-    @Query("SELECT * FROM characters WHERE id IN (:ids) ORDER BY RANDOM()")
-    suspend fun getCharactersByIdInRandomOrder(ids: IntArray): List<Character>
+    @Query("SELECT * FROM characters WHERE id IN (:characterIds) ORDER BY RANDOM()")
+    suspend fun getCharactersByIdInRandomOrder(characterIds: LongArray): List<Character>
 
     @Query("DELETE FROM characters WHERE id IN (:characterIds)")
-    suspend fun delete(characterIds: IntArray)
+    suspend fun delete(characterIds: LongArray)
 
 }

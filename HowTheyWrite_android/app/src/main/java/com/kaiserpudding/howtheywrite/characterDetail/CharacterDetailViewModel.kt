@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  * @param application
  * @param characterId The id of the character which should be loaded
  */
-class CharacterDetailViewModel(application: Application, characterId: Int)
+class CharacterDetailViewModel(application: Application, characterId: Long)
     : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)

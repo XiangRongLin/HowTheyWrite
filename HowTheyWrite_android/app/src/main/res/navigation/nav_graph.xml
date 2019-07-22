@@ -31,8 +31,8 @@
       app:destination="@id/quizFragment"/>
     <argument
       android:name="lessonId"
-      app:argType="integer"
-      android:defaultValue="-1"/>
+      app:argType="long"
+      android:defaultValue="-1L"/>
     <action
       android:id="@+id/action_characterList_to_characterDetail"
       app:destination="@id/characterDetailFragment"/>
@@ -49,8 +49,8 @@
       android:name="com.kaiserpudding.howtheywrite.quiz.QuizFragment">
     <argument
         android:name="lessonId"
-        app:argType="integer"
-      android:defaultValue="-1"/>
+        app:argType="long"
+      />
     <action
         android:id="@+id/action_quiz_to_characterDetail"
         app:destination="@id/characterDetailFragment" />
@@ -60,7 +60,7 @@
         app:argType="string" />
     <argument
       android:name="characterIds"
-      app:argType="integer[]"
+      app:argType="long[]"
       app:nullable="true"/>
   </fragment>
   <fragment
@@ -70,8 +70,7 @@
       tools:layout="@layout/fragment_character_detail">
     <argument
         android:name="characterId"
-        android:defaultValue="0"
-        app:argType="integer" />
+      app:argType="long" />
   </fragment>
   <fragment
       android:id="@+id/newCharacterFragment"
@@ -89,7 +88,7 @@
     android:label="AddCharactersFragment">
     <argument
       android:name="lessonId"
-      app:argType="integer"/>
+      app:argType="long"/>
     <argument
       android:name="lessonName"
       app:argType="string"/>

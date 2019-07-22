@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
  */
 class CharacterListViewModel(
         application: Application,
-        val lessonId: Int,
+        val lessonId: Long,
         loadAll: Boolean)
     : AndroidViewModel(application) {
 
@@ -44,19 +44,19 @@ class CharacterListViewModel(
                 }
     }
 
-    fun addCharactersToLesson(characterIds: IntArray) {
+    fun addCharactersToLesson(characterIds: LongArray) {
         viewModelScope.launch {
             characterRepository.addCharactersToLesson(lessonId, characterIds)
         }
     }
 
-    fun deleteCharactersFromLesson(characterIds: IntArray) {
+    fun deleteCharactersFromLesson(characterIds: LongArray) {
         viewModelScope.launch {
             characterRepository.deleteCharactersFromLesson(lessonId, characterIds)
         }
     }
 
-    fun deleteCharacters(characterIds: IntArray) {
+    fun deleteCharacters(characterIds: LongArray) {
         viewModelScope.launch {
             characterRepository.delete(characterIds)
         }

@@ -27,27 +27,27 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
     @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
             +   "characters.id = lesson_character_join.characterId WHERE\n"
             + "lesson_character_join.lessonId = :id")
-    fun getLiveDataCharacterByLessonId(id: Int): LiveData<List<Character>>
+    fun getLiveDataCharacterByLessonId(id: Long): LiveData<List<Character>>
 
     @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
             + "characters.id = lesson_character_join.characterId WHERE\n"
             + "lesson_character_join.lessonId = :id")
-    suspend fun getCharacterByLessonId(id: Int): List<Character>
+    suspend fun getCharacterByLessonId(id: Long): List<Character>
 
     @Query("SELECT * FROM characters INNER JOIN lesson_character_join ON\n"
             + "characters.id = lesson_character_join.characterId WHERE\n"
             + "lesson_character_join.lessonId = :id\n"
             + "ORDER BY RANDOM()")
-    suspend fun getCharacterByLessonIdInRandomOrder(id: Int): List<Character>
+    suspend fun getCharacterByLessonIdInRandomOrder(id: Long): List<Character>
 
     @Query("DELETE FROM lesson_character_join WHERE lessonId = :lessonId AND characterId IN (:characterIds)")
-    suspend fun deleteLessonCharacterJoins(lessonId: Int, characterIds: IntArray)
+    suspend fun deleteLessonCharacterJoins(lessonId: Long, characterIds: LongArray)
 
     @Query("DELETE FROM lesson_character_join WHERE characterId IN (:characterIds)")
-    suspend fun deleteAllLessonCharacterJoinsFromCharacter(characterIds: IntArray)
+    suspend fun deleteAllLessonCharacterJoinsFromCharacter(characterIds: LongArray)
 
     @Query("DELETE FROM lesson_character_join WHERE lessonId IN (:lessonIds)")
-    fun deleteAllLessonCharacterJoinsFromLesson(lessonIds: IntArray)
+    fun deleteAllLessonCharacterJoinsFromLesson(lessonIds: LongArray)
 
 
 }

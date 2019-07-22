@@ -54,7 +54,7 @@ class CharacterListAdapter(
         else 0
     }
 
-    override fun getMyItemId(position: Int): Int {
+    override fun getMyItemId(position: Int): Long {
         return if (list != null) list!![position].id
         else 0
     }

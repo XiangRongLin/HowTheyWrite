@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
  */
 class CharacterListViewModelFactory(
         private val application: Application,
-        private val lessonId: Int,
+        private val lessonId: Long,
         private val loadAll: Boolean)
     : ViewModelProvider.Factory {
 

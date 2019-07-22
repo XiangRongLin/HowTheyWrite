@@ -41,7 +41,7 @@ class LessonListViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    fun deleteLessons(lessonIds: IntArray) {
+    fun deleteLessons(lessonIds: LongArray) {
         viewModelScope.launch {
             lessonRepository.deleteLessons(lessonIds)
         }

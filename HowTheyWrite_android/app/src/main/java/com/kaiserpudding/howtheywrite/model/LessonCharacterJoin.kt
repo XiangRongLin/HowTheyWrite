@@ -16,7 +16,7 @@ import androidx.room.Index
         foreignKeys = [ForeignKey(entity = Lesson::class, parentColumns = ["id"], childColumns = ["lessonId"], onDelete = CASCADE),
             ForeignKey(entity = Character::class, parentColumns = ["id"], childColumns = ["characterId"], onDelete = CASCADE)],
         indices = [Index(value = ["lessonId", "characterId"], unique = true), Index(value = ["characterId"])])
-class LessonCharacterJoin(val lessonId: Int, val characterId: Int) {
+class LessonCharacterJoin(val lessonId: Long, val characterId: Long) {
 
     override fun toString(): String {
         return "LessonId: " + lessonId.toString() + "CharacterId: " + characterId.toString()
