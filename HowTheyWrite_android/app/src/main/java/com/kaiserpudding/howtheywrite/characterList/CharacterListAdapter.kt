@@ -22,7 +22,6 @@ class CharacterListAdapter(
     : MultiSelectAdapter<Character>(listener) {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-//    private var characters: List<Character>? = null
     override val viewHolderId = R.id.characterTextView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiSelectViewHolder {
@@ -47,6 +46,7 @@ class CharacterListAdapter(
     fun setCharacters(characters: List<Character>) {
         list = characters
         notifyDataSetChanged()
+
     }
 
     override fun getItemCount(): Int {

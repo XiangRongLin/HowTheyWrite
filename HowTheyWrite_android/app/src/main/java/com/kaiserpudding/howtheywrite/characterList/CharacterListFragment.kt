@@ -68,8 +68,18 @@ class CharacterListFragment
     }
 
     private fun onToQuizButtonPressed() {
-        if (adapter.inSelectionMode) listener?.onToQuizInteraction(adapter.selectedIdArray, lessonName)
-        else listener?.onToQuizInteraction(lessonId, lessonName)
+        when {
+            adapter.list == null -> {
+                val toast = Toast.makeText(context, "Please wait for it to finish loading", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+            adapter.list!!.isEmpty() -> {
+                val toast = Toast.makeText(context, "This lesson doesn't contain any characters", Toast.LENGTH_SHORT)
+                toast.show()
+            }
+            adapter.inSelectionMode -> listener?.onToQuizInteraction(adapter.selectedIdArray, lessonName)
+            else -> listener?.onToQuizInteraction(lessonId, lessonName)
+        }
     }
 
     private fun showConfirmationDialog() {

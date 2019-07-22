@@ -33,7 +33,7 @@ abstract class MultiSelectAdapter<T>(
     /**
      * The list of the items that are represented in the recycler view
      */
-    protected var list: List<T>? = null
+    var list: List<T>? = null
 
 
     override fun onBindViewHolder(holder: MultiSelectViewHolder, position: Int) {
