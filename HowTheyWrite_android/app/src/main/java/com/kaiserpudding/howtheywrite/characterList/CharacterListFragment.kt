@@ -43,6 +43,25 @@ class CharacterListFragment
         setHasOptionsMenu(true)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.character_list_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.add_new_character -> {
+                onToNewCharacterPressed(CHARACTER_LIST_TYPE)
+                true
+            }
+            R.id.add_to_lesson -> {
+                onAddToLessonPressed()
+                true
+            }
+            else -> false
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -87,10 +106,6 @@ class CharacterListFragment
         dialog.show(childFragmentManager, "dialog")
     }
 
-    private fun onAddToLessonPressed() {
-        listener?.onAddToLessonInteraction(lessonId, lessonName)
-    }
-
     override fun onDialogPositiveClick() {
         characterListViewModel.deleteCharactersFromLesson(adapter.selectedIdArray)
         actionMode?.finish()
@@ -101,23 +116,8 @@ class CharacterListFragment
         toast.show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.character_list_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.add_new_character -> {
-                onToNewCharacterPressed()
-                true
-            }
-            R.id.add_to_lesson -> {
-                onAddToLessonPressed()
-                true
-            }
-            else -> false
-        }
+    private fun onAddToLessonPressed() {
+        listener?.onAddToLessonInteraction(lessonId, lessonName)
     }
 
     override fun onListInteraction(itemId: Long) {

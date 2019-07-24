@@ -3,12 +3,12 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-  <item android:title="Add new Character"
+  <item android:title="@string/create_new_character"
     android:id="@+id/add_new_character"
     app:showAsAction="never"/>
 
   <item
-    android:title="Add to this Lesson"
+    android:title="@string/add_to_this_lesson"
     android:id="@+id/add_to_lesson"
     app:showAsAction="never"/>
 </menu>

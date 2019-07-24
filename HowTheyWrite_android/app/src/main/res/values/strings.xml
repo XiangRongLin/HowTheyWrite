@@ -2685,8 +2685,11 @@
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="translation">translation</string>
   <string name="pinyin">pinyin</string>
-  <string name="start_quiz">start Quiz</string>
+  <string name="start_quiz">start quiz</string>
   <string name="search">Search</string>
+  <string name="create_new_character">Create new character</string>
+  <string name="add_to_this_lesson">Add to this lesson</string>
+  <string name="confirm">confirm</string>
 
 
   <!--<string name="w_me">I</string>-->

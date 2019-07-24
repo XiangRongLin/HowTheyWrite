@@ -55,8 +55,8 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
 
     protected abstract fun updateToolBarTitle()
 
-    protected fun onToNewCharacterPressed() {
-        listener?.onNewCharacterInteraction(lessonId, lessonName)
+    protected fun onToNewCharacterPressed(type: Int) {
+        listener?.onNewCharacterInteraction(lessonId, lessonName, type)
     }
 
     override fun onAttach(context: Context) {
@@ -71,6 +71,13 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+
+    companion object {
+        const val CHARACTER_LIST_TYPE = 0
+        const val ADD_CHARACTERS_TYPE = 1
+        const val ALL_CHARACTERS_TYPE = 2
     }
 
     /**
@@ -88,7 +95,7 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
          */
         fun onCharacterListItemInteraction(characterId: Long, type: Int)
 
-        fun onNewCharacterInteraction(lessonId: Long, lessonName: String)
+        fun onNewCharacterInteraction(lessonId: Long, lessonName: String, type: Int)
         fun onAddToLessonInteraction(lessonId: Long, lessonName: String)
         fun updateTitle(title: String)
         fun onFinish()

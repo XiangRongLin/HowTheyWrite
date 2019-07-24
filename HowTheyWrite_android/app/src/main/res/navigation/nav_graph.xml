@@ -17,7 +17,7 @@
       android:id="@+id/action_lessonList_to_newLesson"
       app:destination="@id/newLessonFragment"/>
     <action
-      android:id="@+id/action_lessonListFragment_to_allCharactersFragment"
+      android:id="@+id/action_lessonList_to_allCharacters"
       app:destination="@id/allCharactersFragment"/>
   </fragment>
 
@@ -40,7 +40,7 @@
       android:id="@+id/action_characterList_to_newCharacter"
       app:destination="@id/newCharacterFragment"/>
     <action
-      android:id="@+id/action_characterListFragment_to_addCharactersFragment"
+      android:id="@+id/action_characterList_to_addCharacters"
       app:destination="@id/addCharactersFragment"/>
   </fragment>
 
@@ -93,7 +93,7 @@
       android:name="lessonName"
       app:argType="string"/>
     <action
-      android:id="@+id/action_addCharactersFragment_to_characterDetailFragment"
+      android:id="@+id/action_addCharacters_to_characterDetail"
       app:destination="@id/characterDetailFragment"/>
   </fragment>
   <fragment
@@ -101,8 +101,11 @@
     android:name="com.kaiserpudding.howtheywrite.characterList.AllCharactersFragment"
     android:label="AllCharactersFragment">
     <action
-      android:id="@+id/action_allCharactersFragment_to_characterDetailFragment"
+      android:id="@+id/action_allCharacters_to_characterDetail"
       app:destination="@id/characterDetailFragment"/>
+    <action
+      android:id="@+id/action_allCharacters_to_newCharacter"
+      app:destination="@id/newCharacterFragment"/>
   </fragment>
 
 
