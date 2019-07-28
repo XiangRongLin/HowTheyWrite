@@ -2682,7 +2682,6 @@
   <string name="w_hsk_6_978">phonetic</string>
 
   <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="translation">translation</string>
   <string name="pinyin">pinyin</string>
   <string name="start_quiz">start quiz</string>
@@ -2690,21 +2689,9 @@
   <string name="create_new_character">Create new character</string>
   <string name="add_to_this_lesson">Add to this lesson</string>
   <string name="confirm">confirm</string>
-
-
-  <!--<string name="w_me">I</string>-->
-  <!--<string name="w_nationality_suffix">Nationality Suffix</string>-->
-  <!--<string name="w_teacher_not_yourself">Teacher (not yourself)</string>-->
-  <!--<string name="w_teacher">Teacher</string>-->
-  <!--<string name="w_student">Student</string>-->
-  <!--<string name="w_employee">Employee</string>-->
-  <!--<string name="w_employee_of">Employee of (business)</string>-->
-  <!--<string name="w_banker">Banker</string>-->
-  <!--<string name="w_doctor">Doctor</string>-->
-  <!--<string name="w_researcher">Researcher</string>-->
-  <!--<string name="w_university">University</string>-->
-  <!--<string name="w_hospital">Hospital</string>-->
-  <!--<string name="w_years_age">Years Suffix (Age)</string>-->
-  <!--<string name="w_book">Book</string>-->
-  <!--<string name="w_dictionary">Dictionary</string>-->
+  <string name="delete">delete</string>
+  <string name="filter_all">Alles</string>
+  <string name="filter_hanzi">Hanzi</string>
+  <string name="filter_pinyin">Pinyin</string>
+  <string name="filter_translation">Translation</string>
 </resources>

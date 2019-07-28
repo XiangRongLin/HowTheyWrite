@@ -35,7 +35,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.add_new_character -> {
+            R.id.action_add_new_character -> {
                 onToNewCharacterPressed(ALL_CHARACTERS_TYPE)
                 true
             }

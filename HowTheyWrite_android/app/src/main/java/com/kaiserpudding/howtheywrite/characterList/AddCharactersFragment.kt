@@ -39,6 +39,16 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_characters_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun updateToolBarTitle() {
         listener?.updateTitle("Add to $lessonName")
     }

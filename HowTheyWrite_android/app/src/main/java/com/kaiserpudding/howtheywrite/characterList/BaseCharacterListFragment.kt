@@ -2,9 +2,9 @@ package com.kaiserpudding.howtheywrite.characterList
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -52,6 +52,12 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
         return view
     }
 
+    override fun onPause() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        super.onPause()
+    }
+
 
     protected abstract fun updateToolBarTitle()
 
@@ -73,6 +79,26 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
         listener = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                (adapter as CharacterListAdapter).filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                (adapter as CharacterListAdapter).filter.filter(newText)
+                return false
+            }
+
+        })
+        searchView.setOnCloseListener {
+            (adapter as CharacterListAdapter).resetCharacters()
+            false
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
     companion object {
         const val CHARACTER_LIST_TYPE = 0

@@ -3,7 +3,9 @@ package com.kaiserpudding.howtheywrite.lessonList
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -74,6 +76,40 @@ class LessonListFragment
 
         return view
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.lesson_list_menu, menu)
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                (adapter as LessonListAdapter).filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                (adapter as LessonListAdapter).filter.filter(newText)
+                return false
+            }
+
+        })
+        searchView.setOnCloseListener {
+            (adapter as LessonListAdapter).resetLessons()
+            false
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPause() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        super.onPause()
+    }
+
 
 
     private fun onNewLessonButtonPressed() {
