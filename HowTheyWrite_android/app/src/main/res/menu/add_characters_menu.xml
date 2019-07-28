@@ -2,20 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
   <item
     android:id="@+id/action_search"
     android:title="@string/search"
     app:actionViewClass="androidx.appcompat.widget.SearchView"
     app:showAsAction="ifRoom"/>
 
-  <item
-    android:id="@+id/action_add_new_character"
-    android:title="@string/create_new_character"
-    app:showAsAction="never"/>
-
-  <item
-    android:id="@+id/action_add_to_lesson"
-    android:title="@string/add_to_this_lesson"
-    app:showAsAction="never"/>
 </menu>

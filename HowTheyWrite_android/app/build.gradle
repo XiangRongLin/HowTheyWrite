@@ -68,6 +68,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
 
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation 'org.apache.commons:commons-lang3:3.9'
+
 }
 repositories {
     mavenCentral()
