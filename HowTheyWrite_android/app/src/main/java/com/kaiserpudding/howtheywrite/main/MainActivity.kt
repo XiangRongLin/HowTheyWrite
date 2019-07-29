@@ -14,6 +14,7 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterList.*
 import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment.BaseCharacterListType
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
+import com.kaiserpudding.howtheywrite.lessonList.AddLessonListFragmentDirections
 import com.kaiserpudding.howtheywrite.lessonList.BaseLessonListFragment.BaseLessonListType
 import com.kaiserpudding.howtheywrite.lessonList.LessonListFragmentDirections
 import com.kaiserpudding.howtheywrite.lessonList.NewLessonFragment
@@ -117,7 +118,8 @@ class MainActivity : AppCompatActivity(),
                 navController.navigate(action)
             }
             BaseLessonListType.ADD_LIST -> {
-
+//                val action = AddLessonListFragmentDirections.actionAddLessonListFragmentToAddCharactersFragment(lessonId)
+//                navController.navigate(action)
             }
         }
     }
@@ -140,9 +142,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onAddToLessonInteraction(lessonId: Long, lessonName: String) {
-        val action = CharacterListFragmentDirections
-                .actionCharacterListToAddCharacters(lessonId, lessonName)
-        navController.navigate(action)
+//        val action = CharacterListFragmentDirections
+//                .actionCharacterListToAddCharacters(lessonId, lessonName)
+//        navController.navigate(action)
     }
 
     override fun onQuizFinishInteraction() {

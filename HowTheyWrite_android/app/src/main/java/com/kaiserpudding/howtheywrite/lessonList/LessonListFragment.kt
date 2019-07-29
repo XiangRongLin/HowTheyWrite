@@ -12,7 +12,6 @@ class LessonListFragment
     : BaseLessonListFragment(), ConfirmationDialogFragment.ConfirmationDialogListener {
 
     override val type = BaseLessonListType.LESSON_LIST
-
     override val actionMenuId: Int
         get() = R.menu.selection_delete_menu
 
@@ -38,11 +37,11 @@ class LessonListFragment
     }
 
     private fun onNewLessonButtonPressed() {
-        listenerBase?.onToNewLessonInteraction()
+        listener?.onToNewLessonInteraction()
     }
 
     override fun onListInteraction(itemId: Long) {
-        listenerBase?.onBaseLessonListItemInteraction(itemId, type)
+        listener?.onBaseLessonListItemInteraction(itemId, type)
     }
 
     private fun showConfirmationDialog() {

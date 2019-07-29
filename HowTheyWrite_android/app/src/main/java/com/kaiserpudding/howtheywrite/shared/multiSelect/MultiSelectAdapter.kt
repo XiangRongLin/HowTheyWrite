@@ -10,7 +10,7 @@ import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
  * An adapter handling the logic needed for a recycler view with clickable and selectable items.
  *
  * @param T They type of the items shown in the list
- * @property listener A listenerBase implementing [MultiSelectAdapterItemInteractionListener]
+ * @property listener A listener implementing [MultiSelectAdapterItemInteractionListener]
  * handling onClick and onLongClick actions on the items
  */
 abstract class MultiSelectAdapter<T>(
