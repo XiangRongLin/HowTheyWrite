@@ -38,11 +38,6 @@ class CharacterListFragment
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.character_list_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -58,7 +53,7 @@ class CharacterListFragment
                 onAddToLessonPressed()
                 true
             }
-            else -> false
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

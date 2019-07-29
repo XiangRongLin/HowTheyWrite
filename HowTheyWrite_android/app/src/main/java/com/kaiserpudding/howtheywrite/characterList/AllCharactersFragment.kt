@@ -39,7 +39,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
                 onToNewCharacterPressed(ALL_CHARACTERS_TYPE)
                 true
             }
-            else -> false
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
