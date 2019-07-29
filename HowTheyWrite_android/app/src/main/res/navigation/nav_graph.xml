@@ -16,9 +16,6 @@
     <action
       android:id="@+id/action_lessonList_to_newLesson"
       app:destination="@id/newLessonFragment"/>
-    <action
-      android:id="@+id/action_lessonList_to_allCharacters"
-      app:destination="@id/allCharactersFragment"/>
   </fragment>
 
   <fragment
@@ -95,17 +92,6 @@
     <action
       android:id="@+id/action_addCharacters_to_characterDetail"
       app:destination="@id/characterDetailFragment"/>
-  </fragment>
-  <fragment
-    android:id="@+id/allCharactersFragment"
-    android:name="com.kaiserpudding.howtheywrite.characterList.AllCharactersFragment"
-    android:label="AllCharactersFragment">
-    <action
-      android:id="@+id/action_allCharacters_to_characterDetail"
-      app:destination="@id/characterDetailFragment"/>
-    <action
-      android:id="@+id/action_allCharacters_to_newCharacter"
-      app:destination="@id/newCharacterFragment"/>
   </fragment>
 
 

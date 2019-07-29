@@ -102,12 +102,6 @@ class MainActivity : AppCompatActivity(),
                         AddCharactersFragmentDirections
                                 .actionAddCharactersToCharacterDetail(characterId))
             }
-            BaseCharacterListType.ALL_CHARACTER -> {
-                navController.navigate(
-                        AllCharactersFragmentDirections
-                                .actionAllCharactersToCharacterDetail(characterId))
-            }
-
         }
     }
 
@@ -139,12 +133,6 @@ class MainActivity : AppCompatActivity(),
                 navController.navigate(
                         CharacterListFragmentDirections
                                 .actionCharacterListToNewCharacter()
-                )
-            }
-            BaseCharacterListType.ALL_CHARACTER -> {
-                navController.navigate(
-                        AllCharactersFragmentDirections
-                                .actionAllCharactersToNewCharacter()
                 )
             }
             else -> return
