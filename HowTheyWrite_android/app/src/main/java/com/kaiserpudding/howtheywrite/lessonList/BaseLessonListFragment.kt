@@ -24,7 +24,7 @@ import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectFragment
  */
 abstract class BaseLessonListFragment : MultiSelectFragment<Lesson, BaseLessonListAdapter>() {
 
-    protected var listenerBase: OnBaseLessonListFragmentInteractionListener? = null
+    protected var listener: OnBaseLessonListFragmentInteractionListener? = null
     protected lateinit var lessonListViewModel: LessonListViewModel
     protected abstract val type: BaseLessonListType
 
@@ -83,7 +83,7 @@ abstract class BaseLessonListFragment : MultiSelectFragment<Lesson, BaseLessonLi
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnBaseLessonListFragmentInteractionListener) {
-            listenerBase = context
+            listener = context
         } else {
             throw RuntimeException("$context must implement OnBaseLessonListFragmentInteractionListener")
         }
@@ -91,7 +91,7 @@ abstract class BaseLessonListFragment : MultiSelectFragment<Lesson, BaseLessonLi
 
     override fun onDetach() {
         super.onDetach()
-        listenerBase = null
+        listener = null
     }
 
     /**
