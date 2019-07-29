@@ -27,6 +27,12 @@ class CharacterListAdapter(
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     override val viewHolderId = R.id.characterTextView
     private var filteredList = list
+    internal var filterType = BaseCharacterListFragment.ALL_FILTER
+        set(value) {
+            field = value
+            filter.filter(constraints)
+        }
+    internal lateinit var constraints: CharSequence
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiSelectViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item_character, parent, false)
@@ -71,29 +77,67 @@ class CharacterListAdapter(
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {
+                constraints = constraint
+
                 val results = FilterResults()
                 if (constraint.isEmpty()) {
                     results.values = list
-                } else {
-                    val resultList = mutableListOf<Character>()
-                    for (character in list!!) {
-                        if (character.hanzi.contains(constraint, true)
-                                || StringUtils.stripAccents(character.pinyin).contains(constraint, true)
-                                || (character.isCustom && character.translation!!
-                                        .contains(constraint, true))
-                                || (!character.isCustom && context.resources.getText(
-                                        context.resources.getIdentifier(
-                                                character.translationKey!!
-                                                , "string"
-                                                , context.packageName))
-                                        .contains(constraint, true))) {
-                            resultList.add(character)
-                        }
-
-                    }
-                    results.values = resultList
+                    return results
                 }
+                val resultList = mutableListOf<Character>()
+                for (character in list!!) {
+                    if (fitsFilter(character, constraint, filterType)) {
+                        resultList.add(character)
+                    }
+                }
+                results.values = resultList
+
                 return results
+            }
+
+            private fun fitsFilter(character: Character, constraint: CharSequence, filter: String): Boolean {
+                return when (filter) {
+                    ALL_FILTER -> {
+                        fitsAllFilter(character, constraint)
+                    }
+                    HANZI_FILTER -> {
+                        fitsHanziFilter(character, constraint)
+                    }
+                    PINYIN_FILTER -> {
+                        fitsPinyinFilter(character, constraint)
+                    }
+                    TRANSLATION_FILTER -> {
+                        fitsTranslationFilter(character, constraint)
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }
+
+            private fun fitsAllFilter(character: Character, constraint: CharSequence): Boolean {
+                return (fitsHanziFilter(character, constraint)
+                        || fitsPinyinFilter(character, constraint)
+                        || fitsTranslationFilter(character, constraint))
+            }
+
+            private fun fitsHanziFilter(character: Character, constraint: CharSequence): Boolean {
+                return character.hanzi.contains(constraint, true)
+            }
+
+            private fun fitsPinyinFilter(character: Character, constraint: CharSequence): Boolean {
+                return StringUtils.stripAccents(character.pinyin).contains(constraint, true)
+            }
+
+            private fun fitsTranslationFilter(character: Character, constraint: CharSequence): Boolean {
+                return (character.isCustom && character.translation!!.contains(constraint, true))
+                        || (!character.isCustom && context.resources.getText(
+                        context.resources.getIdentifier(
+                                character.translationKey!!
+                                , "string"
+                                , context.packageName))
+                        .contains(constraint, true))
+
             }
 
             @Suppress("UNCHECKED_CAST")
@@ -105,4 +149,10 @@ class CharacterListAdapter(
         }
     }
 
+    companion object {
+        const val ALL_FILTER = "all_filter"
+        const val HANZI_FILTER = "hanzi_filter"
+        const val PINYIN_FILTER = "pinyin_filter"
+        const val TRANSLATION_FILTER = "translation_filter"
+    }
 }
