@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListAdapter.CharacterFilter
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectFragment
 
@@ -33,14 +34,14 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
 
         //instantiate the recyclerView with its adapter
         val recyclerView = view.findViewById<RecyclerView>(R.id.character_recyclerview)
-        adapter = CharacterListAdapter(view.context, this)
+        adapter = BaseCharacterListAdapter(view.context, this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(view.context, 5)
 
         //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
                 Observer { characters ->
-                    (adapter as CharacterListAdapter).setCharacters(characters)
+                    (adapter as BaseCharacterListAdapter).setCharacters(characters)
                 }
         )
         characterListViewModel.lessonName.observe(this,
@@ -63,7 +64,7 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
 
     protected abstract fun updateToolBarTitle()
 
-    protected fun onToNewCharacterPressed(type: Int) {
+    protected fun onToNewCharacterPressed(type: BaseCharacterListType) {
         listener?.onNewCharacterInteraction(lessonId, lessonName, type)
     }
 
@@ -109,18 +110,18 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                (adapter as CharacterListAdapter).filter.filter(query)
+                (adapter as BaseCharacterListAdapter).filter.filter(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                (adapter as CharacterListAdapter).filter.filter(newText)
+                (adapter as BaseCharacterListAdapter).filter.filter(newText)
                 return false
             }
 
         })
         searchView.setOnCloseListener {
-            (adapter as CharacterListAdapter).resetCharacters()
+            (adapter as BaseCharacterListAdapter).resetCharacters()
             false
         }
         super.onCreateOptionsMenu(menu, inflater)
@@ -129,31 +130,31 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_filter -> {
-                when ((adapter as CharacterListAdapter).filterType) {
-                    ALL_FILTER -> item.subMenu.getItem(0).isChecked = true
-                    HANZI_FILTER -> item.subMenu.getItem(1).isChecked = true
-                    PINYIN_FILTER -> item.subMenu.getItem(2).isChecked = true
-                    TRANSLATION_FILTER -> item.subMenu.getItem(3).isChecked = true
+                when ((adapter as BaseCharacterListAdapter).filterType) {
+                    CharacterFilter.ALL -> item.subMenu.getItem(0).isChecked = true
+                    CharacterFilter.HANZI -> item.subMenu.getItem(1).isChecked = true
+                    CharacterFilter.PINYIN -> item.subMenu.getItem(2).isChecked = true
+                    CharacterFilter.TRANSLATION -> item.subMenu.getItem(3).isChecked = true
                 }
                 false
             }
             R.id.filter_all -> {
-                (adapter as CharacterListAdapter).filterType = ALL_FILTER
+                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.ALL
                 item.isChecked = true
                 true
             }
             R.id.filter_hanzi -> {
-                (adapter as CharacterListAdapter).filterType = HANZI_FILTER
+                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.HANZI
                 item.isChecked = true
                 true
             }
             R.id.filter_pinyin -> {
-                (adapter as CharacterListAdapter).filterType = PINYIN_FILTER
+                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.PINYIN
                 item.isChecked = true
                 true
             }
             R.id.filter_translation -> {
-                (adapter as CharacterListAdapter).filterType = TRANSLATION_FILTER
+                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.TRANSLATION
                 item.isChecked = true
                 true
             }
@@ -162,13 +163,13 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
     }
 
     companion object {
-        const val CHARACTER_LIST_TYPE = 0
-        const val ADD_CHARACTERS_TYPE = 1
-        const val ALL_CHARACTERS_TYPE = 2
-        const val ALL_FILTER = "all_filter"
-        const val HANZI_FILTER = "hanzi_filter"
-        const val PINYIN_FILTER = "pinyin_filter"
-        const val TRANSLATION_FILTER = "translation_filter"
+//        const val CHARACTER_LIST_TYPE = 0
+//        const val ADD_CHARACTERS_TYPE = 1
+//        const val ALL_CHARACTERS_TYPE = 2
+    }
+
+    enum class BaseCharacterListType {
+        CHARACTER_LIST, ADD_CHARACTER, ALL_CHARACTER
     }
 
     /**
@@ -184,9 +185,9 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
          * @param characterId
          * @param type Specifies from which specialized fragment it was called. 0 for CharacterList, 1 for AddCharacters
          */
-        fun onCharacterListItemInteraction(characterId: Long, type: Int)
+        fun onCharacterListItemInteraction(characterId: Long, type: BaseCharacterListType)
 
-        fun onNewCharacterInteraction(lessonId: Long, lessonName: String, type: Int)
+        fun onNewCharacterInteraction(lessonId: Long, lessonName: String, type: BaseCharacterListType)
         fun onAddToLessonInteraction(lessonId: Long, lessonName: String)
         fun updateTitle(title: String)
         fun onFinish()

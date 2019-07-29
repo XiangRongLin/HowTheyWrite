@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils
  * @property context
  * @property listener
  */
-class CharacterListAdapter(
+class BaseCharacterListAdapter(
         private val context: Context,
         listener: MultiSelectAdapterItemInteractionListener)
     : MultiSelectAdapter<Character>(listener), Filterable {
@@ -27,7 +27,7 @@ class CharacterListAdapter(
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     override val viewHolderId = R.id.characterTextView
     private var filteredList = list
-    internal var filterType = BaseCharacterListFragment.ALL_FILTER
+    internal var filterType = CharacterFilter.ALL
         set(value) {
             field = value
             filter.filter(constraints)
@@ -95,22 +95,19 @@ class CharacterListAdapter(
                 return results
             }
 
-            private fun fitsFilter(character: Character, constraint: CharSequence, filter: String): Boolean {
+            private fun fitsFilter(character: Character, constraint: CharSequence, filter: CharacterFilter): Boolean {
                 return when (filter) {
-                    ALL_FILTER -> {
+                    CharacterFilter.ALL -> {
                         fitsAllFilter(character, constraint)
                     }
-                    HANZI_FILTER -> {
+                    CharacterFilter.HANZI -> {
                         fitsHanziFilter(character, constraint)
                     }
-                    PINYIN_FILTER -> {
+                    CharacterFilter.PINYIN -> {
                         fitsPinyinFilter(character, constraint)
                     }
-                    TRANSLATION_FILTER -> {
+                    CharacterFilter.TRANSLATION -> {
                         fitsTranslationFilter(character, constraint)
-                    }
-                    else -> {
-                        false
                     }
                 }
             }
@@ -149,10 +146,7 @@ class CharacterListAdapter(
         }
     }
 
-    companion object {
-        const val ALL_FILTER = "all_filter"
-        const val HANZI_FILTER = "hanzi_filter"
-        const val PINYIN_FILTER = "pinyin_filter"
-        const val TRANSLATION_FILTER = "translation_filter"
+    enum class CharacterFilter {
+        ALL, HANZI, PINYIN, TRANSLATION
     }
 }

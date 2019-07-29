@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterList.*
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
@@ -19,6 +20,8 @@ import com.kaiserpudding.howtheywrite.lessonList.NewLessonFragment
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.quiz.QuizFragment
 import com.kaiserpudding.howtheywrite.quiz.QuizFragmentDirections
+import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment.BaseCharacterListType
+
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -88,19 +91,19 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onCharacterListItemInteraction(characterId: Long, type: Int) {
+    override fun onCharacterListItemInteraction(characterId: Long, type: BaseCharacterListType) {
         when (type) {
-            BaseCharacterListFragment.CHARACTER_LIST_TYPE -> {
+            BaseCharacterListType.CHARACTER_LIST -> {
                 navController.navigate(
                         CharacterListFragmentDirections
                                 .actionCharacterListToCharacterDetail(characterId))
             }
-            BaseCharacterListFragment.ADD_CHARACTERS_TYPE -> {
+            BaseCharacterListType.ADD_CHARACTER -> {
                 navController.navigate(
                         AddCharactersFragmentDirections
                                 .actionAddCharactersToCharacterDetail(characterId))
             }
-            BaseCharacterListFragment.ALL_CHARACTERS_TYPE -> {
+            BaseCharacterListType.ALL_CHARACTER -> {
                 navController.navigate(
                         AllCharactersFragmentDirections
                                 .actionAllCharactersToCharacterDetail(characterId))
@@ -128,15 +131,15 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onNewCharacterInteraction(lessonId: Long, lessonName: String, type: Int) {
+    override fun onNewCharacterInteraction(lessonId: Long, lessonName: String, type: BaseCharacterListType) {
         when (type) {
-            BaseCharacterListFragment.CHARACTER_LIST_TYPE -> {
+            BaseCharacterListType.CHARACTER_LIST -> {
                 navController.navigate(
                         CharacterListFragmentDirections
                                 .actionCharacterListToNewCharacter()
                 )
             }
-            BaseCharacterListFragment.ALL_CHARACTERS_TYPE -> {
+            BaseCharacterListType.ALL_CHARACTER -> {
                 navController.navigate(
                         AllCharactersFragmentDirections
                                 .actionAllCharactersToNewCharacter()
