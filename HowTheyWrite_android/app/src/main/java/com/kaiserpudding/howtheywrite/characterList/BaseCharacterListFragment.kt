@@ -163,7 +163,7 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character, BaseCh
     }
 
     enum class BaseCharacterListType {
-        CHARACTER_LIST, ADD_CHARACTER, ALL_CHARACTER
+        CHARACTER_LIST, ADD_CHARACTER
     }
 
     /**
