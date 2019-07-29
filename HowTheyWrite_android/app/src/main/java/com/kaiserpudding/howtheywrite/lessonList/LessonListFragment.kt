@@ -28,7 +28,7 @@ import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
  *
  */
 class LessonListFragment
-    : MultiSelectFragment<Lesson>(),
+    : MultiSelectFragment<Lesson, LessonListAdapter>(),
         ConfirmationDialogFragment.ConfirmationDialogListener {
 
     private var listener: OnLessonListFragmentInteractionListener? = null
@@ -66,7 +66,7 @@ class LessonListFragment
 
         //add observer to viewModel to set lessons into the adapter
         lessonListViewModel.lessons.observe(this, Observer {
-            (adapter as LessonListAdapter).setLessons(it)
+            adapter.setLessons(it)
         })
 
         val fab = view.findViewById<FloatingActionButton>(R.id.new_lessen_fab)
@@ -87,18 +87,18 @@ class LessonListFragment
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                (adapter as LessonListAdapter).filter.filter(query)
+                adapter.filter.filter(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                (adapter as LessonListAdapter).filter.filter(newText)
+                adapter.filter.filter(newText)
                 return false
             }
 
         })
         searchView.setOnCloseListener {
-            (adapter as LessonListAdapter).resetLessons()
+            adapter.resetLessons()
             false
         }
         super.onCreateOptionsMenu(menu, inflater)
@@ -109,7 +109,6 @@ class LessonListFragment
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
         super.onPause()
     }
-
 
 
     private fun onNewLessonButtonPressed() {

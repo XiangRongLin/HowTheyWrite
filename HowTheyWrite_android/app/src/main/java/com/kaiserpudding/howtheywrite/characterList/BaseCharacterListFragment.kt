@@ -14,7 +14,7 @@ import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListAdapter.Cha
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectFragment
 
-abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
+abstract class BaseCharacterListFragment : MultiSelectFragment<Character, BaseCharacterListAdapter>() {
     protected var lessonId: Long = -1
     protected lateinit var lessonName: String
     protected var listener: OnCharacterListFragmentInteractionListener? = null
@@ -41,7 +41,7 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
         //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
                 Observer { characters ->
-                    (adapter as BaseCharacterListAdapter).setCharacters(characters)
+                    adapter.setCharacters(characters)
                 }
         )
         characterListViewModel.lessonName.observe(this,
@@ -110,18 +110,18 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                (adapter as BaseCharacterListAdapter).filter.filter(query)
+                adapter.filter.filter(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                (adapter as BaseCharacterListAdapter).filter.filter(newText)
+                adapter.filter.filter(newText)
                 return false
             }
 
         })
         searchView.setOnCloseListener {
-            (adapter as BaseCharacterListAdapter).resetCharacters()
+            adapter.resetCharacters()
             false
         }
         super.onCreateOptionsMenu(menu, inflater)
@@ -130,7 +130,7 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_filter -> {
-                when ((adapter as BaseCharacterListAdapter).filterType) {
+                when (adapter.filterType) {
                     CharacterFilter.ALL -> item.subMenu.getItem(0).isChecked = true
                     CharacterFilter.HANZI -> item.subMenu.getItem(1).isChecked = true
                     CharacterFilter.PINYIN -> item.subMenu.getItem(2).isChecked = true
@@ -139,33 +139,27 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character>() {
                 false
             }
             R.id.filter_all -> {
-                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.ALL
+                adapter.filterType = CharacterFilter.ALL
                 item.isChecked = true
                 true
             }
             R.id.filter_hanzi -> {
-                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.HANZI
+                adapter.filterType = CharacterFilter.HANZI
                 item.isChecked = true
                 true
             }
             R.id.filter_pinyin -> {
-                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.PINYIN
+                adapter.filterType = CharacterFilter.PINYIN
                 item.isChecked = true
                 true
             }
             R.id.filter_translation -> {
-                (adapter as BaseCharacterListAdapter).filterType = CharacterFilter.TRANSLATION
+                adapter.filterType = CharacterFilter.TRANSLATION
                 item.isChecked = true
                 true
             }
             else -> false
         }
-    }
-
-    companion object {
-//        const val CHARACTER_LIST_TYPE = 0
-//        const val ADD_CHARACTERS_TYPE = 1
-//        const val ALL_CHARACTERS_TYPE = 2
     }
 
     enum class BaseCharacterListType {
