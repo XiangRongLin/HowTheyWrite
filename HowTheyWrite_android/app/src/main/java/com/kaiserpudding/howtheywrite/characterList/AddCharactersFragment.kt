@@ -49,6 +49,6 @@ class AddCharactersFragment : BaseCharacterListFragment() {
     }
 
     override fun onListInteraction(itemId: Long) {
-        listener?.onCharacterListItemInteraction(itemId, 1)
+        listener?.onCharacterListItemInteraction(itemId, BaseCharacterListType.ADD_CHARACTER)
     }
 }
