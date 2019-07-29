@@ -10,7 +10,7 @@ import com.kaiserpudding.howtheywrite.model.Lesson
 import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectAdapter
 
 /**
- * Adapter for the recyclerView for lessions
+ * Adapter for the recyclerView for lessons
  *
  * Classes using this must implement [MultiSelectAdapter.MultiSelectAdapterItemInteractionListener]
  * to handle interaction events with an item in the list.
@@ -18,20 +18,14 @@ import com.kaiserpudding.howtheywrite.shared.multiSelect.MultiSelectAdapter
  * @property context
  * @property listener
  */
-class LessonListAdapter(
+class BaseLessonListAdapter(
         private val context: Context,
         listener: MultiSelectAdapterItemInteractionListener)
     : MultiSelectAdapter<Lesson>(listener), Filterable {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     override val viewHolderId = R.id.lessonTextView
-    private val all = Lesson("All")
-    private var filteredList: List<Lesson>?
-
-    init {
-        list = listOf(all)
-        filteredList = list
-    }
+    private var filteredList = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiSelectViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item_lesson, parent, false)
@@ -43,13 +37,11 @@ class LessonListAdapter(
 
         val current = filteredList!![position]
         //TODO proper string representation of lesson
-        holder.textView.text = current.toString()
+        holder.textView.text = current.name
     }
 
     internal fun setLessons(lessons: List<Lesson>) {
-        val combined = mutableListOf(all)
-        combined.addAll(lessons)
-        list = combined
+        list = lessons
         filteredList = list
         notifyDataSetChanged()
     }
