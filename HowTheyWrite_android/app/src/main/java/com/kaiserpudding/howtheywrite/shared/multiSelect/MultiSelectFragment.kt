@@ -12,11 +12,12 @@ import androidx.fragment.app.Fragment
  * of [ActionMode] to display a bar at the top when something is selected.
  *
  * @param T The type of the items shown in the list.
+ * @param A The type of the adapter. Must be subclass of [MultiSelectAdapter]
  */
-abstract class MultiSelectFragment<T> : Fragment(),
+abstract class MultiSelectFragment<T, A : MultiSelectAdapter<T>> : Fragment(),
         MultiSelectAdapter.MultiSelectAdapterItemInteractionListener {
 
-    protected lateinit var adapter: MultiSelectAdapter<T>
+    protected lateinit var adapter: A
     protected var actionMode: ActionMode? = null
 
     /**
