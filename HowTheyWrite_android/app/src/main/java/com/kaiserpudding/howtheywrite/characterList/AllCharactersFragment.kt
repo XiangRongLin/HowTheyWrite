@@ -23,11 +23,6 @@ class AllCharactersFragment : BaseCharacterListFragment(),
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.all_character_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -45,7 +40,6 @@ class AllCharactersFragment : BaseCharacterListFragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         characterListViewModel = ViewModelProviders.of(
                 this, CharacterListViewModelFactory(activity!!.application, -1, true))
                 .get(CharacterListViewModel::class.java)
@@ -53,9 +47,7 @@ class AllCharactersFragment : BaseCharacterListFragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-
         view.findViewById<Button>(R.id.to_quiz_button).visibility = View.GONE
-
         return view
     }
 

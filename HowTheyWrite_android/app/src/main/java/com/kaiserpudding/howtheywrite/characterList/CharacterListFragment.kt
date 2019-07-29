@@ -59,7 +59,6 @@ class CharacterListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //to make it immutable
         val tmpId = lessonId
         characterListViewModel = ViewModelProviders.of(
@@ -70,10 +69,8 @@ class CharacterListFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-
         val toQuizButton = view.findViewById<Button>(R.id.to_quiz_button)
         toQuizButton.setSafeOnClickListener { onToQuizButtonPressed() }
-
         return view
     }
 

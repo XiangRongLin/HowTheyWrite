@@ -24,7 +24,6 @@ class AddCharactersFragment : BaseCharacterListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         characterListViewModel =
                 ViewModelProviders.of(
                         this, CharacterListViewModelFactory(activity!!.application, lessonId, true))
@@ -33,15 +32,8 @@ class AddCharactersFragment : BaseCharacterListFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-
         view.findViewById<Button>(R.id.to_quiz_button).visibility = View.GONE
-
         return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun updateToolBarTitle() {
