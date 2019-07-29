@@ -83,7 +83,7 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character, BaseCh
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
+        inflater.inflate(R.menu.search_characters_menu, menu)
 
         val filterMenuItem = menu.findItem(R.id.action_filter)
         val searchMenuItem = menu.findItem(R.id.action_search)

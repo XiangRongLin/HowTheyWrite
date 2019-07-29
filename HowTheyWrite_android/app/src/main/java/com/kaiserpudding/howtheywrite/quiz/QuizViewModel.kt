@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 /**
  * ViewModel to load the [Character] from the lesson with the given id
  *
- * Before accessing it check if [finishedLoading].value is true, or add a listener to it to be
+ * Before accessing it check if [finishedLoading].value is true, or add a listenerBase to it to be
  * notified when it finishes
  *
  * @param application
