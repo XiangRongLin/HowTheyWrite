@@ -25,7 +25,10 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character, BaseCh
 
         val safeArgs: CharacterListFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
+        adapter = BaseCharacterListAdapter(context!!, this)
+        setHasOptionsMenu(true)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -33,10 +36,9 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character, BaseCh
         val view = inflater.inflate(R.layout.fragment_character_list, container, false)
 
         //instantiate the recyclerView with its adapter
-        val recyclerView = view.findViewById<RecyclerView>(R.id.character_recyclerview)
-        adapter = BaseCharacterListAdapter(view.context, this)
+        val recyclerView = view!!.findViewById<RecyclerView>(R.id.character_recyclerview)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(view.context, 5)
+        recyclerView.layoutManager = GridLayoutManager(context!!, 5)
 
         //add observer to viewModel to set characters into the adapter
         characterListViewModel.characters.observe(this,
@@ -49,8 +51,6 @@ abstract class BaseCharacterListFragment : MultiSelectFragment<Character, BaseCh
                     lessonName = it
                     updateToolBarTitle()
                 })
-
-        setHasOptionsMenu(true)
 
         return view
     }
