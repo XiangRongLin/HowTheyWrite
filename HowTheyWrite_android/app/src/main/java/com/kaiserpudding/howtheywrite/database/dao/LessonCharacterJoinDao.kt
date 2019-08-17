@@ -49,5 +49,11 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
     @Query("DELETE FROM lesson_character_join WHERE lessonId IN (:lessonIds)")
     fun deleteAllLessonCharacterJoinsFromLesson(lessonIds: LongArray)
 
+    @Query("INSERT INTO lesson_character_join (lessonId, characterId) " +
+            "SELECT :addToId, characterId " +
+            "FROM lesson_character_join " +
+            "WHERE lessonId IN (:lessonIds)")
+    fun addCharactersOfLessonToLesson(lessonIds: LongArray, addToId: Long)
+
 
 }

@@ -50,7 +50,7 @@ class CharacterListFragment
                 true
             }
             R.id.action_add_to_lesson -> {
-                onAddToLessonPressed()
+                listener?.onAddToLessonInteraction(lessonId, lessonName)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -106,10 +106,6 @@ class CharacterListFragment
     override fun onDialogNegativeClick() {
         val toast = Toast.makeText(context, "Cancelled", Toast.LENGTH_SHORT)
         toast.show()
-    }
-
-    private fun onAddToLessonPressed() {
-        listener?.onAddToLessonInteraction(lessonId, lessonName)
     }
 
     override fun onListInteraction(itemId: Long) {

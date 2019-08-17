@@ -14,15 +14,12 @@ import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.characterList.*
 import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment.BaseCharacterListType
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
-import com.kaiserpudding.howtheywrite.lessonList.AddLessonListFragmentDirections
+import com.kaiserpudding.howtheywrite.lessonList.*
 import com.kaiserpudding.howtheywrite.lessonList.BaseLessonListFragment.BaseLessonListType
-import com.kaiserpudding.howtheywrite.lessonList.LessonListFragmentDirections
-import com.kaiserpudding.howtheywrite.lessonList.NewLessonFragment
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.quiz.QuizFragment
 import com.kaiserpudding.howtheywrite.quiz.QuizFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
-import com.kaiserpudding.howtheywrite.lessonList.BaseLessonListFragment as BaseLessonListFragment1
 
 /**
  * The single activity in the projects which hosts all fragments.
@@ -32,7 +29,9 @@ import com.kaiserpudding.howtheywrite.lessonList.BaseLessonListFragment as BaseL
 class MainActivity : AppCompatActivity(),
         QuizFragment.OnQuizFragmentInteractionListener,
         BaseCharacterListFragment.OnCharacterListFragmentInteractionListener,
-        BaseLessonListFragment1.OnBaseLessonListFragmentInteractionListener,
+        BaseLessonListFragment.OnBaseLessonListFragmentInteractionListener,
+        AddLessonListFragment.OnAddLessonListFragmentInteractionListener,
+        AddCharactersFragment.OnAddCharacterFragmentInteractionListener,
         NewCharacterFragment.OnNewCharacterFragmentInteractionListener,
         NewLessonFragment.OnNewLessonFragmentInteractionListener {
 
@@ -114,14 +113,22 @@ class MainActivity : AppCompatActivity(),
     override fun onBaseLessonListItemInteraction(lessonId: Long, type: BaseLessonListType) {
         when (type) {
             BaseLessonListType.LESSON_LIST -> {
-                val action = LessonListFragmentDirections.actionLessonListToCharacterList(lessonId)
+                val action = LessonListFragmentDirections
+                        .actionLessonListToCharacterList(lessonId)
                 navController.navigate(action)
             }
-            BaseLessonListType.ADD_LIST -> {
-//                val action = AddLessonListFragmentDirections.actionAddLessonListFragmentToAddCharactersFragment(lessonId)
-//                navController.navigate(action)
+            else -> {
+                //TODO throw error
             }
         }
+    }
+
+    override fun onAddLessonListItemInteraction(addToId: Long, addToName: String, selectedId: Long) {
+        val action = AddLessonListFragmentDirections
+                .actionAddLessonListFragmentToAddCharactersFragment(
+                        selectedId, addToId, addToName
+                )
+        navController.navigate(action)
     }
 
     override fun onToNewLessonInteraction() {
@@ -142,9 +149,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onAddToLessonInteraction(lessonId: Long, lessonName: String) {
-//        val action = CharacterListFragmentDirections
-//                .actionCharacterListToAddCharacters(lessonId, lessonName)
-//        navController.navigate(action)
+        val action = CharacterListFragmentDirections
+                .actionCharacterListFragmentToAddLessonListFragment(lessonId, lessonName)
+        navController.navigate(action)
     }
 
     override fun onQuizFinishInteraction() {
@@ -164,6 +171,12 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onFinish() {
+        navController.popBackStack()
+    }
+
+    override fun onAddFinish() {
+        //pop twice to skip through AddLessonListFragment
+        navController.popBackStack()
         navController.popBackStack()
     }
 

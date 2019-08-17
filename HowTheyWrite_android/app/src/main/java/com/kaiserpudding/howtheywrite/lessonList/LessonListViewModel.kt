@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.kaiserpudding.howtheywrite.model.Lesson
+import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
 import com.kaiserpudding.howtheywrite.repositories.LessonRepository
 import kotlinx.coroutines.launch
 
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
  */
 class LessonListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val lessonRepository: LessonRepository = LessonRepository(application)
+    private val lessonRepository = LessonRepository(application)
+    private val characterRepository = CharacterRepository(application)
 
     var lessons: LiveData<List<Lesson>>
         private set
@@ -46,4 +48,12 @@ class LessonListViewModel(application: Application) : AndroidViewModel(applicati
             lessonRepository.deleteLessons(lessonIds)
         }
     }
+
+    fun addCharactersOfLessonToLesson(lessonIds: LongArray, addToId: Long) {
+        viewModelScope.launch {
+            characterRepository.addCharactersOfLessonToLesson(lessonIds, addToId)
+        }
+    }
+
+
 }

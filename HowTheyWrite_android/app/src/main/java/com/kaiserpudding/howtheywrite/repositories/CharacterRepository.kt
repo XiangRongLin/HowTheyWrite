@@ -79,4 +79,10 @@ class CharacterRepository(application: Application) {
             lessonCharacterJoinDao.deleteLessonCharacterJoins(lessonId, characterIds)
         }
     }
+
+    suspend fun addCharactersOfLessonToLesson(lessonIds: LongArray, addToId: Long) {
+        withContext(Dispatchers.IO) {
+            lessonCharacterJoinDao.addCharactersOfLessonToLesson(lessonIds, addToId)
+        }
+    }
 }
