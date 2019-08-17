@@ -11,10 +11,6 @@ class Lesson(@ColumnInfo(name = "name") var name: String) {
     @Ignore
     var characters: MutableList<Character> = LinkedList()
 
-//    constructor(id: Int, name: String, characters: MutableList<Character>): this(name) {
-//        this.characters = characters
-//    }
-
     override fun toString(): String {
         return id.toString() + name
     }

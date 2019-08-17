@@ -50,10 +50,6 @@ class LessonListFragment
     }
 
     override fun onDialogPositiveClick() {
-        if (adapter.selectedIdArray.contains(0)) {
-            val toast = Toast.makeText(context, "The All lesson can't be deleted", Toast.LENGTH_LONG)
-            toast.show()
-        }
         lessonListViewModel.deleteLessons(adapter.selectedIdArray)
         actionMode?.finish()
     }

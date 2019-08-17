@@ -62,8 +62,11 @@ class LessonRepository(application: Application) {
 
     suspend fun deleteLessons(lessonIds: LongArray) {
         withContext(Dispatchers.IO) {
+            val characterIds = lessonCharacterJoinDao.getCharacterIdsByLessonIds(lessonIds)
             lessonDao.deleteLessons(lessonIds)
-            lessonCharacterJoinDao.deleteAllLessonCharacterJoinsFromLesson(lessonIds)
+            for (id in characterIds) {
+                lessonCharacterJoinDao.deleteCharacterIfNoJoin(id)
+            }
         }
     }
 }
