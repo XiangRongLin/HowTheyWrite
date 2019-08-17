@@ -86,12 +86,15 @@
     <argument
       android:name="lessonId"
       app:argType="long"/>
-    <argument
-      android:name="lessonName"
-      app:argType="string"/>
     <action
       android:id="@+id/action_addCharacters_to_characterDetail"
       app:destination="@id/characterDetailFragment"/>
+    <argument
+      android:name="addToId"
+      app:argType="long"/>
+    <argument
+      android:name="addToName"
+      app:argType="string"/>
   </fragment>
   <fragment
     android:id="@+id/addLessonListFragment"
@@ -103,6 +106,9 @@
     <argument
       android:name="lessonId"
       app:argType="long"/>
+    <argument
+      android:name="lessonName"
+      app:argType="string"/>
   </fragment>
 
 

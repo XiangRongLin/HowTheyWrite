@@ -44,7 +44,7 @@ class CharacterListViewModel(
                 }
     }
 
-    fun addCharactersToLesson(characterIds: LongArray) {
+    fun addCharactersToLesson(characterIds: LongArray, lessonId: Long) {
         viewModelScope.launch {
             characterRepository.addCharactersToLesson(lessonId, characterIds)
         }
