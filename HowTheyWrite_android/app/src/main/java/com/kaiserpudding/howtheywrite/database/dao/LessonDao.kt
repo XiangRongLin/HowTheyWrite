@@ -6,17 +6,19 @@ import androidx.room.Query
 import com.kaiserpudding.howtheywrite.model.Lesson
 
 @Dao
-interface LessonDao : BaseDao<Lesson>{
+interface LessonDao : BaseDao<Lesson> {
 
-    @Query("SELECT * FROM lessons")
+    @Query("""SELECT * FROM lessons""")
     fun allLessons(): LiveData<List<Lesson>>
 
-    @Query("SELECT name FROM lessons")
+    @Query("""SELECT name FROM lessons""")
     suspend fun allLessonNames(): List<String>
 
-    @Query("SELECT name FROM  lessons WHERE id = :lessonId")
+    @Query("""SELECT name FROM lessons
+        WHERE id = :lessonId""")
     fun getLiveDataLessonNameById(lessonId: Long): LiveData<String>
 
-    @Query("DELETE FROM lessons WHERE id IN (:lessonIds)")
+    @Query("""DELETE FROM lessons
+        WHERE id IN (:lessonIds)""")
     fun deleteLessons(lessonIds: LongArray)
 }
