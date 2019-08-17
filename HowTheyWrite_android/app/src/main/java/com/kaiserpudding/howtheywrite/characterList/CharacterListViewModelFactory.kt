@@ -12,12 +12,11 @@ import androidx.lifecycle.ViewModelProvider
  */
 class CharacterListViewModelFactory(
         private val application: Application,
-        private val lessonId: Long,
-        private val loadAll: Boolean)
+        private val lessonId: Long)
     : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CharacterListViewModel(application, lessonId, loadAll) as T
+        return CharacterListViewModel(application, lessonId) as T
     }
 
 

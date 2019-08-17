@@ -49,7 +49,7 @@ class NewLessonFragment : Fragment() {
                 lessonListViewModel.insertLesson(Lesson(newLessonEditText.text.toString()))
                 val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
-                onFinish()
+                listener?.onFinish()
             }
         }
 
@@ -74,10 +74,6 @@ class NewLessonFragment : Fragment() {
             }
             else -> true
         }
-    }
-
-    private fun onFinish() {
-        listener?.onNewLessonFinishInteraction()
     }
 
     override fun onAttach(context: Context) {
@@ -106,7 +102,7 @@ class NewLessonFragment : Fragment() {
      * for more information.
      */
     interface OnNewLessonFragmentInteractionListener {
-        fun onNewLessonFinishInteraction()
+        fun onFinish()
     }
 
 }

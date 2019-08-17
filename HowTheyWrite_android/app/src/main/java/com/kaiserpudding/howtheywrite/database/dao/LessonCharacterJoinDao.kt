@@ -12,6 +12,9 @@ import com.kaiserpudding.howtheywrite.model.LessonCharacterJoin
 interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLessonCharacterJoin(lessonCharacterJoin: LessonCharacterJoin)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLessonCharacterJoin(lessonCharacterJoin: Array<LessonCharacterJoin>)
 
 //    @Query("SELECT * FROM lessons INNER JOIN lesson_character_join ON\n"

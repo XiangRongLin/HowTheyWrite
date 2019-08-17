@@ -1,6 +1,7 @@
 package com.kaiserpudding.howtheywrite.repositories
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.kaiserpudding.howtheywrite.database.AppDatabase
 import com.kaiserpudding.howtheywrite.database.dao.CharacterDao
@@ -63,6 +64,15 @@ class CharacterRepository(application: Application) {
 
     suspend fun getCharactersByLessonIdInRandomOrder(lessonId: Long): List<Character> {
         return lessonCharacterJoinDao.getCharacterByLessonIdInRandomOrder(lessonId)
+    }
+
+    suspend fun addNewCharacterToLesson(character: Character, lessonId: Long) {
+        withContext(Dispatchers.IO) {
+            val characterId = characterDao.insert(character)
+            val lessonCharacterJoin = LessonCharacterJoin(lessonId, characterId)
+            Log.v("MY_IO", "Adding $lessonCharacterJoin")
+            lessonCharacterJoinDao.insertLessonCharacterJoin(lessonCharacterJoin)
+        }
     }
 
     suspend fun addCharactersToLesson(lessonId: Long, characterIds: LongArray) {

@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
@@ -31,6 +32,13 @@ class NewCharacterFragment : Fragment() {
     private lateinit var newCharacterPinyinEditText: EditText
     private lateinit var newCharacterTranslationEditText: EditText
     private lateinit var insertionViewModel: InsertionViewModel
+    private var lessonId = 0L
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val safeArgs: NewCharacterFragmentArgs by navArgs()
+        lessonId = safeArgs.lessonId
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -49,11 +57,13 @@ class NewCharacterFragment : Fragment() {
                 insertionViewModel.insertCharacter(
                         Character(newCharacterHanziEditText.text.toString(),
                                 newCharacterPinyinEditText.text.toString(),
-                                newCharacterTranslationEditText.text.toString())
+                                newCharacterTranslationEditText.text.toString()),
+                        lessonId
+
                 )
                 val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
-                onFinish()
+                listener?.onFinish()
             }//TODO else show error
 
         }
@@ -68,10 +78,6 @@ class NewCharacterFragment : Fragment() {
      */
     private fun checkEditText(): Boolean {
         return true
-    }
-
-    private fun onFinish() {
-        listener?.onNewCharacterFinishInteraction()
     }
 
     override fun onAttach(context: Context) {
@@ -95,7 +101,7 @@ class NewCharacterFragment : Fragment() {
      * activity.
      */
     interface OnNewCharacterFragmentInteractionListener {
-        fun onNewCharacterFinishInteraction()
+        fun onFinish()
     }
 
 }
