@@ -58,5 +58,12 @@ interface LessonCharacterJoinDao : BaseDao<LessonCharacterJoin>{
             "WHERE lessonId IN (:lessonIds)")
     fun addCharactersOfLessonToLesson(lessonIds: LongArray, addToId: Long)
 
+    @Query("DELETE FROM characters WHERE id = :id " +
+            "AND NOT EXISTS (SELECT * FROM lesson_character_join WHERE characterId = :id)")
+    fun deleteCharacterIfNoJoin(id: Long)
+
+    @Query("SELECT DISTINCT characterId FROM lesson_character_join WHERE lessonId IN (:lessonIds)")
+    fun getCharacterIdsByLessonIds(lessonIds: LongArray): LongArray
+
 
 }
