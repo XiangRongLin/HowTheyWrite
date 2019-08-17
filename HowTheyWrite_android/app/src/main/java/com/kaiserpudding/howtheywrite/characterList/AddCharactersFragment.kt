@@ -35,7 +35,7 @@ class AddCharactersFragment : BaseCharacterListFragment() {
         addToName = safeArgs.addToName
         characterListViewModel =
                 ViewModelProviders.of(
-                        this, CharacterListViewModelFactory(activity!!.application, lessonId, false))
+                        this, CharacterListViewModelFactory(activity!!.application, lessonId))
                         .get(CharacterListViewModel::class.java)
     }
 

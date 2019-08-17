@@ -136,12 +136,12 @@ class MainActivity : AppCompatActivity(),
         navController.navigate(action)
     }
 
-    override fun onNewCharacterInteraction(lessonId: Long, lessonName: String, type: BaseCharacterListType) {
+    override fun onNewCharacterInteraction(lessonId: Long, type: BaseCharacterListType) {
         when (type) {
             BaseCharacterListType.CHARACTER_LIST -> {
                 navController.navigate(
                         CharacterListFragmentDirections
-                                .actionCharacterListToNewCharacter()
+                                .actionCharacterListToNewCharacter(lessonId)
                 )
             }
             else -> return
@@ -152,18 +152,6 @@ class MainActivity : AppCompatActivity(),
         val action = CharacterListFragmentDirections
                 .actionCharacterListFragmentToAddLessonListFragment(lessonId, lessonName)
         navController.navigate(action)
-    }
-
-    override fun onQuizFinishInteraction() {
-        navController.popBackStack()
-    }
-
-    override fun onNewCharacterFinishInteraction() {
-        navController.popBackStack()
-    }
-
-    override fun onNewLessonFinishInteraction() {
-        navController.popBackStack()
     }
 
     override fun updateTitle(title: String) {

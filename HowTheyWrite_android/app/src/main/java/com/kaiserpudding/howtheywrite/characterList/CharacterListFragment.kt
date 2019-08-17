@@ -26,6 +26,7 @@ class CharacterListFragment
     : BaseCharacterListFragment(),
         ConfirmationDialogFragment.ConfirmationDialogListener {
 
+    private val type = BaseCharacterListType.CHARACTER_LIST
     override val actionMenuId = R.menu.selection_delete_menu
 
     override fun onMyActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
@@ -46,7 +47,7 @@ class CharacterListFragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add_new_character -> {
-                onToNewCharacterPressed(BaseCharacterListType.CHARACTER_LIST)
+                listener?.onNewCharacterInteraction(lessonId, type)
                 true
             }
             R.id.action_add_to_lesson -> {
@@ -62,7 +63,7 @@ class CharacterListFragment
         //to make it immutable
         val tmpId = lessonId
         characterListViewModel = ViewModelProviders.of(
-                this, CharacterListViewModelFactory(activity!!.application, tmpId, false))
+                this, CharacterListViewModelFactory(activity!!.application, tmpId))
                 .get(CharacterListViewModel::class.java)
     }
 

@@ -96,7 +96,7 @@ class QuizFragment : Fragment() {
                     quizViewModel.nextCharacter()
                     setQuizCharacter()
                 } else {
-                    listener!!.onQuizFinishInteraction()
+                    listener!!.onFinish()
                 }
             } else {
                 resetQuizInput()
@@ -184,7 +184,7 @@ class QuizFragment : Fragment() {
      */
     interface OnQuizFragmentInteractionListener {
         fun onQuizCharacterInteraction(character: Character)
-        fun onQuizFinishInteraction()
+        fun onFinish()
         fun updateTitle(title: String)
     }
 }
