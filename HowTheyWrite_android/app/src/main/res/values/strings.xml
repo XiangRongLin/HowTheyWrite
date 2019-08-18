@@ -2694,4 +2694,5 @@
   <string name="filter_hanzi">Hanzi</string>
   <string name="filter_pinyin">Pinyin</string>
   <string name="filter_translation">Translation</string>
+  <string name="edit">Edit</string>
 </resources>

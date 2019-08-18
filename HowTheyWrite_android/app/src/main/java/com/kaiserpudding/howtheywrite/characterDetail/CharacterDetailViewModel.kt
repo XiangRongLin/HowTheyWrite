@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.Transformations
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.repositories.CharacterRepository
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel to load a [Character] with given id from the db
@@ -23,18 +22,19 @@ class CharacterDetailViewModel(application: Application, characterId: Long)
     : AndroidViewModel(application) {
 
     private val characterRepository: CharacterRepository = CharacterRepository(application)
-    private val _finishedLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _finishedLoading: LiveData<Boolean>
     val finishedLoading: LiveData<Boolean>
         get() = _finishedLoading
+
 
     private lateinit var character: Character
 
     init {
-        viewModelScope.launch {
-            character = characterRepository.getCharacterById(characterId)
-            _finishedLoading.value = true
+        val liveData = characterRepository.getLiveDataCharacterById(characterId)
+        _finishedLoading = Transformations.map(liveData) {
+            character = it
+            true
         }
-
     }
 
     val hanzi: String
