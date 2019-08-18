@@ -1,10 +1,9 @@
 package com.kaiserpudding.howtheywrite.characterDetail
 
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,18 +22,22 @@ class CharacterDetailFragment : Fragment() {
     private lateinit var pinyinTextView: TextView
     private lateinit var translationTextView: TextView
     private lateinit var characterDetailViewModel: CharacterDetailViewModel
+    private var characterId: Long = 0L
+    private var listener: OnCharacterDetailFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //Get characterId from safeArgs
         val safeArgs: CharacterDetailFragmentArgs by navArgs()
-        val characterId = safeArgs.characterId
+        characterId = safeArgs.characterId
 
         //instantiate the viewModel with the characterId from above
         characterDetailViewModel = ViewModelProviders.of(
                 this, CharacterDetailViewModelFactory(activity!!.application, characterId))
                 .get(CharacterDetailViewModel::class.java)
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +61,43 @@ class CharacterDetailFragment : Fragment() {
             }
         })
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.character_detail_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_edit_character -> {
+                listener?.onEditCharacterInteraction(
+                        characterId,
+                        hanziTextView.text.toString(),
+                        pinyinTextView.text.toString(),
+                        translationTextView.text.toString())
+                true
+            }
+            else -> false
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnCharacterDetailFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement OnCharacterDetailFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    interface OnCharacterDetailFragmentInteractionListener{
+        fun onEditCharacterInteraction(id: Long, hanzi: String, pinyin: String, translation: String)
     }
 
 }

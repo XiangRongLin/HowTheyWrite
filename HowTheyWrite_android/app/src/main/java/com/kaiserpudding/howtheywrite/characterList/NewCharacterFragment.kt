@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.kaiserpudding.howtheywrite.R
 import com.kaiserpudding.howtheywrite.model.Character
 import com.kaiserpudding.howtheywrite.shared.setSafeOnClickListener
+import kotlinx.android.synthetic.main.fragment_lesson_list.*
 
 /**
  * A simple [Fragment] subclass.
@@ -32,12 +34,18 @@ class NewCharacterFragment : Fragment() {
     private lateinit var newCharacterPinyinEditText: EditText
     private lateinit var newCharacterTranslationEditText: EditText
     private lateinit var insertionViewModel: InsertionViewModel
+    private lateinit var mode: Mode
     private var lessonId = 0L
+    private var characterId = 0L
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val safeArgs: NewCharacterFragmentArgs by navArgs()
         lessonId = safeArgs.lessonId
+        characterId = safeArgs.characterId
+        mode = if (lessonId > 0) Mode.NEW
+        else Mode.EDIT
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -51,16 +59,36 @@ class NewCharacterFragment : Fragment() {
         newCharacterPinyinEditText = view.findViewById(R.id.editNewCharPinyin)
         newCharacterTranslationEditText = view.findViewById(R.id.editNewCharTranslation)
 
+        if (mode == Mode.EDIT) {
+            val safeArgs: NewCharacterFragmentArgs by navArgs()
+            newCharacterHanziEditText.setText(safeArgs.hanzi)
+            newCharacterPinyinEditText.setText(safeArgs.pinyin)
+            newCharacterTranslationEditText.setText(safeArgs.translation)
+        }
+
         val button = view.findViewById<Button>(R.id.button_save_new_char)
         button.setSafeOnClickListener {
             if (checkEditText()) {
-                insertionViewModel.insertCharacter(
-                        Character(newCharacterHanziEditText.text.toString(),
-                                newCharacterPinyinEditText.text.toString(),
-                                newCharacterTranslationEditText.text.toString()),
-                        lessonId
+                when (mode) {
+                    Mode.NEW -> {
+                        insertionViewModel.insertCharacter(
+                                Character(newCharacterHanziEditText.text.toString(),
+                                        newCharacterPinyinEditText.text.toString(),
+                                        newCharacterTranslationEditText.text.toString()),
+                                lessonId
 
-                )
+                        )
+                    }
+                    Mode.EDIT -> {
+                        val character = Character(
+                                newCharacterHanziEditText.text.toString(),
+                                newCharacterPinyinEditText.text.toString(),
+                                newCharacterTranslationEditText.text.toString())
+                        character.id = characterId
+                        insertionViewModel.updateCharacter(character)
+                    }
+                }
+
                 val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
                 listener?.onFinish()
@@ -102,6 +130,10 @@ class NewCharacterFragment : Fragment() {
      */
     interface OnNewCharacterFragmentInteractionListener {
         fun onFinish()
+    }
+
+    enum class Mode {
+        NEW, EDIT
     }
 
 }

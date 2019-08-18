@@ -68,6 +68,9 @@
     <argument
         android:name="characterId"
       app:argType="long" />
+    <action
+      android:id="@+id/action_characterDetailFragment_to_newCharacterFragment"
+      app:destination="@id/newCharacterFragment"/>
   </fragment>
   <fragment
       android:id="@+id/newCharacterFragment"
@@ -76,7 +79,24 @@
       tools:layout="@layout/fragment_new_character" >
     <argument
       android:name="lessonId"
-      app:argType="long"/>
+      app:argType="long"
+      android:defaultValue="-1L"/>
+    <argument
+      android:name="characterId"
+      app:argType="long"
+      android:defaultValue="-1L"/>
+    <argument
+      android:name="hanzi"
+      app:argType="string"
+      app:nullable="true"/>
+    <argument
+      android:name="pinyin"
+      app:argType="string"
+      app:nullable="true"/>
+    <argument
+      android:name="translation"
+      app:argType="string"
+      app:nullable="true"/>
   </fragment>
   <fragment
       android:id="@+id/newLessonFragment"

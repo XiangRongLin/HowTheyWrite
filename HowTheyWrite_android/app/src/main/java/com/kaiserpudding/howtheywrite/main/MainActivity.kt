@@ -11,6 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.kaiserpudding.howtheywrite.R
+import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailFragment
+import com.kaiserpudding.howtheywrite.characterDetail.CharacterDetailFragmentDirections
 import com.kaiserpudding.howtheywrite.characterList.*
 import com.kaiserpudding.howtheywrite.characterList.BaseCharacterListFragment.BaseCharacterListType
 import com.kaiserpudding.howtheywrite.database.ChineseDbHelper
@@ -33,7 +35,8 @@ class MainActivity : AppCompatActivity(),
         AddLessonListFragment.OnAddLessonListFragmentInteractionListener,
         AddCharactersFragment.OnAddCharacterFragmentInteractionListener,
         NewCharacterFragment.OnNewCharacterFragmentInteractionListener,
-        NewLessonFragment.OnNewLessonFragmentInteractionListener {
+        NewLessonFragment.OnNewLessonFragmentInteractionListener,
+        CharacterDetailFragment.OnCharacterDetailFragmentInteractionListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -141,7 +144,7 @@ class MainActivity : AppCompatActivity(),
             BaseCharacterListType.CHARACTER_LIST -> {
                 navController.navigate(
                         CharacterListFragmentDirections
-                                .actionCharacterListToNewCharacter(lessonId)
+                                .actionCharacterListToNewCharacter(lessonId, hanzi = null, pinyin = null, translation = null)
                 )
             }
             else -> return
@@ -151,6 +154,12 @@ class MainActivity : AppCompatActivity(),
     override fun onAddToLessonInteraction(lessonId: Long, lessonName: String) {
         val action = CharacterListFragmentDirections
                 .actionCharacterListFragmentToAddLessonListFragment(lessonId, lessonName)
+        navController.navigate(action)
+    }
+
+    override fun onEditCharacterInteraction(id: Long, hanzi: String, pinyin: String, translation: String) {
+        val action = CharacterDetailFragmentDirections
+                .actionCharacterDetailFragmentToNewCharacterFragment(0, id, hanzi, pinyin, translation)
         navController.navigate(action)
     }
 

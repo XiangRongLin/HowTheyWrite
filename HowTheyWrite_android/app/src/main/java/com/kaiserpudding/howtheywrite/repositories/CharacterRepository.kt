@@ -25,7 +25,12 @@ class CharacterRepository(application: Application) {
         withContext(Dispatchers.IO) {
             characterDao.insert(character)
         }
+    }
 
+    suspend fun update(character: Character) {
+        withContext(Dispatchers.IO) {
+            characterDao.update(character)
+        }
     }
 
     suspend fun delete(character: Character) {
@@ -47,6 +52,10 @@ class CharacterRepository(application: Application) {
 
     fun allLiveDataCharacters(): LiveData<List<Character>> {
         return characterDao.allCharacters()
+    }
+
+    fun getLiveDataCharacterById(id: Long): LiveData<Character> {
+        return characterDao.getLiveDataCharacterById(id)
     }
 
     suspend fun getCharacterById(id: Long): Character {

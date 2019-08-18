@@ -16,4 +16,10 @@ class InsertionViewModel(application: Application) : AndroidViewModel(applicatio
         GlobalScope.launch {
             characterRepository.addNewCharacterToLesson(character, lessonId) }
     }
+
+    fun updateCharacter(character: Character) {
+        GlobalScope.launch {
+            characterRepository.update(character)
+        }
+    }
 }
