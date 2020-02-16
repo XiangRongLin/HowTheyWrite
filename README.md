@@ -1,3 +1,5 @@
+Get the current version from the [release page](https://github.com/XiangRongLin/HowTheyWrite/releases)
+
 # HowTheyWrite
 
 Android App written in Kotlin to learn Chinese. This is aimed at people who already know how to speak the characters or know the pinyin, but don't know how to write the hanzi.
